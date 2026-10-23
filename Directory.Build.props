@@ -1,0 +1,23 @@
+<Project>
+  <!--
+    MSBuild imports this before Zippendo.csproj, so it can only add what the generated project
+    leaves unset; the project's own properties come from the generator config in packages/sdks.
+  -->
+  <PropertyGroup>
+    <!-- netstandard2.0 defaults to C# 7.3, which rejects the project's <Nullable>enable</Nullable>. -->
+    <LangVersion>latest</LangVersion>
+    <PackageProjectUrl>https://www.zippendo.com/docs/sdks/overview</PackageProjectUrl>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <!-- The overlay README at the repo root, not the generator's own one under src/Zippendo. -->
+    <None Include="$(MSBuildThisFileDirectory)README.md" Pack="true" PackagePath="\" />
+  </ItemGroup>
+  <ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
+    <!--
+      The generated Microsoft.Extensions.Hosting 6.0.1 pulls System.Text.Json 6.0.0, which has a high
+      severity advisory (GHSA-8g4q-xg66-9fp4). net10.0 uses the framework's own copy.
+    -->
+    <PackageReference Include="System.Text.Json" Version="10.0.13" />
+  </ItemGroup>
+</Project>

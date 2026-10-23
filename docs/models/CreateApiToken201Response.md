@@ -1,0 +1,18 @@
+# Zippendo.Model.CreateApiToken201Response
+
+## Properties
+
+Name | Type | Description | Notes
+------------ | ------------- | ------------- | -------------
+**Id** | **string** | Unique API token identifier | 
+**Name** | **string** | Token name for identification | 
+**TokenPrefix** | **string** | First 12 chars of the token for identification | 
+**Scopes** | **List&lt;string&gt;** | Permission scopes granted by the token | 
+**CreatedAt** | **string** | Creation timestamp (ISO 8601) | 
+**Token** | **string** | Full API token (only shown once) | 
+**BrandId** | **string** | Brand this token is restricted to, or null for organization-wide access | 
+**LastUsedAt** | **string** | Timestamp the token was last used (ISO 8601), null if never used | 
+**ExpiresAt** | **string** | Expiry timestamp (ISO 8601), null if it never expires | 
+
+[[Back to Model list]](../../README.md#documentation-for-models) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to README]](../../README.md)
+
