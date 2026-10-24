@@ -2,7 +2,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zippendo", "src\Zippendo\Zippendo.csproj", "{52B08D70-7036-4EEB-B17C-D6E165DD6365}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zippendo", "src\Zippendo\Zippendo.csproj", "{EAC7F58E-7778-4A26-A629-6CB91B88CD79}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -10,10 +10,10 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{52B08D70-7036-4EEB-B17C-D6E165DD6365}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{52B08D70-7036-4EEB-B17C-D6E165DD6365}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{52B08D70-7036-4EEB-B17C-D6E165DD6365}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{52B08D70-7036-4EEB-B17C-D6E165DD6365}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EAC7F58E-7778-4A26-A629-6CB91B88CD79}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EAC7F58E-7778-4A26-A629-6CB91B88CD79}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EAC7F58E-7778-4A26-A629-6CB91B88CD79}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EAC7F58E-7778-4A26-A629-6CB91B88CD79}.Release|Any CPU.Build.0 = Release|Any CPU
 		{19F1DEBC-DE5E-4517-8062-F000CD499087}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{19F1DEBC-DE5E-4517-8062-F000CD499087}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{19F1DEBC-DE5E-4517-8062-F000CD499087}.Release|Any CPU.ActiveCfg = Release|Any CPU
