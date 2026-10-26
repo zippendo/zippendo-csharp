@@ -41,8 +41,8 @@ namespace Zippendo.Model
         /// <param name="carrierSettings">carrierSettings</param>
         /// <param name="parcels">Parcels to include. Optional when orderId is provided.</param>
         /// <param name="pickupDetails">pickupDetails</param>
-        /// <param name="termOfTrade">Incoterm governing the shipment. (default to &quot;DAP&quot;)</param>
-        /// <param name="status">Lifecycle status of the shipment. (default to StatusEnum.Pending)</param>
+        /// <param name="termOfTrade">Incoterm governing the shipment.</param>
+        /// <param name="status">Lifecycle status of the shipment.</param>
         /// <param name="orderId">Order to derive parties and parcels from.</param>
         /// <param name="labelPrinterId">Printer to assign for labels.</param>
         /// <param name="documentPrinterId">Printer to assign for documents.</param>

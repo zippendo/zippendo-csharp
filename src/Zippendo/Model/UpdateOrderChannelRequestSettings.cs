@@ -33,19 +33,19 @@ namespace Zippendo.Model
         /// <summary>
         /// Initializes a new instance of the <see cref="UpdateOrderChannelRequestSettings" /> class.
         /// </summary>
-        /// <param name="useWebhooks">Use webhooks for real-time order sync. (default to true)</param>
+        /// <param name="useWebhooks">Use webhooks for real-time order sync.</param>
         /// <param name="siteUrl">WooCommerce store URL.</param>
         /// <param name="autoFulfill">Push tracking back to the platform when a shipment is dispatched. Enabled by default (opt-out) — set to false to disable write-back; an unset value still syncs.</param>
-        /// <param name="autoSync">Periodically poll the channel for new orders. (default to false)</param>
-        /// <param name="syncIntervalMinutes">Polling interval in minutes (5-1440). (default to 15)</param>
-        /// <param name="autoShipOnCreate">Create a shipment automatically when an order arrives. (default to false)</param>
+        /// <param name="autoSync">Periodically poll the channel for new orders.</param>
+        /// <param name="syncIntervalMinutes">Polling interval in minutes (5-1440).</param>
+        /// <param name="autoShipOnCreate">Create a shipment automatically when an order arrives.</param>
         /// <param name="defaultCarrierId">Default carrier ID for auto-shipping.</param>
         /// <param name="defaultProductId">Default carrier product ID for auto-shipping.</param>
         /// <param name="defaultAddressId">Default sender address ID for auto-shipping.</param>
         /// <param name="shippingMethodMappings">Map imported shipping-method titles to shipping rules, for channels without checkout rate integration.</param>
-        /// <param name="syncOnlyUnfulfilled">Only import orders that are not yet fulfilled. (default to true)</param>
+        /// <param name="syncOnlyUnfulfilled">Only import orders that are not yet fulfilled.</param>
         /// <param name="syncOrdersSince">Only sync orders placed at or after this timestamp.</param>
-        /// <param name="servicePointCount">Number of service points to show at checkout (1-20). (default to 6)</param>
+        /// <param name="servicePointCount">Number of service points to show at checkout (1-20).</param>
         [JsonConstructor]
         public UpdateOrderChannelRequestSettings(Option<bool?> useWebhooks = default, Option<string?> siteUrl = default, Option<bool?> autoFulfill = default, Option<bool?> autoSync = default, Option<int?> syncIntervalMinutes = default, Option<bool?> autoShipOnCreate = default, Option<string?> defaultCarrierId = default, Option<string?> defaultProductId = default, Option<string?> defaultAddressId = default, Option<List<CreateOrderChannelRequestSettingsShippingMethodMappingsInner>?> shippingMethodMappings = default, Option<bool?> syncOnlyUnfulfilled = default, Option<DateTimeOffset?> syncOrdersSince = default, Option<int?> servicePointCount = default)
         {

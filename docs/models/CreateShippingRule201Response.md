@@ -6,6 +6,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Id** | **string** | Unique shipping rule identifier | 
 **Name** | **string** | Shipping rule name | 
+**Translations** | [**Dictionary&lt;string, ListShippingRules200ResponseDataInnerTranslationsValue&gt;**](ListShippingRules200ResponseDataInnerTranslationsValue.md) | Checkout name and description per language | 
 **CarrierId** | **string** | Carrier ID | 
 **ProductId** | **string** | Product ID from carrier | 
 **Services** | **List&lt;string&gt;** | List of selected services | 

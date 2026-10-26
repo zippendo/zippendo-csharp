@@ -35,6 +35,7 @@ namespace Zippendo.Model
         /// </summary>
         /// <param name="id">Unique shipping rule identifier</param>
         /// <param name="name">Shipping rule name</param>
+        /// <param name="translations">Checkout name and description per language</param>
         /// <param name="carrierId">Carrier ID</param>
         /// <param name="productId">Product ID from carrier</param>
         /// <param name="services">List of selected services</param>
@@ -64,10 +65,11 @@ namespace Zippendo.Model
         /// <param name="autoCreateReturnShipment">Automatically create and send a return shipment on dispatch (default to false)</param>
         /// <param name="brandId">Brand this record belongs to, or null when it is organization-wide</param>
         [JsonConstructor]
-        public CreateShippingRule201Response(string id, string name, string carrierId, string productId, List<string> services, Dictionary<string, ListShippingRules200ResponseDataInnerAdditionalParametersValue> additionalParameters, string addressId, List<string> receivingCountries, List<ListShippingRules200ResponseDataInnerConditionsInner> conditions, string orgId, string createdAt, string updatedAt, string? description = default, DirectionEnum direction = DirectionEnum.Outbound, bool emailNotification = false, bool phoneNotification = false, decimal? minWeight = default, decimal? maxWeight = default, decimal? minOrderValue = default, decimal? maxOrderValue = default, bool generateProformaInvoice = false, bool generateCommercialInvoice = false, bool generatePackingList = false, bool autoPrintLabels = false, bool autoPrintDocuments = false, string? labelPrinterId = default, string? documentPrinterId = default, string? returnShippingRuleId = default, bool autoCreateReturnShipment = false, string? brandId = default)
+        public CreateShippingRule201Response(string id, string name, Dictionary<string, ListShippingRules200ResponseDataInnerTranslationsValue> translations, string carrierId, string productId, List<string> services, Dictionary<string, ListShippingRules200ResponseDataInnerAdditionalParametersValue> additionalParameters, string addressId, List<string> receivingCountries, List<ListShippingRules200ResponseDataInnerConditionsInner> conditions, string orgId, string createdAt, string updatedAt, string? description = default, DirectionEnum direction = DirectionEnum.Outbound, bool emailNotification = false, bool phoneNotification = false, decimal? minWeight = default, decimal? maxWeight = default, decimal? minOrderValue = default, decimal? maxOrderValue = default, bool generateProformaInvoice = false, bool generateCommercialInvoice = false, bool generatePackingList = false, bool autoPrintLabels = false, bool autoPrintDocuments = false, string? labelPrinterId = default, string? documentPrinterId = default, string? returnShippingRuleId = default, bool autoCreateReturnShipment = false, string? brandId = default)
         {
             Id = id;
             Name = name;
+            Translations = translations;
             CarrierId = carrierId;
             ProductId = productId;
             Services = services;
@@ -191,6 +193,14 @@ namespace Zippendo.Model
         /* <example>Standard DK</example> */
         [JsonPropertyName("name")]
         public string Name { get; set; }
+
+        /// <summary>
+        /// Checkout name and description per language
+        /// </summary>
+        /// <value>Checkout name and description per language</value>
+        /* <example>{&quot;da&quot;:{&quot;name&quot;:&quot;Levering til døren&quot;,&quot;description&quot;:&quot;Leveres inden for 1-2 hverdage&quot;},&quot;de&quot;:{&quot;name&quot;:&quot;Lieferung bis zur Haustür&quot;}}</example> */
+        [JsonPropertyName("translations")]
+        public Dictionary<string, ListShippingRules200ResponseDataInnerTranslationsValue> Translations { get; set; }
 
         /// <summary>
         /// Carrier ID
@@ -415,6 +425,7 @@ namespace Zippendo.Model
             sb.Append("class CreateShippingRule201Response {\n");
             sb.Append("  Id: ").Append(Id).Append("\n");
             sb.Append("  Name: ").Append(Name).Append("\n");
+            sb.Append("  Translations: ").Append(Translations).Append("\n");
             sb.Append("  CarrierId: ").Append(CarrierId).Append("\n");
             sb.Append("  ProductId: ").Append(ProductId).Append("\n");
             sb.Append("  Services: ").Append(Services).Append("\n");
@@ -482,6 +493,7 @@ namespace Zippendo.Model
 
             Option<string?> id = default;
             Option<string?> name = default;
+            Option<Dictionary<string, ListShippingRules200ResponseDataInnerTranslationsValue>?> translations = default;
             Option<string?> carrierId = default;
             Option<string?> productId = default;
             Option<List<string>?> services = default;
@@ -531,6 +543,9 @@ namespace Zippendo.Model
                             break;
                         case "name":
                             name = new Option<string?>(utf8JsonReader.GetString()!);
+                            break;
+                        case "translations":
+                            translations = new Option<Dictionary<string, ListShippingRules200ResponseDataInnerTranslationsValue>?>(JsonSerializer.Deserialize<Dictionary<string, ListShippingRules200ResponseDataInnerTranslationsValue>>(ref utf8JsonReader, jsonSerializerOptions)!);
                             break;
                         case "carrierId":
                             carrierId = new Option<string?>(utf8JsonReader.GetString()!);
@@ -630,6 +645,9 @@ namespace Zippendo.Model
             if (!name.IsSet)
                 throw new ArgumentException("Property is required for class CreateShippingRule201Response.", nameof(name));
 
+            if (!translations.IsSet)
+                throw new ArgumentException("Property is required for class CreateShippingRule201Response.", nameof(translations));
+
             if (!carrierId.IsSet)
                 throw new ArgumentException("Property is required for class CreateShippingRule201Response.", nameof(carrierId));
 
@@ -720,6 +738,9 @@ namespace Zippendo.Model
             if (name.IsSet && name.Value == null)
                 throw new ArgumentNullException(nameof(name), "Property is not nullable for class CreateShippingRule201Response.");
 
+            if (translations.IsSet && translations.Value == null)
+                throw new ArgumentNullException(nameof(translations), "Property is not nullable for class CreateShippingRule201Response.");
+
             if (carrierId.IsSet && carrierId.Value == null)
                 throw new ArgumentNullException(nameof(carrierId), "Property is not nullable for class CreateShippingRule201Response.");
 
@@ -777,7 +798,7 @@ namespace Zippendo.Model
             if (autoCreateReturnShipment.IsSet && autoCreateReturnShipment.Value == null)
                 throw new ArgumentNullException(nameof(autoCreateReturnShipment), "Property is not nullable for class CreateShippingRule201Response.");
 
-            return new CreateShippingRule201Response(id.Value!, name.Value!, carrierId.Value!, productId.Value!, services.Value!, additionalParameters.Value!, addressId.Value!, receivingCountries.Value!, conditions.Value!, orgId.Value!, createdAt.Value!, updatedAt.Value!, description.Value!, direction.Value!.Value!, emailNotification.Value!.Value!, phoneNotification.Value!.Value!, minWeight.Value!, maxWeight.Value!, minOrderValue.Value!, maxOrderValue.Value!, generateProformaInvoice.Value!.Value!, generateCommercialInvoice.Value!.Value!, generatePackingList.Value!.Value!, autoPrintLabels.Value!.Value!, autoPrintDocuments.Value!.Value!, labelPrinterId.Value!, documentPrinterId.Value!, returnShippingRuleId.Value!, autoCreateReturnShipment.Value!.Value!, brandId.Value!);
+            return new CreateShippingRule201Response(id.Value!, name.Value!, translations.Value!, carrierId.Value!, productId.Value!, services.Value!, additionalParameters.Value!, addressId.Value!, receivingCountries.Value!, conditions.Value!, orgId.Value!, createdAt.Value!, updatedAt.Value!, description.Value!, direction.Value!.Value!, emailNotification.Value!.Value!, phoneNotification.Value!.Value!, minWeight.Value!, maxWeight.Value!, minOrderValue.Value!, maxOrderValue.Value!, generateProformaInvoice.Value!.Value!, generateCommercialInvoice.Value!.Value!, generatePackingList.Value!.Value!, autoPrintLabels.Value!.Value!, autoPrintDocuments.Value!.Value!, labelPrinterId.Value!, documentPrinterId.Value!, returnShippingRuleId.Value!, autoCreateReturnShipment.Value!.Value!, brandId.Value!);
         }
 
         /// <summary>
@@ -809,6 +830,9 @@ namespace Zippendo.Model
 
             if (createShippingRule201Response.Name == null)
                 throw new ArgumentNullException(nameof(createShippingRule201Response.Name), "Property is required for class CreateShippingRule201Response.");
+
+            if (createShippingRule201Response.Translations == null)
+                throw new ArgumentNullException(nameof(createShippingRule201Response.Translations), "Property is required for class CreateShippingRule201Response.");
 
             if (createShippingRule201Response.CarrierId == null)
                 throw new ArgumentNullException(nameof(createShippingRule201Response.CarrierId), "Property is required for class CreateShippingRule201Response.");
@@ -844,6 +868,8 @@ namespace Zippendo.Model
 
             writer.WriteString("name", createShippingRule201Response.Name);
 
+            writer.WritePropertyName("translations");
+            JsonSerializer.Serialize(writer, createShippingRule201Response.Translations, jsonSerializerOptions);
             writer.WriteString("carrierId", createShippingRule201Response.CarrierId);
 
             writer.WriteString("productId", createShippingRule201Response.ProductId);

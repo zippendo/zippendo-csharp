@@ -107,6 +107,7 @@ namespace Zippendo.Client
             _jsonOptions.Converters.Add(new CreateShippingRuleRequestConditionsInnerOneOf2JsonConverter());
             _jsonOptions.Converters.Add(new CreateShippingRuleRequestConditionsInnerOneOf3JsonConverter());
             _jsonOptions.Converters.Add(new CreateShippingRuleRequestConditionsInnerOneOf4JsonConverter());
+            _jsonOptions.Converters.Add(new CreateShippingRuleRequestTranslationsValueJsonConverter());
             _jsonOptions.Converters.Add(new DeleteOrgWebhook200ResponseJsonConverter());
             _jsonOptions.Converters.Add(new DeleteShippingRule200ResponseJsonConverter());
             _jsonOptions.Converters.Add(new GetBillingUsage200ResponseJsonConverter());
@@ -177,6 +178,7 @@ namespace Zippendo.Client
             _jsonOptions.Converters.Add(new ListShippingRules200ResponseDataInnerConditionsInnerOneOf4JsonConverter());
             _jsonOptions.Converters.Add(new ListShippingRules200ResponseDataInnerLabelPrinterJsonConverter());
             _jsonOptions.Converters.Add(new ListShippingRules200ResponseDataInnerReturnShippingRuleJsonConverter());
+            _jsonOptions.Converters.Add(new ListShippingRules200ResponseDataInnerTranslationsValueJsonConverter());
             _jsonOptions.Converters.Add(new RevokeApiToken200ResponseJsonConverter());
             _jsonOptions.Converters.Add(new RevokeOrderChannelWebhookSecret200ResponseJsonConverter());
             _jsonOptions.Converters.Add(new SendShipment422ResponseJsonConverter());

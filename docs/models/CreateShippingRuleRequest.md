@@ -12,6 +12,7 @@ Name | Type | Description | Notes
 **ReceivingCountries** | **List&lt;string&gt;** | List of supported country codes | 
 **Conditions** | [**List&lt;CreateShippingRuleRequestConditionsInner&gt;**](CreateShippingRuleRequestConditionsInner.md) | Rule conditions (weight/price/quantity) | 
 **Description** | **string** | Optional description | [optional] 
+**Translations** | [**Dictionary&lt;string, CreateShippingRuleRequestTranslationsValue&gt;**](CreateShippingRuleRequestTranslationsValue.md) | Checkout name and description per language; a blank field falls back to the rule&#39;s own text | [optional] 
 **Direction** | **string** | Whether this rule is for outbound or inbound (return) shipments | [optional] [default to DirectionEnum.Outbound]
 **AdditionalParameters** | [**Dictionary&lt;string, CreateShippingRuleRequestAdditionalParametersValue&gt;**](CreateShippingRuleRequestAdditionalParametersValue.md) | Carrier-specific extra parameters, keyed by the carrier parameter &#x60;key&#x60; from the product&#39;s &#x60;additionalParameters[].key&#x60; (e.g. &#x60;returnFunctionality&#x60;). | [optional] 
 **EmailNotification** | **bool** | Send an email notification to the receiver | [optional] [default to false]

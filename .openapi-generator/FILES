@@ -83,6 +83,7 @@ docs/models/CreateShippingRuleRequestConditionsInnerOneOf1.md
 docs/models/CreateShippingRuleRequestConditionsInnerOneOf2.md
 docs/models/CreateShippingRuleRequestConditionsInnerOneOf3.md
 docs/models/CreateShippingRuleRequestConditionsInnerOneOf4.md
+docs/models/CreateShippingRuleRequestTranslationsValue.md
 docs/models/DeleteOrgWebhook200Response.md
 docs/models/DeleteShippingRule200Response.md
 docs/models/GetBillingUsage200Response.md
@@ -153,6 +154,7 @@ docs/models/ListShippingRules200ResponseDataInnerConditionsInnerOneOf3.md
 docs/models/ListShippingRules200ResponseDataInnerConditionsInnerOneOf4.md
 docs/models/ListShippingRules200ResponseDataInnerLabelPrinter.md
 docs/models/ListShippingRules200ResponseDataInnerReturnShippingRule.md
+docs/models/ListShippingRules200ResponseDataInnerTranslationsValue.md
 docs/models/RevokeApiToken200Response.md
 docs/models/RevokeOrderChannelWebhookSecret200Response.md
 docs/models/SendShipment422Response.md
@@ -287,6 +289,7 @@ src/Zippendo/Model/CreateShippingRuleRequestConditionsInnerOneOf1.cs
 src/Zippendo/Model/CreateShippingRuleRequestConditionsInnerOneOf2.cs
 src/Zippendo/Model/CreateShippingRuleRequestConditionsInnerOneOf3.cs
 src/Zippendo/Model/CreateShippingRuleRequestConditionsInnerOneOf4.cs
+src/Zippendo/Model/CreateShippingRuleRequestTranslationsValue.cs
 src/Zippendo/Model/DeleteOrgWebhook200Response.cs
 src/Zippendo/Model/DeleteShippingRule200Response.cs
 src/Zippendo/Model/GetBillingUsage200Response.cs
@@ -357,6 +360,7 @@ src/Zippendo/Model/ListShippingRules200ResponseDataInnerConditionsInnerOneOf3.cs
 src/Zippendo/Model/ListShippingRules200ResponseDataInnerConditionsInnerOneOf4.cs
 src/Zippendo/Model/ListShippingRules200ResponseDataInnerLabelPrinter.cs
 src/Zippendo/Model/ListShippingRules200ResponseDataInnerReturnShippingRule.cs
+src/Zippendo/Model/ListShippingRules200ResponseDataInnerTranslationsValue.cs
 src/Zippendo/Model/RevokeApiToken200Response.cs
 src/Zippendo/Model/RevokeOrderChannelWebhookSecret200Response.cs
 src/Zippendo/Model/SendShipment422Response.cs

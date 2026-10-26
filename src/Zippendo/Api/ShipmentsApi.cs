@@ -393,7 +393,7 @@ namespace Zippendo.Api
         /// Update shipment
         /// </summary>
         /// <remarks>
-        /// Update an existing shipment. Only draft, pending or error shipments can be updated; an applied shipping rule overrides carrier settings and sender party.
+        /// Update a draft, pending or error shipment; fields left out keep their stored values. A draft becomes pending when the update sets its carrier settings or service point and it has a carrier, or applies a shipping rule, which overrides carrier settings and sender party.
         /// </remarks>
         /// <exception cref="ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId">Organization identifier.</param>
@@ -407,7 +407,7 @@ namespace Zippendo.Api
         /// Update shipment
         /// </summary>
         /// <remarks>
-        /// Update an existing shipment. Only draft, pending or error shipments can be updated; an applied shipping rule overrides carrier settings and sender party.
+        /// Update a draft, pending or error shipment; fields left out keep their stored values. A draft becomes pending when the update sets its carrier settings or service point and it has a carrier, or applies a shipping rule, which overrides carrier settings and sender party.
         /// </remarks>
         /// <param name="orgId">Organization identifier.</param>
         /// <param name="shipmentId">Shipment identifier.</param>
@@ -6134,7 +6134,7 @@ namespace Zippendo.Api
         partial void OnErrorUpdateShipment(ref bool suppressDefaultLogLocalVar, Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, string orgId, string shipmentId, UpdateShipmentRequest updateShipmentRequest);
 
         /// <summary>
-        /// Update shipment Update an existing shipment. Only draft, pending or error shipments can be updated; an applied shipping rule overrides carrier settings and sender party.
+        /// Update shipment Update a draft, pending or error shipment; fields left out keep their stored values. A draft becomes pending when the update sets its carrier settings or service point and it has a carrier, or applies a shipping rule, which overrides carrier settings and sender party.
         /// </summary>
         /// <param name="orgId">Organization identifier.</param>
         /// <param name="shipmentId">Shipment identifier.</param>
@@ -6154,7 +6154,7 @@ namespace Zippendo.Api
         }
 
         /// <summary>
-        /// Update shipment Update an existing shipment. Only draft, pending or error shipments can be updated; an applied shipping rule overrides carrier settings and sender party.
+        /// Update shipment Update a draft, pending or error shipment; fields left out keep their stored values. A draft becomes pending when the update sets its carrier settings or service point and it has a carrier, or applies a shipping rule, which overrides carrier settings and sender party.
         /// </summary>
         /// <exception cref="ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId">Organization identifier.</param>

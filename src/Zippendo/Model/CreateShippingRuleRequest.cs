@@ -41,6 +41,7 @@ namespace Zippendo.Model
         /// <param name="receivingCountries">List of supported country codes</param>
         /// <param name="conditions">Rule conditions (weight/price/quantity)</param>
         /// <param name="description">Optional description</param>
+        /// <param name="translations">Checkout name and description per language; a blank field falls back to the rule&#39;s own text</param>
         /// <param name="direction">Whether this rule is for outbound or inbound (return) shipments (default to DirectionEnum.Outbound)</param>
         /// <param name="additionalParameters">Carrier-specific extra parameters, keyed by the carrier parameter &#x60;key&#x60; from the product&#39;s &#x60;additionalParameters[].key&#x60; (e.g. &#x60;returnFunctionality&#x60;).</param>
         /// <param name="emailNotification">Send an email notification to the receiver (default to false)</param>
@@ -60,7 +61,7 @@ namespace Zippendo.Model
         /// <param name="autoCreateReturnShipment">Automatically create and send a return shipment on dispatch (default to false)</param>
         /// <param name="brandId">Brand this record is assigned to; null (or omitted outside a brand session) keeps it organization-wide</param>
         [JsonConstructor]
-        public CreateShippingRuleRequest(string name, string carrierId, string productId, List<string> services, string addressId, List<string> receivingCountries, List<CreateShippingRuleRequestConditionsInner> conditions, Option<string?> description = default, Option<DirectionEnum?> direction = default, Option<Dictionary<string, CreateShippingRuleRequestAdditionalParametersValue>?> additionalParameters = default, Option<bool?> emailNotification = default, Option<bool?> phoneNotification = default, Option<decimal?> minWeight = default, Option<decimal?> maxWeight = default, Option<decimal?> minOrderValue = default, Option<decimal?> maxOrderValue = default, Option<bool?> generateProformaInvoice = default, Option<bool?> generateCommercialInvoice = default, Option<bool?> generatePackingList = default, Option<bool?> autoPrintLabels = default, Option<bool?> autoPrintDocuments = default, Option<string?> labelPrinterId = default, Option<string?> documentPrinterId = default, Option<string?> returnShippingRuleId = default, Option<bool?> autoCreateReturnShipment = default, Option<string?> brandId = default)
+        public CreateShippingRuleRequest(string name, string carrierId, string productId, List<string> services, string addressId, List<string> receivingCountries, List<CreateShippingRuleRequestConditionsInner> conditions, Option<string?> description = default, Option<Dictionary<string, CreateShippingRuleRequestTranslationsValue>?> translations = default, Option<DirectionEnum?> direction = default, Option<Dictionary<string, CreateShippingRuleRequestAdditionalParametersValue>?> additionalParameters = default, Option<bool?> emailNotification = default, Option<bool?> phoneNotification = default, Option<decimal?> minWeight = default, Option<decimal?> maxWeight = default, Option<decimal?> minOrderValue = default, Option<decimal?> maxOrderValue = default, Option<bool?> generateProformaInvoice = default, Option<bool?> generateCommercialInvoice = default, Option<bool?> generatePackingList = default, Option<bool?> autoPrintLabels = default, Option<bool?> autoPrintDocuments = default, Option<string?> labelPrinterId = default, Option<string?> documentPrinterId = default, Option<string?> returnShippingRuleId = default, Option<bool?> autoCreateReturnShipment = default, Option<string?> brandId = default)
         {
             Name = name;
             CarrierId = carrierId;
@@ -70,6 +71,7 @@ namespace Zippendo.Model
             ReceivingCountries = receivingCountries;
             Conditions = conditions;
             DescriptionOption = description;
+            TranslationsOption = translations;
             DirectionOption = direction;
             AdditionalParametersOption = additionalParameters;
             EmailNotificationOption = emailNotification;
@@ -245,6 +247,21 @@ namespace Zippendo.Model
         /* <example>Standard levering i Danmark</example> */
         [JsonPropertyName("description")]
         public string? Description { get { return this.DescriptionOption.Value; } set { this.DescriptionOption = new Option<string?>(value); } }
+
+        /// <summary>
+        /// Used to track the state of Translations
+        /// </summary>
+        [JsonIgnore]
+        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public Option<Dictionary<string, CreateShippingRuleRequestTranslationsValue>?> TranslationsOption { get; private set; }
+
+        /// <summary>
+        /// Checkout name and description per language; a blank field falls back to the rule&#39;s own text
+        /// </summary>
+        /// <value>Checkout name and description per language; a blank field falls back to the rule&#39;s own text</value>
+        /* <example>{&quot;da&quot;:{&quot;name&quot;:&quot;Levering til døren&quot;,&quot;description&quot;:&quot;Leveres inden for 1-2 hverdage&quot;},&quot;de&quot;:{&quot;name&quot;:&quot;Lieferung bis zur Haustür&quot;}}</example> */
+        [JsonPropertyName("translations")]
+        public Dictionary<string, CreateShippingRuleRequestTranslationsValue>? Translations { get { return this.TranslationsOption.Value; } set { this.TranslationsOption = new Option<Dictionary<string, CreateShippingRuleRequestTranslationsValue>?>(value); } }
 
         /// <summary>
         /// Used to track the state of AdditionalParameters
@@ -514,6 +531,7 @@ namespace Zippendo.Model
             sb.Append("  ReceivingCountries: ").Append(ReceivingCountries).Append("\n");
             sb.Append("  Conditions: ").Append(Conditions).Append("\n");
             sb.Append("  Description: ").Append(Description).Append("\n");
+            sb.Append("  Translations: ").Append(Translations).Append("\n");
             sb.Append("  Direction: ").Append(Direction).Append("\n");
             sb.Append("  AdditionalParameters: ").Append(AdditionalParameters).Append("\n");
             sb.Append("  EmailNotification: ").Append(EmailNotification).Append("\n");
@@ -577,6 +595,7 @@ namespace Zippendo.Model
             Option<List<string>?> receivingCountries = default;
             Option<List<CreateShippingRuleRequestConditionsInner>?> conditions = default;
             Option<string?> description = default;
+            Option<Dictionary<string, CreateShippingRuleRequestTranslationsValue>?> translations = default;
             Option<CreateShippingRuleRequest.DirectionEnum?> direction = default;
             Option<Dictionary<string, CreateShippingRuleRequestAdditionalParametersValue>?> additionalParameters = default;
             Option<bool?> emailNotification = default;
@@ -634,6 +653,9 @@ namespace Zippendo.Model
                             break;
                         case "description":
                             description = new Option<string?>(utf8JsonReader.GetString()!);
+                            break;
+                        case "translations":
+                            translations = new Option<Dictionary<string, CreateShippingRuleRequestTranslationsValue>?>(JsonSerializer.Deserialize<Dictionary<string, CreateShippingRuleRequestTranslationsValue>>(ref utf8JsonReader, jsonSerializerOptions)!);
                             break;
                         case "direction":
                             string? directionRawValue = utf8JsonReader.GetString();
@@ -742,6 +764,9 @@ namespace Zippendo.Model
             if (description.IsSet && description.Value == null)
                 throw new ArgumentNullException(nameof(description), "Property is not nullable for class CreateShippingRuleRequest.");
 
+            if (translations.IsSet && translations.Value == null)
+                throw new ArgumentNullException(nameof(translations), "Property is not nullable for class CreateShippingRuleRequest.");
+
             if (direction.IsSet && direction.Value == null)
                 throw new ArgumentNullException(nameof(direction), "Property is not nullable for class CreateShippingRuleRequest.");
 
@@ -772,7 +797,7 @@ namespace Zippendo.Model
             if (autoCreateReturnShipment.IsSet && autoCreateReturnShipment.Value == null)
                 throw new ArgumentNullException(nameof(autoCreateReturnShipment), "Property is not nullable for class CreateShippingRuleRequest.");
 
-            return new CreateShippingRuleRequest(name.Value!, carrierId.Value!, productId.Value!, services.Value!, addressId.Value!, receivingCountries.Value!, conditions.Value!, description, direction, additionalParameters, emailNotification, phoneNotification, minWeight, maxWeight, minOrderValue, maxOrderValue, generateProformaInvoice, generateCommercialInvoice, generatePackingList, autoPrintLabels, autoPrintDocuments, labelPrinterId, documentPrinterId, returnShippingRuleId, autoCreateReturnShipment, brandId);
+            return new CreateShippingRuleRequest(name.Value!, carrierId.Value!, productId.Value!, services.Value!, addressId.Value!, receivingCountries.Value!, conditions.Value!, description, translations, direction, additionalParameters, emailNotification, phoneNotification, minWeight, maxWeight, minOrderValue, maxOrderValue, generateProformaInvoice, generateCommercialInvoice, generatePackingList, autoPrintLabels, autoPrintDocuments, labelPrinterId, documentPrinterId, returnShippingRuleId, autoCreateReturnShipment, brandId);
         }
 
         /// <summary>
@@ -823,6 +848,9 @@ namespace Zippendo.Model
             if (createShippingRuleRequest.DescriptionOption.IsSet && createShippingRuleRequest.Description == null)
                 throw new ArgumentNullException(nameof(createShippingRuleRequest.Description), "Property is required for class CreateShippingRuleRequest.");
 
+            if (createShippingRuleRequest.TranslationsOption.IsSet && createShippingRuleRequest.Translations == null)
+                throw new ArgumentNullException(nameof(createShippingRuleRequest.Translations), "Property is required for class CreateShippingRuleRequest.");
+
             if (createShippingRuleRequest.AdditionalParametersOption.IsSet && createShippingRuleRequest.AdditionalParameters == null)
                 throw new ArgumentNullException(nameof(createShippingRuleRequest.AdditionalParameters), "Property is required for class CreateShippingRuleRequest.");
 
@@ -843,6 +871,11 @@ namespace Zippendo.Model
             if (createShippingRuleRequest.DescriptionOption.IsSet)
                 writer.WriteString("description", createShippingRuleRequest.Description);
 
+            if (createShippingRuleRequest.TranslationsOption.IsSet)
+            {
+                writer.WritePropertyName("translations");
+                JsonSerializer.Serialize(writer, createShippingRuleRequest.Translations, jsonSerializerOptions);
+            }
             var directionRawValue = CreateShippingRuleRequest.DirectionEnumToJsonValue(createShippingRuleRequest.DirectionOption.Value!.Value);
             writer.WriteString("direction", directionRawValue);
             if (createShippingRuleRequest.AdditionalParametersOption.IsSet)

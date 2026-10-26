@@ -35,35 +35,37 @@ namespace Zippendo.Model
         /// </summary>
         /// <param name="name">Shipping rule name</param>
         /// <param name="description">Optional description</param>
-        /// <param name="direction">Whether this rule is for outbound or inbound (return) shipments (default to DirectionEnum.Outbound)</param>
+        /// <param name="translations">Checkout name and description per language; a blank field falls back to the rule&#39;s own text</param>
+        /// <param name="direction">Whether this rule is for outbound or inbound (return) shipments</param>
         /// <param name="carrierId">Carrier ID</param>
         /// <param name="productId">Product ID from carrier</param>
         /// <param name="services">List of selected services</param>
         /// <param name="additionalParameters">Carrier-specific extra parameters, keyed by the carrier parameter &#x60;key&#x60; from the product&#39;s &#x60;additionalParameters[].key&#x60;. Omit to leave the rule&#39;s parameters unchanged.</param>
         /// <param name="addressId">Sender address ID</param>
         /// <param name="receivingCountries">List of supported country codes</param>
-        /// <param name="emailNotification">Send an email notification to the receiver (default to false)</param>
-        /// <param name="phoneNotification">Send an SMS notification to the receiver (default to false)</param>
+        /// <param name="emailNotification">Send an email notification to the receiver</param>
+        /// <param name="phoneNotification">Send an SMS notification to the receiver</param>
         /// <param name="minWeight">Minimum required weight in kg</param>
         /// <param name="maxWeight">Maximum allowed weight in kg</param>
         /// <param name="minOrderValue">Minimum required order value in currency units</param>
         /// <param name="maxOrderValue">Maximum allowed order value in currency units</param>
         /// <param name="conditions">Rule conditions (weight/price/quantity)</param>
-        /// <param name="generateProformaInvoice">Generate proforma invoice for shipments (default to false)</param>
-        /// <param name="generateCommercialInvoice">Generate commercial invoice for international shipments (default to false)</param>
-        /// <param name="generatePackingList">Generate a packing slip with parcel and item details (default to false)</param>
-        /// <param name="autoPrintLabels">Automatically print labels when shipment is sent (default to false)</param>
-        /// <param name="autoPrintDocuments">Automatically print documents when shipment is sent (default to false)</param>
+        /// <param name="generateProformaInvoice">Generate proforma invoice for shipments</param>
+        /// <param name="generateCommercialInvoice">Generate commercial invoice for international shipments</param>
+        /// <param name="generatePackingList">Generate a packing slip with parcel and item details</param>
+        /// <param name="autoPrintLabels">Automatically print labels when shipment is sent</param>
+        /// <param name="autoPrintDocuments">Automatically print documents when shipment is sent</param>
         /// <param name="labelPrinterId">ID of the label printer</param>
         /// <param name="documentPrinterId">ID of the document printer</param>
         /// <param name="returnShippingRuleId">ID of the return shipping rule</param>
-        /// <param name="autoCreateReturnShipment">Automatically create and send a return shipment on dispatch (default to false)</param>
+        /// <param name="autoCreateReturnShipment">Automatically create and send a return shipment on dispatch</param>
         /// <param name="brandId">Brand this record is assigned to; null (or omitted outside a brand session) keeps it organization-wide</param>
         [JsonConstructor]
-        public UpdateShippingRuleRequest(Option<string?> name = default, Option<string?> description = default, Option<DirectionEnum?> direction = default, Option<string?> carrierId = default, Option<string?> productId = default, Option<List<string>?> services = default, Option<Dictionary<string, CreateShippingRuleRequestAdditionalParametersValue>?> additionalParameters = default, Option<string?> addressId = default, Option<List<string>?> receivingCountries = default, Option<bool?> emailNotification = default, Option<bool?> phoneNotification = default, Option<decimal?> minWeight = default, Option<decimal?> maxWeight = default, Option<decimal?> minOrderValue = default, Option<decimal?> maxOrderValue = default, Option<List<CreateShippingRuleRequestConditionsInner>?> conditions = default, Option<bool?> generateProformaInvoice = default, Option<bool?> generateCommercialInvoice = default, Option<bool?> generatePackingList = default, Option<bool?> autoPrintLabels = default, Option<bool?> autoPrintDocuments = default, Option<string?> labelPrinterId = default, Option<string?> documentPrinterId = default, Option<string?> returnShippingRuleId = default, Option<bool?> autoCreateReturnShipment = default, Option<string?> brandId = default)
+        public UpdateShippingRuleRequest(Option<string?> name = default, Option<string?> description = default, Option<Dictionary<string, CreateShippingRuleRequestTranslationsValue>?> translations = default, Option<DirectionEnum?> direction = default, Option<string?> carrierId = default, Option<string?> productId = default, Option<List<string>?> services = default, Option<Dictionary<string, CreateShippingRuleRequestAdditionalParametersValue>?> additionalParameters = default, Option<string?> addressId = default, Option<List<string>?> receivingCountries = default, Option<bool?> emailNotification = default, Option<bool?> phoneNotification = default, Option<decimal?> minWeight = default, Option<decimal?> maxWeight = default, Option<decimal?> minOrderValue = default, Option<decimal?> maxOrderValue = default, Option<List<CreateShippingRuleRequestConditionsInner>?> conditions = default, Option<bool?> generateProformaInvoice = default, Option<bool?> generateCommercialInvoice = default, Option<bool?> generatePackingList = default, Option<bool?> autoPrintLabels = default, Option<bool?> autoPrintDocuments = default, Option<string?> labelPrinterId = default, Option<string?> documentPrinterId = default, Option<string?> returnShippingRuleId = default, Option<bool?> autoCreateReturnShipment = default, Option<string?> brandId = default)
         {
             NameOption = name;
             DescriptionOption = description;
+            TranslationsOption = translations;
             DirectionOption = direction;
             CarrierIdOption = carrierId;
             ProductIdOption = productId;
@@ -204,6 +206,21 @@ namespace Zippendo.Model
         /* <example>Standard levering i Danmark</example> */
         [JsonPropertyName("description")]
         public string? Description { get { return this.DescriptionOption.Value; } set { this.DescriptionOption = new Option<string?>(value); } }
+
+        /// <summary>
+        /// Used to track the state of Translations
+        /// </summary>
+        [JsonIgnore]
+        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public Option<Dictionary<string, CreateShippingRuleRequestTranslationsValue>?> TranslationsOption { get; private set; }
+
+        /// <summary>
+        /// Checkout name and description per language; a blank field falls back to the rule&#39;s own text
+        /// </summary>
+        /// <value>Checkout name and description per language; a blank field falls back to the rule&#39;s own text</value>
+        /* <example>{&quot;da&quot;:{&quot;name&quot;:&quot;Levering til døren&quot;,&quot;description&quot;:&quot;Leveres inden for 1-2 hverdage&quot;},&quot;de&quot;:{&quot;name&quot;:&quot;Lieferung bis zur Haustür&quot;}}</example> */
+        [JsonPropertyName("translations")]
+        public Dictionary<string, CreateShippingRuleRequestTranslationsValue>? Translations { get { return this.TranslationsOption.Value; } set { this.TranslationsOption = new Option<Dictionary<string, CreateShippingRuleRequestTranslationsValue>?>(value); } }
 
         /// <summary>
         /// Used to track the state of CarrierId
@@ -557,6 +574,7 @@ namespace Zippendo.Model
             sb.Append("class UpdateShippingRuleRequest {\n");
             sb.Append("  Name: ").Append(Name).Append("\n");
             sb.Append("  Description: ").Append(Description).Append("\n");
+            sb.Append("  Translations: ").Append(Translations).Append("\n");
             sb.Append("  Direction: ").Append(Direction).Append("\n");
             sb.Append("  CarrierId: ").Append(CarrierId).Append("\n");
             sb.Append("  ProductId: ").Append(ProductId).Append("\n");
@@ -620,6 +638,7 @@ namespace Zippendo.Model
 
             Option<string?> name = default;
             Option<string?> description = default;
+            Option<Dictionary<string, CreateShippingRuleRequestTranslationsValue>?> translations = default;
             Option<UpdateShippingRuleRequest.DirectionEnum?> direction = default;
             Option<string?> carrierId = default;
             Option<string?> productId = default;
@@ -665,6 +684,9 @@ namespace Zippendo.Model
                             break;
                         case "description":
                             description = new Option<string?>(utf8JsonReader.GetString()!);
+                            break;
+                        case "translations":
+                            translations = new Option<Dictionary<string, CreateShippingRuleRequestTranslationsValue>?>(JsonSerializer.Deserialize<Dictionary<string, CreateShippingRuleRequestTranslationsValue>>(ref utf8JsonReader, jsonSerializerOptions)!);
                             break;
                         case "direction":
                             string? directionRawValue = utf8JsonReader.GetString();
@@ -752,6 +774,9 @@ namespace Zippendo.Model
             if (description.IsSet && description.Value == null)
                 throw new ArgumentNullException(nameof(description), "Property is not nullable for class UpdateShippingRuleRequest.");
 
+            if (translations.IsSet && translations.Value == null)
+                throw new ArgumentNullException(nameof(translations), "Property is not nullable for class UpdateShippingRuleRequest.");
+
             if (direction.IsSet && direction.Value == null)
                 throw new ArgumentNullException(nameof(direction), "Property is not nullable for class UpdateShippingRuleRequest.");
 
@@ -800,7 +825,7 @@ namespace Zippendo.Model
             if (autoCreateReturnShipment.IsSet && autoCreateReturnShipment.Value == null)
                 throw new ArgumentNullException(nameof(autoCreateReturnShipment), "Property is not nullable for class UpdateShippingRuleRequest.");
 
-            return new UpdateShippingRuleRequest(name, description, direction, carrierId, productId, services, additionalParameters, addressId, receivingCountries, emailNotification, phoneNotification, minWeight, maxWeight, minOrderValue, maxOrderValue, conditions, generateProformaInvoice, generateCommercialInvoice, generatePackingList, autoPrintLabels, autoPrintDocuments, labelPrinterId, documentPrinterId, returnShippingRuleId, autoCreateReturnShipment, brandId);
+            return new UpdateShippingRuleRequest(name, description, translations, direction, carrierId, productId, services, additionalParameters, addressId, receivingCountries, emailNotification, phoneNotification, minWeight, maxWeight, minOrderValue, maxOrderValue, conditions, generateProformaInvoice, generateCommercialInvoice, generatePackingList, autoPrintLabels, autoPrintDocuments, labelPrinterId, documentPrinterId, returnShippingRuleId, autoCreateReturnShipment, brandId);
         }
 
         /// <summary>
@@ -833,6 +858,9 @@ namespace Zippendo.Model
             if (updateShippingRuleRequest.DescriptionOption.IsSet && updateShippingRuleRequest.Description == null)
                 throw new ArgumentNullException(nameof(updateShippingRuleRequest.Description), "Property is required for class UpdateShippingRuleRequest.");
 
+            if (updateShippingRuleRequest.TranslationsOption.IsSet && updateShippingRuleRequest.Translations == null)
+                throw new ArgumentNullException(nameof(updateShippingRuleRequest.Translations), "Property is required for class UpdateShippingRuleRequest.");
+
             if (updateShippingRuleRequest.CarrierIdOption.IsSet && updateShippingRuleRequest.CarrierId == null)
                 throw new ArgumentNullException(nameof(updateShippingRuleRequest.CarrierId), "Property is required for class UpdateShippingRuleRequest.");
 
@@ -860,6 +888,11 @@ namespace Zippendo.Model
             if (updateShippingRuleRequest.DescriptionOption.IsSet)
                 writer.WriteString("description", updateShippingRuleRequest.Description);
 
+            if (updateShippingRuleRequest.TranslationsOption.IsSet)
+            {
+                writer.WritePropertyName("translations");
+                JsonSerializer.Serialize(writer, updateShippingRuleRequest.Translations, jsonSerializerOptions);
+            }
             var directionRawValue = UpdateShippingRuleRequest.DirectionEnumToJsonValue(updateShippingRuleRequest.DirectionOption.Value!.Value);
             writer.WriteString("direction", directionRawValue);
             if (updateShippingRuleRequest.CarrierIdOption.IsSet)
