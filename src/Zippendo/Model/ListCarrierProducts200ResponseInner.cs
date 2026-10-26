@@ -142,7 +142,7 @@ namespace Zippendo.Model
         /// Display name of the carrier product
         /// </summary>
         /// <value>Display name of the carrier product</value>
-        /* <example>PostNord MyPack Home</example> */
+        /* <example>PostNord Home</example> */
         [JsonPropertyName("name")]
         public string Name { get; set; }
 
