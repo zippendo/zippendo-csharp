@@ -7,6 +7,7 @@ Name | Type | Description | Notes
 **Id** | **string** | Unique organization identifier | 
 **Name** | **string** | Organization name | 
 **Slug** | **string** | Organization URL slug (unique identifier) | 
+**PackingSlipScanCode** | **string** | Code printed on packing slips that a scan turns into a print: &#x60;QR&#x60;, &#x60;BARCODE&#x60;, or &#x60;NONE&#x60; for no code. | 
 **CreatedAt** | **string** | Creation timestamp (ISO 8601) | 
 **UpdatedAt** | **string** | Last update timestamp (ISO 8601) | 
 **Description** | **string** | Organization description | 

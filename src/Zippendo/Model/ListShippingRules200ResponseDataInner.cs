@@ -43,6 +43,7 @@ namespace Zippendo.Model
         /// <param name="addressId">Sender address ID</param>
         /// <param name="receivingCountries">List of supported country codes</param>
         /// <param name="conditions">Rule conditions (weight/price/quantity)</param>
+        /// <param name="autoPrintTrigger">When automatic printing starts: &#x60;ON_BOOKING&#x60; prints as soon as the shipment is sent, &#x60;ON_SCAN&#x60; waits until the packing slip is scanned.</param>
         /// <param name="orgId">Owning organization ID</param>
         /// <param name="createdAt">Creation timestamp (ISO 8601)</param>
         /// <param name="updatedAt">Last update timestamp (ISO 8601)</param>
@@ -70,7 +71,7 @@ namespace Zippendo.Model
         /// <param name="documentPrinter">documentPrinter</param>
         /// <param name="returnShippingRule">returnShippingRule</param>
         [JsonConstructor]
-        public ListShippingRules200ResponseDataInner(string id, string name, Dictionary<string, ListShippingRules200ResponseDataInnerTranslationsValue> translations, string carrierId, string productId, List<string> services, Dictionary<string, ListShippingRules200ResponseDataInnerAdditionalParametersValue> additionalParameters, string addressId, List<string> receivingCountries, List<ListShippingRules200ResponseDataInnerConditionsInner> conditions, string orgId, string createdAt, string updatedAt, ListShippingRules200ResponseDataInnerCarrier carrier, ListAddresses200ResponseDataInner address, string? description = default, DirectionEnum direction = DirectionEnum.Outbound, bool emailNotification = false, bool phoneNotification = false, decimal? minWeight = default, decimal? maxWeight = default, decimal? minOrderValue = default, decimal? maxOrderValue = default, bool generateProformaInvoice = false, bool generateCommercialInvoice = false, bool generatePackingList = false, bool autoPrintLabels = false, bool autoPrintDocuments = false, string? labelPrinterId = default, string? documentPrinterId = default, string? returnShippingRuleId = default, bool autoCreateReturnShipment = false, string? brandId = default, Option<ListShippingRules200ResponseDataInnerLabelPrinter?> labelPrinter = default, Option<ListShippingRules200ResponseDataInnerLabelPrinter?> documentPrinter = default, Option<ListShippingRules200ResponseDataInnerReturnShippingRule?> returnShippingRule = default)
+        public ListShippingRules200ResponseDataInner(string id, string name, Dictionary<string, ListShippingRules200ResponseDataInnerTranslationsValue> translations, string carrierId, string productId, List<string> services, Dictionary<string, ListShippingRules200ResponseDataInnerAdditionalParametersValue> additionalParameters, string addressId, List<string> receivingCountries, List<ListShippingRules200ResponseDataInnerConditionsInner> conditions, AutoPrintTriggerEnum autoPrintTrigger, string orgId, string createdAt, string updatedAt, ListShippingRules200ResponseDataInnerCarrier carrier, ListAddresses200ResponseDataInner address, string? description = default, DirectionEnum direction = DirectionEnum.Outbound, bool emailNotification = false, bool phoneNotification = false, decimal? minWeight = default, decimal? maxWeight = default, decimal? minOrderValue = default, decimal? maxOrderValue = default, bool generateProformaInvoice = false, bool generateCommercialInvoice = false, bool generatePackingList = false, bool autoPrintLabels = false, bool autoPrintDocuments = false, string? labelPrinterId = default, string? documentPrinterId = default, string? returnShippingRuleId = default, bool autoCreateReturnShipment = false, string? brandId = default, Option<ListShippingRules200ResponseDataInnerLabelPrinter?> labelPrinter = default, Option<ListShippingRules200ResponseDataInnerLabelPrinter?> documentPrinter = default, Option<ListShippingRules200ResponseDataInnerReturnShippingRule?> returnShippingRule = default)
         {
             Id = id;
             Name = name;
@@ -82,6 +83,7 @@ namespace Zippendo.Model
             AddressId = addressId;
             ReceivingCountries = receivingCountries;
             Conditions = conditions;
+            AutoPrintTrigger = autoPrintTrigger;
             OrgId = orgId;
             CreatedAt = createdAt;
             UpdatedAt = updatedAt;
@@ -112,6 +114,81 @@ namespace Zippendo.Model
         }
 
         partial void OnCreated();
+
+        /// <summary>
+        /// When automatic printing starts: &#x60;ON_BOOKING&#x60; prints as soon as the shipment is sent, &#x60;ON_SCAN&#x60; waits until the packing slip is scanned.
+        /// </summary>
+        /// <value>When automatic printing starts: &#x60;ON_BOOKING&#x60; prints as soon as the shipment is sent, &#x60;ON_SCAN&#x60; waits until the packing slip is scanned.</value>
+        public enum AutoPrintTriggerEnum
+        {
+            /// <summary>
+            /// Enum ONBOOKING for value: ON_BOOKING
+            /// </summary>
+            ONBOOKING = 1,
+
+            /// <summary>
+            /// Enum ONSCAN for value: ON_SCAN
+            /// </summary>
+            ONSCAN = 2
+        }
+
+        /// <summary>
+        /// Returns a <see cref="AutoPrintTriggerEnum"/>
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
+        public static AutoPrintTriggerEnum AutoPrintTriggerEnumFromString(string value)
+        {
+            if (value.Equals("ON_BOOKING"))
+                return AutoPrintTriggerEnum.ONBOOKING;
+
+            if (value.Equals("ON_SCAN"))
+                return AutoPrintTriggerEnum.ONSCAN;
+
+            throw new NotImplementedException($"Could not convert value to type AutoPrintTriggerEnum: '{value}'");
+        }
+
+        /// <summary>
+        /// Returns a <see cref="AutoPrintTriggerEnum"/>
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public static AutoPrintTriggerEnum? AutoPrintTriggerEnumFromStringOrDefault(string value)
+        {
+            if (value.Equals("ON_BOOKING"))
+                return AutoPrintTriggerEnum.ONBOOKING;
+
+            if (value.Equals("ON_SCAN"))
+                return AutoPrintTriggerEnum.ONSCAN;
+
+            return null;
+        }
+
+        /// <summary>
+        /// Converts the <see cref="AutoPrintTriggerEnum"/> to the json value
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
+        public static string AutoPrintTriggerEnumToJsonValue(AutoPrintTriggerEnum value)
+        {
+            if (value == AutoPrintTriggerEnum.ONBOOKING)
+                return "ON_BOOKING";
+
+            if (value == AutoPrintTriggerEnum.ONSCAN)
+                return "ON_SCAN";
+
+            throw new NotImplementedException($"Value could not be handled: '{value}'");
+        }
+
+        /// <summary>
+        /// When automatic printing starts: &#x60;ON_BOOKING&#x60; prints as soon as the shipment is sent, &#x60;ON_SCAN&#x60; waits until the packing slip is scanned.
+        /// </summary>
+        /// <value>When automatic printing starts: &#x60;ON_BOOKING&#x60; prints as soon as the shipment is sent, &#x60;ON_SCAN&#x60; waits until the packing slip is scanned.</value>
+        /* <example>ON_BOOKING</example> */
+        [JsonPropertyName("autoPrintTrigger")]
+        public AutoPrintTriggerEnum AutoPrintTrigger { get; set; }
 
         /// <summary>
         /// Whether this rule is for outbound or inbound (return) shipments
@@ -494,6 +571,7 @@ namespace Zippendo.Model
             sb.Append("  AddressId: ").Append(AddressId).Append("\n");
             sb.Append("  ReceivingCountries: ").Append(ReceivingCountries).Append("\n");
             sb.Append("  Conditions: ").Append(Conditions).Append("\n");
+            sb.Append("  AutoPrintTrigger: ").Append(AutoPrintTrigger).Append("\n");
             sb.Append("  OrgId: ").Append(OrgId).Append("\n");
             sb.Append("  CreatedAt: ").Append(CreatedAt).Append("\n");
             sb.Append("  UpdatedAt: ").Append(UpdatedAt).Append("\n");
@@ -567,6 +645,7 @@ namespace Zippendo.Model
             Option<string?> addressId = default;
             Option<List<string>?> receivingCountries = default;
             Option<List<ListShippingRules200ResponseDataInnerConditionsInner>?> conditions = default;
+            Option<ListShippingRules200ResponseDataInner.AutoPrintTriggerEnum?> autoPrintTrigger = default;
             Option<string?> orgId = default;
             Option<string?> createdAt = default;
             Option<string?> updatedAt = default;
@@ -638,6 +717,11 @@ namespace Zippendo.Model
                             break;
                         case "conditions":
                             conditions = new Option<List<ListShippingRules200ResponseDataInnerConditionsInner>?>(JsonSerializer.Deserialize<List<ListShippingRules200ResponseDataInnerConditionsInner>>(ref utf8JsonReader, jsonSerializerOptions)!);
+                            break;
+                        case "autoPrintTrigger":
+                            string? autoPrintTriggerRawValue = utf8JsonReader.GetString();
+                            if (autoPrintTriggerRawValue != null)
+                                autoPrintTrigger = new Option<ListShippingRules200ResponseDataInner.AutoPrintTriggerEnum?>(ListShippingRules200ResponseDataInner.AutoPrintTriggerEnumFromStringOrDefault(autoPrintTriggerRawValue));
                             break;
                         case "orgId":
                             orgId = new Option<string?>(utf8JsonReader.GetString()!);
@@ -755,6 +839,9 @@ namespace Zippendo.Model
             if (!conditions.IsSet)
                 throw new ArgumentException("Property is required for class ListShippingRules200ResponseDataInner.", nameof(conditions));
 
+            if (!autoPrintTrigger.IsSet)
+                throw new ArgumentException("Property is required for class ListShippingRules200ResponseDataInner.", nameof(autoPrintTrigger));
+
             if (!orgId.IsSet)
                 throw new ArgumentException("Property is required for class ListShippingRules200ResponseDataInner.", nameof(orgId));
 
@@ -854,6 +941,9 @@ namespace Zippendo.Model
             if (conditions.IsSet && conditions.Value == null)
                 throw new ArgumentNullException(nameof(conditions), "Property is not nullable for class ListShippingRules200ResponseDataInner.");
 
+            if (autoPrintTrigger.IsSet && autoPrintTrigger.Value == null)
+                throw new ArgumentNullException(nameof(autoPrintTrigger), "Property is not nullable for class ListShippingRules200ResponseDataInner.");
+
             if (orgId.IsSet && orgId.Value == null)
                 throw new ArgumentNullException(nameof(orgId), "Property is not nullable for class ListShippingRules200ResponseDataInner.");
 
@@ -896,7 +986,7 @@ namespace Zippendo.Model
             if (autoCreateReturnShipment.IsSet && autoCreateReturnShipment.Value == null)
                 throw new ArgumentNullException(nameof(autoCreateReturnShipment), "Property is not nullable for class ListShippingRules200ResponseDataInner.");
 
-            return new ListShippingRules200ResponseDataInner(id.Value!, name.Value!, translations.Value!, carrierId.Value!, productId.Value!, services.Value!, additionalParameters.Value!, addressId.Value!, receivingCountries.Value!, conditions.Value!, orgId.Value!, createdAt.Value!, updatedAt.Value!, carrier.Value!, address.Value!, description.Value!, direction.Value!.Value!, emailNotification.Value!.Value!, phoneNotification.Value!.Value!, minWeight.Value!, maxWeight.Value!, minOrderValue.Value!, maxOrderValue.Value!, generateProformaInvoice.Value!.Value!, generateCommercialInvoice.Value!.Value!, generatePackingList.Value!.Value!, autoPrintLabels.Value!.Value!, autoPrintDocuments.Value!.Value!, labelPrinterId.Value!, documentPrinterId.Value!, returnShippingRuleId.Value!, autoCreateReturnShipment.Value!.Value!, brandId.Value!, labelPrinter, documentPrinter, returnShippingRule);
+            return new ListShippingRules200ResponseDataInner(id.Value!, name.Value!, translations.Value!, carrierId.Value!, productId.Value!, services.Value!, additionalParameters.Value!, addressId.Value!, receivingCountries.Value!, conditions.Value!, autoPrintTrigger.Value!.Value!, orgId.Value!, createdAt.Value!, updatedAt.Value!, carrier.Value!, address.Value!, description.Value!, direction.Value!.Value!, emailNotification.Value!.Value!, phoneNotification.Value!.Value!, minWeight.Value!, maxWeight.Value!, minOrderValue.Value!, maxOrderValue.Value!, generateProformaInvoice.Value!.Value!, generateCommercialInvoice.Value!.Value!, generatePackingList.Value!.Value!, autoPrintLabels.Value!.Value!, autoPrintDocuments.Value!.Value!, labelPrinterId.Value!, documentPrinterId.Value!, returnShippingRuleId.Value!, autoCreateReturnShipment.Value!.Value!, brandId.Value!, labelPrinter, documentPrinter, returnShippingRule);
         }
 
         /// <summary>
@@ -988,6 +1078,8 @@ namespace Zippendo.Model
             JsonSerializer.Serialize(writer, listShippingRules200ResponseDataInner.ReceivingCountries, jsonSerializerOptions);
             writer.WritePropertyName("conditions");
             JsonSerializer.Serialize(writer, listShippingRules200ResponseDataInner.Conditions, jsonSerializerOptions);
+            var autoPrintTriggerRawValue = ListShippingRules200ResponseDataInner.AutoPrintTriggerEnumToJsonValue(listShippingRules200ResponseDataInner.AutoPrintTrigger);
+            writer.WriteString("autoPrintTrigger", autoPrintTriggerRawValue);
             writer.WriteString("orgId", listShippingRules200ResponseDataInner.OrgId);
 
             writer.WriteString("createdAt", listShippingRules200ResponseDataInner.CreatedAt);

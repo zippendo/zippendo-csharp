@@ -47,8 +47,9 @@ namespace Zippendo.Model
         /// <param name="postalCode">Postal code</param>
         /// <param name="country">Country (ISO 3166-1 alpha-2 code)</param>
         /// <param name="customs">Organization-wide customs identifiers (EORI, IOSS, VOEC, etc.); null clears all</param>
+        /// <param name="packingSlipScanCode">Code printed on packing slips that a scan turns into a print: &#x60;QR&#x60;, &#x60;BARCODE&#x60;, or &#x60;NONE&#x60; for no code.</param>
         [JsonConstructor]
-        public UpdateOrgRequest(Option<string?> name = default, Option<string?> slug = default, Option<string?> description = default, Option<CurrencyEnum?> currency = default, Option<string?> vatNumber = default, Option<string?> phone = default, Option<string?> billingEmail = default, Option<string?> companyName = default, Option<string?> addressLine1 = default, Option<string?> addressLine2 = default, Option<string?> city = default, Option<string?> postalCode = default, Option<string?> country = default, Option<Dictionary<string, string>?> customs = default)
+        public UpdateOrgRequest(Option<string?> name = default, Option<string?> slug = default, Option<string?> description = default, Option<CurrencyEnum?> currency = default, Option<string?> vatNumber = default, Option<string?> phone = default, Option<string?> billingEmail = default, Option<string?> companyName = default, Option<string?> addressLine1 = default, Option<string?> addressLine2 = default, Option<string?> city = default, Option<string?> postalCode = default, Option<string?> country = default, Option<Dictionary<string, string>?> customs = default, Option<PackingSlipScanCodeEnum?> packingSlipScanCode = default)
         {
             NameOption = name;
             SlugOption = slug;
@@ -64,6 +65,7 @@ namespace Zippendo.Model
             PostalCodeOption = postalCode;
             CountryOption = country;
             CustomsOption = customs;
+            PackingSlipScanCodeOption = packingSlipScanCode;
             OnCreated();
         }
 
@@ -206,6 +208,102 @@ namespace Zippendo.Model
         /* <example>DKK</example> */
         [JsonPropertyName("currency")]
         public CurrencyEnum? Currency { get { return this.CurrencyOption.Value; } set { this.CurrencyOption = new Option<CurrencyEnum?>(value); } }
+
+        /// <summary>
+        /// Code printed on packing slips that a scan turns into a print: &#x60;QR&#x60;, &#x60;BARCODE&#x60;, or &#x60;NONE&#x60; for no code.
+        /// </summary>
+        /// <value>Code printed on packing slips that a scan turns into a print: &#x60;QR&#x60;, &#x60;BARCODE&#x60;, or &#x60;NONE&#x60; for no code.</value>
+        public enum PackingSlipScanCodeEnum
+        {
+            /// <summary>
+            /// Enum NONE for value: NONE
+            /// </summary>
+            NONE = 1,
+
+            /// <summary>
+            /// Enum QR for value: QR
+            /// </summary>
+            QR = 2,
+
+            /// <summary>
+            /// Enum BARCODE for value: BARCODE
+            /// </summary>
+            BARCODE = 3
+        }
+
+        /// <summary>
+        /// Returns a <see cref="PackingSlipScanCodeEnum"/>
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
+        public static PackingSlipScanCodeEnum PackingSlipScanCodeEnumFromString(string value)
+        {
+            if (value.Equals("NONE"))
+                return PackingSlipScanCodeEnum.NONE;
+
+            if (value.Equals("QR"))
+                return PackingSlipScanCodeEnum.QR;
+
+            if (value.Equals("BARCODE"))
+                return PackingSlipScanCodeEnum.BARCODE;
+
+            throw new NotImplementedException($"Could not convert value to type PackingSlipScanCodeEnum: '{value}'");
+        }
+
+        /// <summary>
+        /// Returns a <see cref="PackingSlipScanCodeEnum"/>
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public static PackingSlipScanCodeEnum? PackingSlipScanCodeEnumFromStringOrDefault(string value)
+        {
+            if (value.Equals("NONE"))
+                return PackingSlipScanCodeEnum.NONE;
+
+            if (value.Equals("QR"))
+                return PackingSlipScanCodeEnum.QR;
+
+            if (value.Equals("BARCODE"))
+                return PackingSlipScanCodeEnum.BARCODE;
+
+            return null;
+        }
+
+        /// <summary>
+        /// Converts the <see cref="PackingSlipScanCodeEnum"/> to the json value
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
+        public static string PackingSlipScanCodeEnumToJsonValue(PackingSlipScanCodeEnum? value)
+        {
+            if (value == PackingSlipScanCodeEnum.NONE)
+                return "NONE";
+
+            if (value == PackingSlipScanCodeEnum.QR)
+                return "QR";
+
+            if (value == PackingSlipScanCodeEnum.BARCODE)
+                return "BARCODE";
+
+            throw new NotImplementedException($"Value could not be handled: '{value}'");
+        }
+
+        /// <summary>
+        /// Used to track the state of PackingSlipScanCode
+        /// </summary>
+        [JsonIgnore]
+        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public Option<PackingSlipScanCodeEnum?> PackingSlipScanCodeOption { get; private set; }
+
+        /// <summary>
+        /// Code printed on packing slips that a scan turns into a print: &#x60;QR&#x60;, &#x60;BARCODE&#x60;, or &#x60;NONE&#x60; for no code.
+        /// </summary>
+        /// <value>Code printed on packing slips that a scan turns into a print: &#x60;QR&#x60;, &#x60;BARCODE&#x60;, or &#x60;NONE&#x60; for no code.</value>
+        /* <example>QR</example> */
+        [JsonPropertyName("packingSlipScanCode")]
+        public PackingSlipScanCodeEnum? PackingSlipScanCode { get { return this.PackingSlipScanCodeOption.Value; } set { this.PackingSlipScanCodeOption = new Option<PackingSlipScanCodeEnum?>(value); } }
 
         /// <summary>
         /// Used to track the state of Name
@@ -423,6 +521,7 @@ namespace Zippendo.Model
             sb.Append("  PostalCode: ").Append(PostalCode).Append("\n");
             sb.Append("  Country: ").Append(Country).Append("\n");
             sb.Append("  Customs: ").Append(Customs).Append("\n");
+            sb.Append("  PackingSlipScanCode: ").Append(PackingSlipScanCode).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -474,6 +573,7 @@ namespace Zippendo.Model
             Option<string?> postalCode = default;
             Option<string?> country = default;
             Option<Dictionary<string, string>?> customs = default;
+            Option<UpdateOrgRequest.PackingSlipScanCodeEnum?> packingSlipScanCode = default;
 
             while (utf8JsonReader.Read())
             {
@@ -534,6 +634,11 @@ namespace Zippendo.Model
                         case "customs":
                             customs = new Option<Dictionary<string, string>?>(JsonSerializer.Deserialize<Dictionary<string, string>>(ref utf8JsonReader, jsonSerializerOptions));
                             break;
+                        case "packingSlipScanCode":
+                            string? packingSlipScanCodeRawValue = utf8JsonReader.GetString();
+                            if (packingSlipScanCodeRawValue != null)
+                                packingSlipScanCode = new Option<UpdateOrgRequest.PackingSlipScanCodeEnum?>(UpdateOrgRequest.PackingSlipScanCodeEnumFromStringOrDefault(packingSlipScanCodeRawValue));
+                            break;
                         default:
                             break;
                     }
@@ -552,7 +657,10 @@ namespace Zippendo.Model
             if (currency.IsSet && currency.Value == null)
                 throw new ArgumentNullException(nameof(currency), "Property is not nullable for class UpdateOrgRequest.");
 
-            return new UpdateOrgRequest(name, slug, description, currency, vatNumber, phone, billingEmail, companyName, addressLine1, addressLine2, city, postalCode, country, customs);
+            if (packingSlipScanCode.IsSet && packingSlipScanCode.Value == null)
+                throw new ArgumentNullException(nameof(packingSlipScanCode), "Property is not nullable for class UpdateOrgRequest.");
+
+            return new UpdateOrgRequest(name, slug, description, currency, vatNumber, phone, billingEmail, companyName, addressLine1, addressLine2, city, postalCode, country, customs, packingSlipScanCode);
         }
 
         /// <summary>
@@ -661,6 +769,8 @@ namespace Zippendo.Model
                 }
                 else
                     writer.WriteNull("customs");
+            var packingSlipScanCodeRawValue = UpdateOrgRequest.PackingSlipScanCodeEnumToJsonValue(updateOrgRequest.PackingSlipScanCodeOption.Value!.Value);
+            writer.WriteString("packingSlipScanCode", packingSlipScanCodeRawValue);
         }
     }
 }

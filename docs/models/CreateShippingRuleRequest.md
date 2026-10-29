@@ -26,6 +26,7 @@ Name | Type | Description | Notes
 **GeneratePackingList** | **bool** | Generate a packing slip with parcel and item details | [optional] [default to false]
 **AutoPrintLabels** | **bool** | Automatically print labels when shipment is sent | [optional] [default to false]
 **AutoPrintDocuments** | **bool** | Automatically print documents when shipment is sent | [optional] [default to false]
+**AutoPrintTrigger** | **string** | When automatic printing starts: &#x60;ON_BOOKING&#x60; prints as soon as the shipment is sent, &#x60;ON_SCAN&#x60; waits until the packing slip is scanned. | [optional] [default to AutoPrintTriggerEnum.ONBOOKING]
 **LabelPrinterId** | **string** | ID of the label printer | [optional] 
 **DocumentPrinterId** | **string** | ID of the document printer | [optional] 
 **ReturnShippingRuleId** | **string** | ID of the return shipping rule | [optional] 

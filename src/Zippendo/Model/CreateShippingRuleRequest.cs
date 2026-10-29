@@ -55,13 +55,14 @@ namespace Zippendo.Model
         /// <param name="generatePackingList">Generate a packing slip with parcel and item details (default to false)</param>
         /// <param name="autoPrintLabels">Automatically print labels when shipment is sent (default to false)</param>
         /// <param name="autoPrintDocuments">Automatically print documents when shipment is sent (default to false)</param>
+        /// <param name="autoPrintTrigger">When automatic printing starts: &#x60;ON_BOOKING&#x60; prints as soon as the shipment is sent, &#x60;ON_SCAN&#x60; waits until the packing slip is scanned. (default to AutoPrintTriggerEnum.ONBOOKING)</param>
         /// <param name="labelPrinterId">ID of the label printer</param>
         /// <param name="documentPrinterId">ID of the document printer</param>
         /// <param name="returnShippingRuleId">ID of the return shipping rule</param>
         /// <param name="autoCreateReturnShipment">Automatically create and send a return shipment on dispatch (default to false)</param>
         /// <param name="brandId">Brand this record is assigned to; null (or omitted outside a brand session) keeps it organization-wide</param>
         [JsonConstructor]
-        public CreateShippingRuleRequest(string name, string carrierId, string productId, List<string> services, string addressId, List<string> receivingCountries, List<CreateShippingRuleRequestConditionsInner> conditions, Option<string?> description = default, Option<Dictionary<string, CreateShippingRuleRequestTranslationsValue>?> translations = default, Option<DirectionEnum?> direction = default, Option<Dictionary<string, CreateShippingRuleRequestAdditionalParametersValue>?> additionalParameters = default, Option<bool?> emailNotification = default, Option<bool?> phoneNotification = default, Option<decimal?> minWeight = default, Option<decimal?> maxWeight = default, Option<decimal?> minOrderValue = default, Option<decimal?> maxOrderValue = default, Option<bool?> generateProformaInvoice = default, Option<bool?> generateCommercialInvoice = default, Option<bool?> generatePackingList = default, Option<bool?> autoPrintLabels = default, Option<bool?> autoPrintDocuments = default, Option<string?> labelPrinterId = default, Option<string?> documentPrinterId = default, Option<string?> returnShippingRuleId = default, Option<bool?> autoCreateReturnShipment = default, Option<string?> brandId = default)
+        public CreateShippingRuleRequest(string name, string carrierId, string productId, List<string> services, string addressId, List<string> receivingCountries, List<CreateShippingRuleRequestConditionsInner> conditions, Option<string?> description = default, Option<Dictionary<string, CreateShippingRuleRequestTranslationsValue>?> translations = default, Option<DirectionEnum?> direction = default, Option<Dictionary<string, CreateShippingRuleRequestAdditionalParametersValue>?> additionalParameters = default, Option<bool?> emailNotification = default, Option<bool?> phoneNotification = default, Option<decimal?> minWeight = default, Option<decimal?> maxWeight = default, Option<decimal?> minOrderValue = default, Option<decimal?> maxOrderValue = default, Option<bool?> generateProformaInvoice = default, Option<bool?> generateCommercialInvoice = default, Option<bool?> generatePackingList = default, Option<bool?> autoPrintLabels = default, Option<bool?> autoPrintDocuments = default, Option<AutoPrintTriggerEnum?> autoPrintTrigger = default, Option<string?> labelPrinterId = default, Option<string?> documentPrinterId = default, Option<string?> returnShippingRuleId = default, Option<bool?> autoCreateReturnShipment = default, Option<string?> brandId = default)
         {
             Name = name;
             CarrierId = carrierId;
@@ -85,6 +86,7 @@ namespace Zippendo.Model
             GeneratePackingListOption = generatePackingList;
             AutoPrintLabelsOption = autoPrintLabels;
             AutoPrintDocumentsOption = autoPrintDocuments;
+            AutoPrintTriggerOption = autoPrintTrigger;
             LabelPrinterIdOption = labelPrinterId;
             DocumentPrinterIdOption = documentPrinterId;
             ReturnShippingRuleIdOption = returnShippingRuleId;
@@ -176,6 +178,88 @@ namespace Zippendo.Model
         /* <example>outbound</example> */
         [JsonPropertyName("direction")]
         public DirectionEnum? Direction { get { return this.DirectionOption.Value; } set { this.DirectionOption = new Option<DirectionEnum?>(value); } }
+
+        /// <summary>
+        /// When automatic printing starts: &#x60;ON_BOOKING&#x60; prints as soon as the shipment is sent, &#x60;ON_SCAN&#x60; waits until the packing slip is scanned.
+        /// </summary>
+        /// <value>When automatic printing starts: &#x60;ON_BOOKING&#x60; prints as soon as the shipment is sent, &#x60;ON_SCAN&#x60; waits until the packing slip is scanned.</value>
+        public enum AutoPrintTriggerEnum
+        {
+            /// <summary>
+            /// Enum ONBOOKING for value: ON_BOOKING
+            /// </summary>
+            ONBOOKING = 1,
+
+            /// <summary>
+            /// Enum ONSCAN for value: ON_SCAN
+            /// </summary>
+            ONSCAN = 2
+        }
+
+        /// <summary>
+        /// Returns a <see cref="AutoPrintTriggerEnum"/>
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
+        public static AutoPrintTriggerEnum AutoPrintTriggerEnumFromString(string value)
+        {
+            if (value.Equals("ON_BOOKING"))
+                return AutoPrintTriggerEnum.ONBOOKING;
+
+            if (value.Equals("ON_SCAN"))
+                return AutoPrintTriggerEnum.ONSCAN;
+
+            throw new NotImplementedException($"Could not convert value to type AutoPrintTriggerEnum: '{value}'");
+        }
+
+        /// <summary>
+        /// Returns a <see cref="AutoPrintTriggerEnum"/>
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public static AutoPrintTriggerEnum? AutoPrintTriggerEnumFromStringOrDefault(string value)
+        {
+            if (value.Equals("ON_BOOKING"))
+                return AutoPrintTriggerEnum.ONBOOKING;
+
+            if (value.Equals("ON_SCAN"))
+                return AutoPrintTriggerEnum.ONSCAN;
+
+            return null;
+        }
+
+        /// <summary>
+        /// Converts the <see cref="AutoPrintTriggerEnum"/> to the json value
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
+        public static string AutoPrintTriggerEnumToJsonValue(AutoPrintTriggerEnum? value)
+        {
+            if (value == AutoPrintTriggerEnum.ONBOOKING)
+                return "ON_BOOKING";
+
+            if (value == AutoPrintTriggerEnum.ONSCAN)
+                return "ON_SCAN";
+
+            throw new NotImplementedException($"Value could not be handled: '{value}'");
+        }
+
+        /// <summary>
+        /// Used to track the state of AutoPrintTrigger
+        /// </summary>
+        [JsonIgnore]
+        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public Option<AutoPrintTriggerEnum?> AutoPrintTriggerOption { get; private set; }
+
+        /// <summary>
+        /// When automatic printing starts: &#x60;ON_BOOKING&#x60; prints as soon as the shipment is sent, &#x60;ON_SCAN&#x60; waits until the packing slip is scanned.
+        /// </summary>
+        /// <value>When automatic printing starts: &#x60;ON_BOOKING&#x60; prints as soon as the shipment is sent, &#x60;ON_SCAN&#x60; waits until the packing slip is scanned.</value>
+        /* <example>ON_BOOKING</example> */
+        [JsonPropertyName("autoPrintTrigger")]
+        public AutoPrintTriggerEnum? AutoPrintTrigger { get { return this.AutoPrintTriggerOption.Value; } set { this.AutoPrintTriggerOption = new Option<AutoPrintTriggerEnum?>(value); } }
 
         /// <summary>
         /// Shipping rule name
@@ -545,6 +629,7 @@ namespace Zippendo.Model
             sb.Append("  GeneratePackingList: ").Append(GeneratePackingList).Append("\n");
             sb.Append("  AutoPrintLabels: ").Append(AutoPrintLabels).Append("\n");
             sb.Append("  AutoPrintDocuments: ").Append(AutoPrintDocuments).Append("\n");
+            sb.Append("  AutoPrintTrigger: ").Append(AutoPrintTrigger).Append("\n");
             sb.Append("  LabelPrinterId: ").Append(LabelPrinterId).Append("\n");
             sb.Append("  DocumentPrinterId: ").Append(DocumentPrinterId).Append("\n");
             sb.Append("  ReturnShippingRuleId: ").Append(ReturnShippingRuleId).Append("\n");
@@ -609,6 +694,7 @@ namespace Zippendo.Model
             Option<bool?> generatePackingList = default;
             Option<bool?> autoPrintLabels = default;
             Option<bool?> autoPrintDocuments = default;
+            Option<CreateShippingRuleRequest.AutoPrintTriggerEnum?> autoPrintTrigger = default;
             Option<string?> labelPrinterId = default;
             Option<string?> documentPrinterId = default;
             Option<string?> returnShippingRuleId = default;
@@ -697,6 +783,11 @@ namespace Zippendo.Model
                             break;
                         case "autoPrintDocuments":
                             autoPrintDocuments = new Option<bool?>(utf8JsonReader.TokenType == JsonTokenType.Null ? (bool?)null : utf8JsonReader.GetBoolean());
+                            break;
+                        case "autoPrintTrigger":
+                            string? autoPrintTriggerRawValue = utf8JsonReader.GetString();
+                            if (autoPrintTriggerRawValue != null)
+                                autoPrintTrigger = new Option<CreateShippingRuleRequest.AutoPrintTriggerEnum?>(CreateShippingRuleRequest.AutoPrintTriggerEnumFromStringOrDefault(autoPrintTriggerRawValue));
                             break;
                         case "labelPrinterId":
                             labelPrinterId = new Option<string?>(utf8JsonReader.GetString());
@@ -794,10 +885,13 @@ namespace Zippendo.Model
             if (autoPrintDocuments.IsSet && autoPrintDocuments.Value == null)
                 throw new ArgumentNullException(nameof(autoPrintDocuments), "Property is not nullable for class CreateShippingRuleRequest.");
 
+            if (autoPrintTrigger.IsSet && autoPrintTrigger.Value == null)
+                throw new ArgumentNullException(nameof(autoPrintTrigger), "Property is not nullable for class CreateShippingRuleRequest.");
+
             if (autoCreateReturnShipment.IsSet && autoCreateReturnShipment.Value == null)
                 throw new ArgumentNullException(nameof(autoCreateReturnShipment), "Property is not nullable for class CreateShippingRuleRequest.");
 
-            return new CreateShippingRuleRequest(name.Value!, carrierId.Value!, productId.Value!, services.Value!, addressId.Value!, receivingCountries.Value!, conditions.Value!, description, translations, direction, additionalParameters, emailNotification, phoneNotification, minWeight, maxWeight, minOrderValue, maxOrderValue, generateProformaInvoice, generateCommercialInvoice, generatePackingList, autoPrintLabels, autoPrintDocuments, labelPrinterId, documentPrinterId, returnShippingRuleId, autoCreateReturnShipment, brandId);
+            return new CreateShippingRuleRequest(name.Value!, carrierId.Value!, productId.Value!, services.Value!, addressId.Value!, receivingCountries.Value!, conditions.Value!, description, translations, direction, additionalParameters, emailNotification, phoneNotification, minWeight, maxWeight, minOrderValue, maxOrderValue, generateProformaInvoice, generateCommercialInvoice, generatePackingList, autoPrintLabels, autoPrintDocuments, autoPrintTrigger, labelPrinterId, documentPrinterId, returnShippingRuleId, autoCreateReturnShipment, brandId);
         }
 
         /// <summary>
@@ -928,6 +1022,8 @@ namespace Zippendo.Model
             if (createShippingRuleRequest.AutoPrintDocumentsOption.IsSet)
                 writer.WriteBoolean("autoPrintDocuments", createShippingRuleRequest.AutoPrintDocumentsOption.Value!.Value);
 
+            var autoPrintTriggerRawValue = CreateShippingRuleRequest.AutoPrintTriggerEnumToJsonValue(createShippingRuleRequest.AutoPrintTriggerOption.Value!.Value);
+            writer.WriteString("autoPrintTrigger", autoPrintTriggerRawValue);
             if (createShippingRuleRequest.LabelPrinterIdOption.IsSet)
                 if (createShippingRuleRequest.LabelPrinterIdOption.Value != null)
                     writer.WriteString("labelPrinterId", createShippingRuleRequest.LabelPrinterId);

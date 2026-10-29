@@ -18,6 +18,7 @@ Name | Type | Description | Notes
 **PostalCode** | **string** | Postal code | [optional] 
 **Country** | **string** | Country (ISO 3166-1 alpha-2 code) | [optional] 
 **Customs** | **Dictionary&lt;string, string&gt;** | Organization-wide customs identifiers (EORI, IOSS, VOEC, etc.); null clears all | [optional] 
+**PackingSlipScanCode** | **string** | Code printed on packing slips that a scan turns into a print: &#x60;QR&#x60;, &#x60;BARCODE&#x60;, or &#x60;NONE&#x60; for no code. | [optional] 
 
 [[Back to Model list]](../../README.md#documentation-for-models) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to README]](../../README.md)
 

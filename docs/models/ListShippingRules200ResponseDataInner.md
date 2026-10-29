@@ -14,6 +14,7 @@ Name | Type | Description | Notes
 **AddressId** | **string** | Sender address ID | 
 **ReceivingCountries** | **List&lt;string&gt;** | List of supported country codes | 
 **Conditions** | [**List&lt;ListShippingRules200ResponseDataInnerConditionsInner&gt;**](ListShippingRules200ResponseDataInnerConditionsInner.md) | Rule conditions (weight/price/quantity) | 
+**AutoPrintTrigger** | **string** | When automatic printing starts: &#x60;ON_BOOKING&#x60; prints as soon as the shipment is sent, &#x60;ON_SCAN&#x60; waits until the packing slip is scanned. | 
 **OrgId** | **string** | Owning organization ID | 
 **CreatedAt** | **string** | Creation timestamp (ISO 8601) | 
 **UpdatedAt** | **string** | Last update timestamp (ISO 8601) | 

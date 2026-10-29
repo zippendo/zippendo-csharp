@@ -159,10 +159,14 @@ namespace Zippendo.Client
                 return CreateShipmentRequestParcelsInner.WeightUnitEnumToJsonValue(createShipmentRequestParcelsInnerWeightUnitEnum);
             if (obj is CreateShipmentRequestPartiesInner.TypeEnum createShipmentRequestPartiesInnerTypeEnum)
                 return CreateShipmentRequestPartiesInner.TypeEnumToJsonValue(createShipmentRequestPartiesInnerTypeEnum);
+            if (obj is CreateShippingRule201Response.AutoPrintTriggerEnum createShippingRule201ResponseAutoPrintTriggerEnum)
+                return CreateShippingRule201Response.AutoPrintTriggerEnumToJsonValue(createShippingRule201ResponseAutoPrintTriggerEnum);
             if (obj is CreateShippingRule201Response.DirectionEnum createShippingRule201ResponseDirectionEnum)
                 return CreateShippingRule201Response.DirectionEnumToJsonValue(createShippingRule201ResponseDirectionEnum);
             if (obj is CreateShippingRuleRequest.DirectionEnum createShippingRuleRequestDirectionEnum)
                 return CreateShippingRuleRequest.DirectionEnumToJsonValue(createShippingRuleRequestDirectionEnum);
+            if (obj is CreateShippingRuleRequest.AutoPrintTriggerEnum createShippingRuleRequestAutoPrintTriggerEnum)
+                return CreateShippingRuleRequest.AutoPrintTriggerEnumToJsonValue(createShippingRuleRequestAutoPrintTriggerEnum);
             if (obj is CreateShippingRuleRequestConditionsInnerOneOf.TypeEnum createShippingRuleRequestConditionsInnerOneOfTypeEnum)
                 return CreateShippingRuleRequestConditionsInnerOneOf.TypeEnumToJsonValue(createShippingRuleRequestConditionsInnerOneOfTypeEnum);
             if (obj is CreateShippingRuleRequestConditionsInnerOneOf1.TypeEnum createShippingRuleRequestConditionsInnerOneOf1TypeEnum)
@@ -193,6 +197,8 @@ namespace Zippendo.Client
                 return GetOrder200ResponseShipmentsInner.TypeEnumToJsonValue(getOrder200ResponseShipmentsInnerTypeEnum);
             if (obj is GetOrder200ResponseShipmentsInnerParcelsInner.WeightUnitEnum getOrder200ResponseShipmentsInnerParcelsInnerWeightUnitEnum)
                 return GetOrder200ResponseShipmentsInnerParcelsInner.WeightUnitEnumToJsonValue(getOrder200ResponseShipmentsInnerParcelsInnerWeightUnitEnum);
+            if (obj is GetOrg200Response.PackingSlipScanCodeEnum getOrg200ResponsePackingSlipScanCodeEnum)
+                return GetOrg200Response.PackingSlipScanCodeEnumToJsonValue(getOrg200ResponsePackingSlipScanCodeEnum);
             if (obj is ListAddresses200ResponseDataInner.AddressTypesEnum listAddresses200ResponseDataInnerAddressTypesEnum)
                 return ListAddresses200ResponseDataInner.AddressTypesEnumToJsonValue(listAddresses200ResponseDataInnerAddressTypesEnum);
             if (obj is ListApiTokens401Response.CodeEnum listApiTokens401ResponseCodeEnum)
@@ -221,6 +227,8 @@ namespace Zippendo.Client
                 return ListShipments200ResponseDataInner.StatusEnumToJsonValue(listShipments200ResponseDataInnerStatusEnum);
             if (obj is ListShipments200ResponseDataInnerAddress.AddressTypesEnum listShipments200ResponseDataInnerAddressAddressTypesEnum)
                 return ListShipments200ResponseDataInnerAddress.AddressTypesEnumToJsonValue(listShipments200ResponseDataInnerAddressAddressTypesEnum);
+            if (obj is ListShippingRules200ResponseDataInner.AutoPrintTriggerEnum listShippingRules200ResponseDataInnerAutoPrintTriggerEnum)
+                return ListShippingRules200ResponseDataInner.AutoPrintTriggerEnumToJsonValue(listShippingRules200ResponseDataInnerAutoPrintTriggerEnum);
             if (obj is ListShippingRules200ResponseDataInner.DirectionEnum listShippingRules200ResponseDataInnerDirectionEnum)
                 return ListShippingRules200ResponseDataInner.DirectionEnumToJsonValue(listShippingRules200ResponseDataInnerDirectionEnum);
             if (obj is ListShippingRules200ResponseDataInnerConditionsInnerOneOf.TypeEnum listShippingRules200ResponseDataInnerConditionsInnerOneOfTypeEnum)
@@ -253,8 +261,12 @@ namespace Zippendo.Client
                 return UpdateOrderChannelRequest.RoleEnumToJsonValue(updateOrderChannelRequestRoleEnum);
             if (obj is UpdateOrderRequest.StatusEnum updateOrderRequestStatusEnum)
                 return UpdateOrderRequest.StatusEnumToJsonValue(updateOrderRequestStatusEnum);
+            if (obj is UpdateOrg200Response.PackingSlipScanCodeEnum updateOrg200ResponsePackingSlipScanCodeEnum)
+                return UpdateOrg200Response.PackingSlipScanCodeEnumToJsonValue(updateOrg200ResponsePackingSlipScanCodeEnum);
             if (obj is UpdateOrgRequest.CurrencyEnum updateOrgRequestCurrencyEnum)
                 return UpdateOrgRequest.CurrencyEnumToJsonValue(updateOrgRequestCurrencyEnum);
+            if (obj is UpdateOrgRequest.PackingSlipScanCodeEnum updateOrgRequestPackingSlipScanCodeEnum)
+                return UpdateOrgRequest.PackingSlipScanCodeEnumToJsonValue(updateOrgRequestPackingSlipScanCodeEnum);
             if (obj is UpdateOrgWebhookRequest.EventsEnum updateOrgWebhookRequestEventsEnum)
                 return UpdateOrgWebhookRequest.EventsEnumToJsonValue(updateOrgWebhookRequestEventsEnum);
             if (obj is UpdateShipmentRequest.TypeEnum updateShipmentRequestTypeEnum)
@@ -263,6 +275,8 @@ namespace Zippendo.Client
                 return UpdateShipmentRequest.StatusEnumToJsonValue(updateShipmentRequestStatusEnum);
             if (obj is UpdateShippingRuleRequest.DirectionEnum updateShippingRuleRequestDirectionEnum)
                 return UpdateShippingRuleRequest.DirectionEnumToJsonValue(updateShippingRuleRequestDirectionEnum);
+            if (obj is UpdateShippingRuleRequest.AutoPrintTriggerEnum updateShippingRuleRequestAutoPrintTriggerEnum)
+                return UpdateShippingRuleRequest.AutoPrintTriggerEnumToJsonValue(updateShippingRuleRequestAutoPrintTriggerEnum);
             if (obj is ICollection collection)
             {
                 List<string?> entries = new List<string?>();
