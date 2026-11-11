@@ -546,479 +546,489 @@ namespace Zippendo.Model
             CARRIERDOCUMENTINCOMPLETE = 98,
 
             /// <summary>
+            /// Enum CARRIERQRCODENOTISSUED for value: CARRIER_QR_CODE_NOT_ISSUED
+            /// </summary>
+            CARRIERQRCODENOTISSUED = 99,
+
+            /// <summary>
             /// Enum CARRIERLABELNOTISSUED for value: CARRIER_LABEL_NOT_ISSUED
             /// </summary>
-            CARRIERLABELNOTISSUED = 99,
+            CARRIERLABELNOTISSUED = 100,
 
             /// <summary>
             /// Enum CARRIERCUSTOMSDATANOTACCEPTED for value: CARRIER_CUSTOMS_DATA_NOT_ACCEPTED
             /// </summary>
-            CARRIERCUSTOMSDATANOTACCEPTED = 100,
+            CARRIERCUSTOMSDATANOTACCEPTED = 101,
 
             /// <summary>
             /// Enum CARRIERGLSWRONGADDRESS for value: CARRIER_GLS_WRONG_ADDRESS
             /// </summary>
-            CARRIERGLSWRONGADDRESS = 101,
+            CARRIERGLSWRONGADDRESS = 102,
 
             /// <summary>
             /// Enum CARRIERGLSBOOKINGFAILED for value: CARRIER_GLS_BOOKING_FAILED
             /// </summary>
-            CARRIERGLSBOOKINGFAILED = 102,
+            CARRIERGLSBOOKINGFAILED = 103,
 
             /// <summary>
             /// Enum CARRIERDAOINVALIDPOSTALCODE for value: CARRIER_DAO_INVALID_POSTAL_CODE
             /// </summary>
-            CARRIERDAOINVALIDPOSTALCODE = 103,
+            CARRIERDAOINVALIDPOSTALCODE = 104,
 
             /// <summary>
             /// Enum CARRIERPOSTNORDBOOKINGFAILED for value: CARRIER_POSTNORD_BOOKING_FAILED
             /// </summary>
-            CARRIERPOSTNORDBOOKINGFAILED = 104,
+            CARRIERPOSTNORDBOOKINGFAILED = 105,
 
             /// <summary>
             /// Enum CARRIERFEDEXBOOKINGFAILED for value: CARRIER_FEDEX_BOOKING_FAILED
             /// </summary>
-            CARRIERFEDEXBOOKINGFAILED = 105,
+            CARRIERFEDEXBOOKINGFAILED = 106,
 
             /// <summary>
             /// Enum CARRIERDHLEXPRESSBOOKINGFAILED for value: CARRIER_DHL_EXPRESS_BOOKING_FAILED
             /// </summary>
-            CARRIERDHLEXPRESSBOOKINGFAILED = 106,
+            CARRIERDHLEXPRESSBOOKINGFAILED = 107,
 
             /// <summary>
             /// Enum CARRIERDHLPARCELNLBOOKINGFAILED for value: CARRIER_DHL_PARCEL_NL_BOOKING_FAILED
             /// </summary>
-            CARRIERDHLPARCELNLBOOKINGFAILED = 107,
+            CARRIERDHLPARCELNLBOOKINGFAILED = 108,
 
             /// <summary>
             /// Enum CARRIERDHLECOMMERCEEUBOOKINGFAILED for value: CARRIER_DHL_ECOMMERCE_EU_BOOKING_FAILED
             /// </summary>
-            CARRIERDHLECOMMERCEEUBOOKINGFAILED = 108,
+            CARRIERDHLECOMMERCEEUBOOKINGFAILED = 109,
 
             /// <summary>
             /// Enum CARRIERUPSBOOKINGFAILED for value: CARRIER_UPS_BOOKING_FAILED
             /// </summary>
-            CARRIERUPSBOOKINGFAILED = 109,
+            CARRIERUPSBOOKINGFAILED = 110,
 
             /// <summary>
             /// Enum CARRIERMATKAHUOLTOBOOKINGFAILED for value: CARRIER_MATKAHUOLTO_BOOKING_FAILED
             /// </summary>
-            CARRIERMATKAHUOLTOBOOKINGFAILED = 110,
+            CARRIERMATKAHUOLTOBOOKINGFAILED = 111,
 
             /// <summary>
             /// Enum CARRIERDPDPLBOOKINGFAILED for value: CARRIER_DPD_PL_BOOKING_FAILED
             /// </summary>
-            CARRIERDPDPLBOOKINGFAILED = 111,
+            CARRIERDPDPLBOOKINGFAILED = 112,
 
             /// <summary>
             /// Enum CARRIERDPDHUBOOKINGFAILED for value: CARRIER_DPD_HU_BOOKING_FAILED
             /// </summary>
-            CARRIERDPDHUBOOKINGFAILED = 112,
+            CARRIERDPDHUBOOKINGFAILED = 113,
 
             /// <summary>
             /// Enum CARRIERDPDCHBOOKINGFAILED for value: CARRIER_DPD_CH_BOOKING_FAILED
             /// </summary>
-            CARRIERDPDCHBOOKINGFAILED = 113,
+            CARRIERDPDCHBOOKINGFAILED = 114,
 
             /// <summary>
             /// Enum CARRIERDPDBEBOOKINGFAILED for value: CARRIER_DPD_BE_BOOKING_FAILED
             /// </summary>
-            CARRIERDPDBEBOOKINGFAILED = 114,
+            CARRIERDPDBEBOOKINGFAILED = 115,
 
             /// <summary>
             /// Enum CARRIERDPDLVBOOKINGFAILED for value: CARRIER_DPD_LV_BOOKING_FAILED
             /// </summary>
-            CARRIERDPDLVBOOKINGFAILED = 115,
+            CARRIERDPDLVBOOKINGFAILED = 116,
 
             /// <summary>
             /// Enum CARRIERDPDLTBOOKINGFAILED for value: CARRIER_DPD_LT_BOOKING_FAILED
             /// </summary>
-            CARRIERDPDLTBOOKINGFAILED = 116,
+            CARRIERDPDLTBOOKINGFAILED = 117,
 
             /// <summary>
             /// Enum CARRIERPOSTNLBOOKINGFAILED for value: CARRIER_POSTNL_BOOKING_FAILED
             /// </summary>
-            CARRIERPOSTNLBOOKINGFAILED = 117,
+            CARRIERPOSTNLBOOKINGFAILED = 118,
 
             /// <summary>
             /// Enum CARRIERPOSTIBOOKINGFAILED for value: CARRIER_POSTI_BOOKING_FAILED
             /// </summary>
-            CARRIERPOSTIBOOKINGFAILED = 118,
+            CARRIERPOSTIBOOKINGFAILED = 119,
+
+            /// <summary>
+            /// Enum CARRIERINPOSTBOOKINGFAILED for value: CARRIER_INPOST_BOOKING_FAILED
+            /// </summary>
+            CARRIERINPOSTBOOKINGFAILED = 120,
 
             /// <summary>
             /// Enum CARRIERROYALMAILBOOKINGFAILED for value: CARRIER_ROYAL_MAIL_BOOKING_FAILED
             /// </summary>
-            CARRIERROYALMAILBOOKINGFAILED = 119,
+            CARRIERROYALMAILBOOKINGFAILED = 121,
 
             /// <summary>
             /// Enum CARRIERHELTHJEMBOOKINGFAILED for value: CARRIER_HELTHJEM_BOOKING_FAILED
             /// </summary>
-            CARRIERHELTHJEMBOOKINGFAILED = 120,
+            CARRIERHELTHJEMBOOKINGFAILED = 122,
 
             /// <summary>
             /// Enum CARRIERDANSKEFRAGTMAENDBOOKINGFAILED for value: CARRIER_DANSKE_FRAGTMAEND_BOOKING_FAILED
             /// </summary>
-            CARRIERDANSKEFRAGTMAENDBOOKINGFAILED = 121,
+            CARRIERDANSKEFRAGTMAENDBOOKINGFAILED = 123,
 
             /// <summary>
             /// Enum CARRIERDSVXPRESSBOOKINGFAILED for value: CARRIER_DSV_XPRESS_BOOKING_FAILED
             /// </summary>
-            CARRIERDSVXPRESSBOOKINGFAILED = 122,
+            CARRIERDSVXPRESSBOOKINGFAILED = 124,
 
             /// <summary>
             /// Enum CARRIERDSVROADBOOKINGFAILED for value: CARRIER_DSV_ROAD_BOOKING_FAILED
             /// </summary>
-            CARRIERDSVROADBOOKINGFAILED = 123,
+            CARRIERDSVROADBOOKINGFAILED = 125,
 
             /// <summary>
             /// Enum CARRIERDSVSCHENKERBOOKINGFAILED for value: CARRIER_DSV_SCHENKER_BOOKING_FAILED
             /// </summary>
-            CARRIERDSVSCHENKERBOOKINGFAILED = 124,
+            CARRIERDSVSCHENKERBOOKINGFAILED = 126,
 
             /// <summary>
             /// Enum CARRIERTRACKINGWEBHOOKREGISTRATIONFAILED for value: CARRIER_TRACKING_WEBHOOK_REGISTRATION_FAILED
             /// </summary>
-            CARRIERTRACKINGWEBHOOKREGISTRATIONFAILED = 125,
+            CARRIERTRACKINGWEBHOOKREGISTRATIONFAILED = 127,
 
             /// <summary>
             /// Enum CARRIERCUSTOMSUNSUPPORTEDPRODUCT for value: CARRIER_CUSTOMS_UNSUPPORTED_PRODUCT
             /// </summary>
-            CARRIERCUSTOMSUNSUPPORTEDPRODUCT = 126,
+            CARRIERCUSTOMSUNSUPPORTEDPRODUCT = 128,
 
             /// <summary>
             /// Enum CARRIERCUSTOMSINCOMPLETE for value: CARRIER_CUSTOMS_INCOMPLETE
             /// </summary>
-            CARRIERCUSTOMSINCOMPLETE = 127,
+            CARRIERCUSTOMSINCOMPLETE = 129,
 
             /// <summary>
             /// Enum CARRIERREQUESTNOTFOUND for value: CARRIER_REQUEST_NOT_FOUND
             /// </summary>
-            CARRIERREQUESTNOTFOUND = 128,
+            CARRIERREQUESTNOTFOUND = 130,
 
             /// <summary>
             /// Enum CARRIERREQUESTLOCKED for value: CARRIER_REQUEST_LOCKED
             /// </summary>
-            CARRIERREQUESTLOCKED = 129,
+            CARRIERREQUESTLOCKED = 131,
 
             /// <summary>
             /// Enum CARRIERREQUESTDISPATCHFAILED for value: CARRIER_REQUEST_DISPATCH_FAILED
             /// </summary>
-            CARRIERREQUESTDISPATCHFAILED = 130,
+            CARRIERREQUESTDISPATCHFAILED = 132,
 
             /// <summary>
             /// Enum SHIPPINGRULENOTFOUND for value: SHIPPING_RULE_NOT_FOUND
             /// </summary>
-            SHIPPINGRULENOTFOUND = 131,
+            SHIPPINGRULENOTFOUND = 133,
 
             /// <summary>
             /// Enum SHIPPINGRULEINVALID for value: SHIPPING_RULE_INVALID
             /// </summary>
-            SHIPPINGRULEINVALID = 132,
+            SHIPPINGRULEINVALID = 134,
 
             /// <summary>
             /// Enum ADDRESSNOTFOUND for value: ADDRESS_NOT_FOUND
             /// </summary>
-            ADDRESSNOTFOUND = 133,
+            ADDRESSNOTFOUND = 135,
 
             /// <summary>
             /// Enum ORDERNOTFOUND for value: ORDER_NOT_FOUND
             /// </summary>
-            ORDERNOTFOUND = 134,
+            ORDERNOTFOUND = 136,
 
             /// <summary>
             /// Enum ORDEREXISTS for value: ORDER_EXISTS
             /// </summary>
-            ORDEREXISTS = 135,
+            ORDEREXISTS = 137,
 
             /// <summary>
             /// Enum ORDERCHANNELNOTFOUND for value: ORDER_CHANNEL_NOT_FOUND
             /// </summary>
-            ORDERCHANNELNOTFOUND = 136,
+            ORDERCHANNELNOTFOUND = 138,
 
             /// <summary>
             /// Enum ORDERCHANNELCONFIGINVALID for value: ORDER_CHANNEL_CONFIG_INVALID
             /// </summary>
-            ORDERCHANNELCONFIGINVALID = 137,
+            ORDERCHANNELCONFIGINVALID = 139,
 
             /// <summary>
             /// Enum ORDERCHANNELRATESONLY for value: ORDER_CHANNEL_RATES_ONLY
             /// </summary>
-            ORDERCHANNELRATESONLY = 138,
+            ORDERCHANNELRATESONLY = 140,
 
             /// <summary>
             /// Enum INTEGRATIONNOTCONFIGURED for value: INTEGRATION_NOT_CONFIGURED
             /// </summary>
-            INTEGRATIONNOTCONFIGURED = 139,
+            INTEGRATIONNOTCONFIGURED = 141,
 
             /// <summary>
             /// Enum INSTALLATIONNOTFOUND for value: INSTALLATION_NOT_FOUND
             /// </summary>
-            INSTALLATIONNOTFOUND = 140,
+            INSTALLATIONNOTFOUND = 142,
 
             /// <summary>
             /// Enum WEBHOOKSIGNATUREINVALID for value: WEBHOOK_SIGNATURE_INVALID
             /// </summary>
-            WEBHOOKSIGNATUREINVALID = 141,
+            WEBHOOKSIGNATUREINVALID = 143,
 
             /// <summary>
             /// Enum WEBHOOKPAYLOADINVALID for value: WEBHOOK_PAYLOAD_INVALID
             /// </summary>
-            WEBHOOKPAYLOADINVALID = 142,
+            WEBHOOKPAYLOADINVALID = 144,
 
             /// <summary>
             /// Enum SHOPIFYPENDINGINSTALLNOTFOUND for value: SHOPIFY_PENDING_INSTALL_NOT_FOUND
             /// </summary>
-            SHOPIFYPENDINGINSTALLNOTFOUND = 143,
+            SHOPIFYPENDINGINSTALLNOTFOUND = 145,
 
             /// <summary>
             /// Enum SHOPIFYPENDINGINSTALLEXPIRED for value: SHOPIFY_PENDING_INSTALL_EXPIRED
             /// </summary>
-            SHOPIFYPENDINGINSTALLEXPIRED = 144,
+            SHOPIFYPENDINGINSTALLEXPIRED = 146,
 
             /// <summary>
             /// Enum SHOPALREADYCONNECTED for value: SHOP_ALREADY_CONNECTED
             /// </summary>
-            SHOPALREADYCONNECTED = 145,
+            SHOPALREADYCONNECTED = 147,
 
             /// <summary>
             /// Enum SHOPCLAIMEDBYANOTHERORG for value: SHOP_CLAIMED_BY_ANOTHER_ORG
             /// </summary>
-            SHOPCLAIMEDBYANOTHERORG = 146,
+            SHOPCLAIMEDBYANOTHERORG = 148,
 
             /// <summary>
             /// Enum WOOCOMMERCECONNECTFAILED for value: WOOCOMMERCE_CONNECT_FAILED
             /// </summary>
-            WOOCOMMERCECONNECTFAILED = 147,
+            WOOCOMMERCECONNECTFAILED = 149,
 
             /// <summary>
             /// Enum WOOCOMMERCEAUTHSTATEINVALID for value: WOOCOMMERCE_AUTH_STATE_INVALID
             /// </summary>
-            WOOCOMMERCEAUTHSTATEINVALID = 148,
+            WOOCOMMERCEAUTHSTATEINVALID = 150,
 
             /// <summary>
             /// Enum CHECKOUTTOKENINVALID for value: CHECKOUT_TOKEN_INVALID
             /// </summary>
-            CHECKOUTTOKENINVALID = 149,
+            CHECKOUTTOKENINVALID = 151,
 
             /// <summary>
             /// Enum ORDERCHANNELTYPEUNSUPPORTED for value: ORDER_CHANNEL_TYPE_UNSUPPORTED
             /// </summary>
-            ORDERCHANNELTYPEUNSUPPORTED = 150,
+            ORDERCHANNELTYPEUNSUPPORTED = 152,
 
             /// <summary>
             /// Enum PRINTERNOTFOUND for value: PRINTER_NOT_FOUND
             /// </summary>
-            PRINTERNOTFOUND = 151,
+            PRINTERNOTFOUND = 153,
 
             /// <summary>
             /// Enum PRINTEROFFLINE for value: PRINTER_OFFLINE
             /// </summary>
-            PRINTEROFFLINE = 152,
+            PRINTEROFFLINE = 154,
 
             /// <summary>
             /// Enum PRINTERAUTHTIMEOUT for value: PRINTER_AUTH_TIMEOUT
             /// </summary>
-            PRINTERAUTHTIMEOUT = 153,
+            PRINTERAUTHTIMEOUT = 155,
 
             /// <summary>
             /// Enum PRINTERJOBNOTFOUND for value: PRINTER_JOB_NOT_FOUND
             /// </summary>
-            PRINTERJOBNOTFOUND = 154,
+            PRINTERJOBNOTFOUND = 156,
 
             /// <summary>
             /// Enum ORGINTEGRATIONNOTFOUND for value: ORG_INTEGRATION_NOT_FOUND
             /// </summary>
-            ORGINTEGRATIONNOTFOUND = 155,
+            ORGINTEGRATIONNOTFOUND = 157,
 
             /// <summary>
             /// Enum ORGWEBHOOKNOTFOUND for value: ORG_WEBHOOK_NOT_FOUND
             /// </summary>
-            ORGWEBHOOKNOTFOUND = 156,
+            ORGWEBHOOKNOTFOUND = 158,
 
             /// <summary>
             /// Enum AUTOMATIONNOTFOUND for value: AUTOMATION_NOT_FOUND
             /// </summary>
-            AUTOMATIONNOTFOUND = 157,
+            AUTOMATIONNOTFOUND = 159,
 
             /// <summary>
             /// Enum AUTOMATIONINVALID for value: AUTOMATION_INVALID
             /// </summary>
-            AUTOMATIONINVALID = 158,
+            AUTOMATIONINVALID = 160,
 
             /// <summary>
             /// Enum ZIPPYDISABLED for value: ZIPPY_DISABLED
             /// </summary>
-            ZIPPYDISABLED = 159,
+            ZIPPYDISABLED = 161,
 
             /// <summary>
             /// Enum CONVERSATIONNOTFOUND for value: CONVERSATION_NOT_FOUND
             /// </summary>
-            CONVERSATIONNOTFOUND = 160,
+            CONVERSATIONNOTFOUND = 162,
 
             /// <summary>
             /// Enum FILTERINVALID for value: FILTER_INVALID
             /// </summary>
-            FILTERINVALID = 161,
+            FILTERINVALID = 163,
 
             /// <summary>
             /// Enum SAVEDVIEWNOTFOUND for value: SAVED_VIEW_NOT_FOUND
             /// </summary>
-            SAVEDVIEWNOTFOUND = 162,
+            SAVEDVIEWNOTFOUND = 164,
 
             /// <summary>
             /// Enum SAVEDVIEWLIMITREACHED for value: SAVED_VIEW_LIMIT_REACHED
             /// </summary>
-            SAVEDVIEWLIMITREACHED = 163,
+            SAVEDVIEWLIMITREACHED = 165,
 
             /// <summary>
             /// Enum ADMINFORBIDDEN for value: ADMIN_FORBIDDEN
             /// </summary>
-            ADMINFORBIDDEN = 164,
+            ADMINFORBIDDEN = 166,
 
             /// <summary>
             /// Enum JOBHANDLERNOTREGISTERED for value: JOB_HANDLER_NOT_REGISTERED
             /// </summary>
-            JOBHANDLERNOTREGISTERED = 165,
+            JOBHANDLERNOTREGISTERED = 167,
 
             /// <summary>
             /// Enum JOBQUEUENOTCONFIGURED for value: JOB_QUEUE_NOT_CONFIGURED
             /// </summary>
-            JOBQUEUENOTCONFIGURED = 166,
+            JOBQUEUENOTCONFIGURED = 168,
 
             /// <summary>
             /// Enum JOBENQUEUEFAILED for value: JOB_ENQUEUE_FAILED
             /// </summary>
-            JOBENQUEUEFAILED = 167,
+            JOBENQUEUEFAILED = 169,
 
             /// <summary>
             /// Enum JOBPAYLOADINVALID for value: JOB_PAYLOAD_INVALID
             /// </summary>
-            JOBPAYLOADINVALID = 168,
+            JOBPAYLOADINVALID = 170,
 
             /// <summary>
             /// Enum EMAILSENDFAILED for value: EMAIL_SEND_FAILED
             /// </summary>
-            EMAILSENDFAILED = 169,
+            EMAILSENDFAILED = 171,
 
             /// <summary>
             /// Enum INTEGRATIONDELIVERYFAILED for value: INTEGRATION_DELIVERY_FAILED
             /// </summary>
-            INTEGRATIONDELIVERYFAILED = 170,
+            INTEGRATIONDELIVERYFAILED = 172,
 
             /// <summary>
             /// Enum WEBHOOKDELIVERYFAILED for value: WEBHOOK_DELIVERY_FAILED
             /// </summary>
-            WEBHOOKDELIVERYFAILED = 171,
+            WEBHOOKDELIVERYFAILED = 173,
 
             /// <summary>
             /// Enum DOCUMENTGENERATIONFAILED for value: DOCUMENT_GENERATION_FAILED
             /// </summary>
-            DOCUMENTGENERATIONFAILED = 172,
+            DOCUMENTGENERATIONFAILED = 174,
 
             /// <summary>
             /// Enum AIUNAVAILABLE for value: AI_UNAVAILABLE
             /// </summary>
-            AIUNAVAILABLE = 173,
+            AIUNAVAILABLE = 175,
 
             /// <summary>
             /// Enum MIGRATIONPROVIDERUNKNOWN for value: MIGRATION_PROVIDER_UNKNOWN
             /// </summary>
-            MIGRATIONPROVIDERUNKNOWN = 174,
+            MIGRATIONPROVIDERUNKNOWN = 176,
 
             /// <summary>
             /// Enum MIGRATIONSOURCETOKENINVALID for value: MIGRATION_SOURCE_TOKEN_INVALID
             /// </summary>
-            MIGRATIONSOURCETOKENINVALID = 175,
+            MIGRATIONSOURCETOKENINVALID = 177,
 
             /// <summary>
             /// Enum MIGRATIONSOURCEUNREACHABLE for value: MIGRATION_SOURCE_UNREACHABLE
             /// </summary>
-            MIGRATIONSOURCEUNREACHABLE = 176,
+            MIGRATIONSOURCEUNREACHABLE = 178,
 
             /// <summary>
             /// Enum MIGRATIONNOTFOUND for value: MIGRATION_NOT_FOUND
             /// </summary>
-            MIGRATIONNOTFOUND = 177,
+            MIGRATIONNOTFOUND = 179,
 
             /// <summary>
             /// Enum MIGRATIONINPROGRESS for value: MIGRATION_IN_PROGRESS
             /// </summary>
-            MIGRATIONINPROGRESS = 178,
+            MIGRATIONINPROGRESS = 180,
 
             /// <summary>
             /// Enum WMSCONNECTIONNOTFOUND for value: WMS_CONNECTION_NOT_FOUND
             /// </summary>
-            WMSCONNECTIONNOTFOUND = 179,
+            WMSCONNECTIONNOTFOUND = 181,
 
             /// <summary>
             /// Enum WMSCONNECTIONCONFIGINVALID for value: WMS_CONNECTION_CONFIG_INVALID
             /// </summary>
-            WMSCONNECTIONCONFIGINVALID = 180,
+            WMSCONNECTIONCONFIGINVALID = 182,
 
             /// <summary>
             /// Enum WMSCONNECTIONDISABLED for value: WMS_CONNECTION_DISABLED
             /// </summary>
-            WMSCONNECTIONDISABLED = 181,
+            WMSCONNECTIONDISABLED = 183,
 
             /// <summary>
             /// Enum WMSACCOUNTMISMATCH for value: WMS_ACCOUNT_MISMATCH
             /// </summary>
-            WMSACCOUNTMISMATCH = 182,
+            WMSACCOUNTMISMATCH = 184,
 
             /// <summary>
             /// Enum WMSHOSTIDUNMAPPED for value: WMS_HOST_ID_UNMAPPED
             /// </summary>
-            WMSHOSTIDUNMAPPED = 183,
+            WMSHOSTIDUNMAPPED = 185,
 
             /// <summary>
             /// Enum WMSSERVICEPOINTREQUIRED for value: WMS_SERVICE_POINT_REQUIRED
             /// </summary>
-            WMSSERVICEPOINTREQUIRED = 184,
+            WMSSERVICEPOINTREQUIRED = 186,
 
             /// <summary>
             /// Enum WMSDANGEROUSGOODSUNSUPPORTED for value: WMS_DANGEROUS_GOODS_UNSUPPORTED
             /// </summary>
-            WMSDANGEROUSGOODSUNSUPPORTED = 185,
+            WMSDANGEROUSGOODSUNSUPPORTED = 187,
 
             /// <summary>
             /// Enum WMSLABELINPROGRESS for value: WMS_LABEL_IN_PROGRESS
             /// </summary>
-            WMSLABELINPROGRESS = 186,
+            WMSLABELINPROGRESS = 188,
 
             /// <summary>
             /// Enum WMSLABELALREADYBOOKED for value: WMS_LABEL_ALREADY_BOOKED
             /// </summary>
-            WMSLABELALREADYBOOKED = 187,
+            WMSLABELALREADYBOOKED = 189,
 
             /// <summary>
             /// Enum WMSLABELCOUNTMISMATCH for value: WMS_LABEL_COUNT_MISMATCH
             /// </summary>
-            WMSLABELCOUNTMISMATCH = 188,
+            WMSLABELCOUNTMISMATCH = 190,
 
             /// <summary>
             /// Enum DATAEXPORTNOTFOUND for value: DATA_EXPORT_NOT_FOUND
             /// </summary>
-            DATAEXPORTNOTFOUND = 189,
+            DATAEXPORTNOTFOUND = 191,
 
             /// <summary>
             /// Enum DATAEXPORTINPROGRESS for value: DATA_EXPORT_IN_PROGRESS
             /// </summary>
-            DATAEXPORTINPROGRESS = 190,
+            DATAEXPORTINPROGRESS = 192,
 
             /// <summary>
             /// Enum DATAEXPORTNOTREADY for value: DATA_EXPORT_NOT_READY
             /// </summary>
-            DATAEXPORTNOTREADY = 191,
+            DATAEXPORTNOTREADY = 193,
 
             /// <summary>
             /// Enum DATAEXPORTEXPIRED for value: DATA_EXPORT_EXPIRED
             /// </summary>
-            DATAEXPORTEXPIRED = 192,
+            DATAEXPORTEXPIRED = 194,
 
             /// <summary>
             /// Enum DATAEXPORTFAILED for value: DATA_EXPORT_FAILED
             /// </summary>
-            DATAEXPORTFAILED = 193
+            DATAEXPORTFAILED = 195
         }
 
         /// <summary>
@@ -1323,6 +1333,9 @@ namespace Zippendo.Model
             if (value.Equals("CARRIER_DOCUMENT_INCOMPLETE"))
                 return CodeEnum.CARRIERDOCUMENTINCOMPLETE;
 
+            if (value.Equals("CARRIER_QR_CODE_NOT_ISSUED"))
+                return CodeEnum.CARRIERQRCODENOTISSUED;
+
             if (value.Equals("CARRIER_LABEL_NOT_ISSUED"))
                 return CodeEnum.CARRIERLABELNOTISSUED;
 
@@ -1382,6 +1395,9 @@ namespace Zippendo.Model
 
             if (value.Equals("CARRIER_POSTI_BOOKING_FAILED"))
                 return CodeEnum.CARRIERPOSTIBOOKINGFAILED;
+
+            if (value.Equals("CARRIER_INPOST_BOOKING_FAILED"))
+                return CodeEnum.CARRIERINPOSTBOOKINGFAILED;
 
             if (value.Equals("CARRIER_ROYAL_MAIL_BOOKING_FAILED"))
                 return CodeEnum.CARRIERROYALMAILBOOKINGFAILED;
@@ -1912,6 +1928,9 @@ namespace Zippendo.Model
             if (value.Equals("CARRIER_DOCUMENT_INCOMPLETE"))
                 return CodeEnum.CARRIERDOCUMENTINCOMPLETE;
 
+            if (value.Equals("CARRIER_QR_CODE_NOT_ISSUED"))
+                return CodeEnum.CARRIERQRCODENOTISSUED;
+
             if (value.Equals("CARRIER_LABEL_NOT_ISSUED"))
                 return CodeEnum.CARRIERLABELNOTISSUED;
 
@@ -1971,6 +1990,9 @@ namespace Zippendo.Model
 
             if (value.Equals("CARRIER_POSTI_BOOKING_FAILED"))
                 return CodeEnum.CARRIERPOSTIBOOKINGFAILED;
+
+            if (value.Equals("CARRIER_INPOST_BOOKING_FAILED"))
+                return CodeEnum.CARRIERINPOSTBOOKINGFAILED;
 
             if (value.Equals("CARRIER_ROYAL_MAIL_BOOKING_FAILED"))
                 return CodeEnum.CARRIERROYALMAILBOOKINGFAILED;
@@ -2502,6 +2524,9 @@ namespace Zippendo.Model
             if (value == CodeEnum.CARRIERDOCUMENTINCOMPLETE)
                 return "CARRIER_DOCUMENT_INCOMPLETE";
 
+            if (value == CodeEnum.CARRIERQRCODENOTISSUED)
+                return "CARRIER_QR_CODE_NOT_ISSUED";
+
             if (value == CodeEnum.CARRIERLABELNOTISSUED)
                 return "CARRIER_LABEL_NOT_ISSUED";
 
@@ -2561,6 +2586,9 @@ namespace Zippendo.Model
 
             if (value == CodeEnum.CARRIERPOSTIBOOKINGFAILED)
                 return "CARRIER_POSTI_BOOKING_FAILED";
+
+            if (value == CodeEnum.CARRIERINPOSTBOOKINGFAILED)
+                return "CARRIER_INPOST_BOOKING_FAILED";
 
             if (value == CodeEnum.CARRIERROYALMAILBOOKINGFAILED)
                 return "CARRIER_ROYAL_MAIL_BOOKING_FAILED";
