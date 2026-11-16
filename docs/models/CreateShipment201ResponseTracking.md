@@ -7,6 +7,8 @@ Name | Type | Description | Notes
 **Url** | **string** | Public carrier tracking URL. | [optional] 
 **Number** | **string** | Carrier tracking number. | [optional] 
 **LabelFreeCode** | **string** | Label-free drop-off code. | [optional] 
+**ExpectedPickupDate** | **string** | The day the carrier plans to collect the parcel, for carriers that choose the pickup day at booking (WebrinQ return pickups). | [optional] 
+**CancellationRequestedAt** | **string** | When a cancellation was sent to a carrier that confirms it later. The shipment stays dispatched until the carrier reports it cancelled. | [optional] 
 **QrCodeLink** | **string** | DEPRECATED — use &#x60;qrCodeDataUri&#x60; (embeddable data URI) or &#x60;qrCodeUrl&#x60; (hosted link). Catch-all that carries whichever applies, kept populated for backwards compatibility during the migration and until it is disabled. | [optional] 
 **QrCodeDataUri** | **string** | Embeddable &#x60;data:&#x60; URI of the QR code image for label-free drop-off — base64 image bytes you can drop straight into an &lt;img&gt;/email. Populated whenever the image bytes are available, including for carriers that host the image (it is fetched and inlined); null if the carrier published no QR code or its image could not be retrieved. | [optional] 
 **QrCodeUrl** | **string** | Carrier-hosted URL of the QR code image for label-free drop-off, returned by carriers (e.g. Bring) that link to the image rather than embedding it. Independent of &#x60;qrCodeDataUri&#x60; — both are set when the hosted image was inlined successfully; null for carriers that only return embedded bytes. | [optional] 

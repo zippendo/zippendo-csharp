@@ -47,8 +47,11 @@ namespace Zippendo.Model
         /// <param name="beta">Whether this integration is newly launched and still being verified in production</param>
         /// <param name="generatesCustomsDocuments">Whether the carrier produces the customs declaration (CN22/CN23) itself and returns it with the label.</param>
         /// <param name="generatesCommercialInvoice">Whether the carrier produces the commercial invoice itself and returns it with the label, e.g. via electronic trade documents.</param>
+        /// <param name="cancelsShipments">Whether a sent shipment of this carrier can be cancelled from Zippendo.</param>
+        /// <param name="uncancellableProductIds">Products whose shipments this carrier cannot cancel, although it cancels its other products (for example locker deliveries).</param>
+        /// <param name="verifiesCredentials">Whether Zippendo checks the credentials with the carrier when the carrier is connected or updated.</param>
         [JsonConstructor]
-        public ListAvailableCarriers200ResponseInner(string name, string slug, Option<string?> group = default, Option<string?> description = default, Option<string?> logo = default, Option<string?> brandColor = default, Option<string?> learnMoreUrl = default, Option<List<ListAvailableCarriers200ResponseInnerRequiredFieldsInner>?> requiredFields = default, Option<List<ListAvailableCarriers200ResponseInnerRequiredFieldsInner>?> optionalFields = default, Option<bool?> deprecated = default, Option<string?> deprecationMessage = default, Option<bool?> beta = default, Option<bool?> generatesCustomsDocuments = default, Option<bool?> generatesCommercialInvoice = default)
+        public ListAvailableCarriers200ResponseInner(string name, string slug, Option<string?> group = default, Option<string?> description = default, Option<string?> logo = default, Option<string?> brandColor = default, Option<string?> learnMoreUrl = default, Option<List<ListAvailableCarriers200ResponseInnerRequiredFieldsInner>?> requiredFields = default, Option<List<ListAvailableCarriers200ResponseInnerRequiredFieldsInner>?> optionalFields = default, Option<bool?> deprecated = default, Option<string?> deprecationMessage = default, Option<bool?> beta = default, Option<bool?> generatesCustomsDocuments = default, Option<bool?> generatesCommercialInvoice = default, Option<bool?> cancelsShipments = default, Option<List<string>?> uncancellableProductIds = default, Option<bool?> verifiesCredentials = default)
         {
             Name = name;
             Slug = slug;
@@ -64,6 +67,9 @@ namespace Zippendo.Model
             BetaOption = beta;
             GeneratesCustomsDocumentsOption = generatesCustomsDocuments;
             GeneratesCommercialInvoiceOption = generatesCommercialInvoice;
+            CancelsShipmentsOption = cancelsShipments;
+            UncancellableProductIdsOption = uncancellableProductIds;
+            VerifiesCredentialsOption = verifiesCredentials;
             OnCreated();
         }
 
@@ -264,6 +270,51 @@ namespace Zippendo.Model
         public bool? GeneratesCommercialInvoice { get { return this.GeneratesCommercialInvoiceOption.Value; } set { this.GeneratesCommercialInvoiceOption = new Option<bool?>(value); } }
 
         /// <summary>
+        /// Used to track the state of CancelsShipments
+        /// </summary>
+        [JsonIgnore]
+        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public Option<bool?> CancelsShipmentsOption { get; private set; }
+
+        /// <summary>
+        /// Whether a sent shipment of this carrier can be cancelled from Zippendo.
+        /// </summary>
+        /// <value>Whether a sent shipment of this carrier can be cancelled from Zippendo.</value>
+        /* <example>true</example> */
+        [JsonPropertyName("cancelsShipments")]
+        public bool? CancelsShipments { get { return this.CancelsShipmentsOption.Value; } set { this.CancelsShipmentsOption = new Option<bool?>(value); } }
+
+        /// <summary>
+        /// Used to track the state of UncancellableProductIds
+        /// </summary>
+        [JsonIgnore]
+        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public Option<List<string>?> UncancellableProductIdsOption { get; private set; }
+
+        /// <summary>
+        /// Products whose shipments this carrier cannot cancel, although it cancels its other products (for example locker deliveries).
+        /// </summary>
+        /// <value>Products whose shipments this carrier cannot cancel, although it cancels its other products (for example locker deliveries).</value>
+        /* <example>[&quot;LOCKER_EXPRESS&quot;]</example> */
+        [JsonPropertyName("uncancellableProductIds")]
+        public List<string>? UncancellableProductIds { get { return this.UncancellableProductIdsOption.Value; } set { this.UncancellableProductIdsOption = new Option<List<string>?>(value); } }
+
+        /// <summary>
+        /// Used to track the state of VerifiesCredentials
+        /// </summary>
+        [JsonIgnore]
+        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public Option<bool?> VerifiesCredentialsOption { get; private set; }
+
+        /// <summary>
+        /// Whether Zippendo checks the credentials with the carrier when the carrier is connected or updated.
+        /// </summary>
+        /// <value>Whether Zippendo checks the credentials with the carrier when the carrier is connected or updated.</value>
+        /* <example>true</example> */
+        [JsonPropertyName("verifiesCredentials")]
+        public bool? VerifiesCredentials { get { return this.VerifiesCredentialsOption.Value; } set { this.VerifiesCredentialsOption = new Option<bool?>(value); } }
+
+        /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
         /// <returns>String presentation of the object</returns>
@@ -285,6 +336,9 @@ namespace Zippendo.Model
             sb.Append("  Beta: ").Append(Beta).Append("\n");
             sb.Append("  GeneratesCustomsDocuments: ").Append(GeneratesCustomsDocuments).Append("\n");
             sb.Append("  GeneratesCommercialInvoice: ").Append(GeneratesCommercialInvoice).Append("\n");
+            sb.Append("  CancelsShipments: ").Append(CancelsShipments).Append("\n");
+            sb.Append("  UncancellableProductIds: ").Append(UncancellableProductIds).Append("\n");
+            sb.Append("  VerifiesCredentials: ").Append(VerifiesCredentials).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -336,6 +390,9 @@ namespace Zippendo.Model
             Option<bool?> beta = default;
             Option<bool?> generatesCustomsDocuments = default;
             Option<bool?> generatesCommercialInvoice = default;
+            Option<bool?> cancelsShipments = default;
+            Option<List<string>?> uncancellableProductIds = default;
+            Option<bool?> verifiesCredentials = default;
 
             while (utf8JsonReader.Read())
             {
@@ -394,6 +451,15 @@ namespace Zippendo.Model
                         case "generatesCommercialInvoice":
                             generatesCommercialInvoice = new Option<bool?>(utf8JsonReader.TokenType == JsonTokenType.Null ? (bool?)null : utf8JsonReader.GetBoolean());
                             break;
+                        case "cancelsShipments":
+                            cancelsShipments = new Option<bool?>(utf8JsonReader.TokenType == JsonTokenType.Null ? (bool?)null : utf8JsonReader.GetBoolean());
+                            break;
+                        case "uncancellableProductIds":
+                            uncancellableProductIds = new Option<List<string>?>(JsonSerializer.Deserialize<List<string>>(ref utf8JsonReader, jsonSerializerOptions)!);
+                            break;
+                        case "verifiesCredentials":
+                            verifiesCredentials = new Option<bool?>(utf8JsonReader.TokenType == JsonTokenType.Null ? (bool?)null : utf8JsonReader.GetBoolean());
+                            break;
                         default:
                             break;
                     }
@@ -448,7 +514,16 @@ namespace Zippendo.Model
             if (generatesCommercialInvoice.IsSet && generatesCommercialInvoice.Value == null)
                 throw new ArgumentNullException(nameof(generatesCommercialInvoice), "Property is not nullable for class ListAvailableCarriers200ResponseInner.");
 
-            return new ListAvailableCarriers200ResponseInner(name.Value!, slug.Value!, group, description, logo, brandColor, learnMoreUrl, requiredFields, optionalFields, deprecated, deprecationMessage, beta, generatesCustomsDocuments, generatesCommercialInvoice);
+            if (cancelsShipments.IsSet && cancelsShipments.Value == null)
+                throw new ArgumentNullException(nameof(cancelsShipments), "Property is not nullable for class ListAvailableCarriers200ResponseInner.");
+
+            if (uncancellableProductIds.IsSet && uncancellableProductIds.Value == null)
+                throw new ArgumentNullException(nameof(uncancellableProductIds), "Property is not nullable for class ListAvailableCarriers200ResponseInner.");
+
+            if (verifiesCredentials.IsSet && verifiesCredentials.Value == null)
+                throw new ArgumentNullException(nameof(verifiesCredentials), "Property is not nullable for class ListAvailableCarriers200ResponseInner.");
+
+            return new ListAvailableCarriers200ResponseInner(name.Value!, slug.Value!, group, description, logo, brandColor, learnMoreUrl, requiredFields, optionalFields, deprecated, deprecationMessage, beta, generatesCustomsDocuments, generatesCommercialInvoice, cancelsShipments, uncancellableProductIds, verifiesCredentials);
         }
 
         /// <summary>
@@ -505,6 +580,9 @@ namespace Zippendo.Model
             if (listAvailableCarriers200ResponseInner.DeprecationMessageOption.IsSet && listAvailableCarriers200ResponseInner.DeprecationMessage == null)
                 throw new ArgumentNullException(nameof(listAvailableCarriers200ResponseInner.DeprecationMessage), "Property is required for class ListAvailableCarriers200ResponseInner.");
 
+            if (listAvailableCarriers200ResponseInner.UncancellableProductIdsOption.IsSet && listAvailableCarriers200ResponseInner.UncancellableProductIds == null)
+                throw new ArgumentNullException(nameof(listAvailableCarriers200ResponseInner.UncancellableProductIds), "Property is required for class ListAvailableCarriers200ResponseInner.");
+
             writer.WriteString("name", listAvailableCarriers200ResponseInner.Name);
 
             writer.WriteString("slug", listAvailableCarriers200ResponseInner.Slug);
@@ -548,6 +626,17 @@ namespace Zippendo.Model
 
             if (listAvailableCarriers200ResponseInner.GeneratesCommercialInvoiceOption.IsSet)
                 writer.WriteBoolean("generatesCommercialInvoice", listAvailableCarriers200ResponseInner.GeneratesCommercialInvoiceOption.Value!.Value);
+
+            if (listAvailableCarriers200ResponseInner.CancelsShipmentsOption.IsSet)
+                writer.WriteBoolean("cancelsShipments", listAvailableCarriers200ResponseInner.CancelsShipmentsOption.Value!.Value);
+
+            if (listAvailableCarriers200ResponseInner.UncancellableProductIdsOption.IsSet)
+            {
+                writer.WritePropertyName("uncancellableProductIds");
+                JsonSerializer.Serialize(writer, listAvailableCarriers200ResponseInner.UncancellableProductIds, jsonSerializerOptions);
+            }
+            if (listAvailableCarriers200ResponseInner.VerifiesCredentialsOption.IsSet)
+                writer.WriteBoolean("verifiesCredentials", listAvailableCarriers200ResponseInner.VerifiesCredentialsOption.Value!.Value);
         }
     }
 }

@@ -6,6 +6,7 @@ All URIs are relative to *https://api.zippendo.com*
 |--------|--------------|-------------|
 | [**BatchSendShipments**](ShipmentsApi.md#batchsendshipments) | **POST** /orgs/{orgId}/shipments/batch-send | Batch send shipments |
 | [**BatchSplitShipment**](ShipmentsApi.md#batchsplitshipment) | **POST** /orgs/{orgId}/shipments/{shipmentId}/batch-split-shipment | Batch split shipment |
+| [**CancelShipment**](ShipmentsApi.md#cancelshipment) | **POST** /orgs/{orgId}/shipments/{shipmentId}/cancel | Cancel sent shipment |
 | [**CreateReturnShipment**](ShipmentsApi.md#createreturnshipment) | **POST** /orgs/{orgId}/shipments/{shipmentId}/create-return | Create return shipment |
 | [**CreateShipment**](ShipmentsApi.md#createshipment) | **POST** /orgs/{orgId}/shipments | Create shipment |
 | [**DeleteShipment**](ShipmentsApi.md#deleteshipment) | **DELETE** /orgs/{orgId}/shipments/{shipmentId} | Delete shipment |
@@ -96,6 +97,49 @@ Split a parcel into multiple new shipments with per-line quantities in a single 
 | **400** | Default Response |  -  |
 | **403** | Default Response |  -  |
 | **404** | Default Response |  -  |
+
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
+
+<a id="cancelshipment"></a>
+# **CancelShipment**
+> CreateShipment201Response CancelShipment (string orgId, string shipmentId)
+
+Cancel sent shipment
+
+Cancel a sent shipment with its carrier. The shipment becomes `cancelled` when the carrier confirms at once; a carrier that confirms later leaves it `dispatched` with the request in its activity, and its tracking shows the outcome; a carrier that withdrew only some parcels leaves it `dispatched` with each parcel's outcome in its activity. Only carriers whose `cancelsShipments` is true accept it, except products listed in `uncancellableProductIds`; others answer SHIPMENT_CANCEL_NOT_SUPPORTED, and a carrier that refuses (for example because the parcel was collected) answers CARRIER_CANCEL_REFUSED.
+
+
+### Parameters
+
+| Name | Type | Description | Notes |
+|------|------|-------------|-------|
+| **orgId** | **string** | Organization identifier. |  |
+| **shipmentId** | **string** | Shipment identifier. |  |
+
+### Return type
+
+[**CreateShipment201Response**](CreateShipment201Response.md)
+
+### Authorization
+
+[bearerAuth](../README.md#bearerAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Default Response |  -  |
+| **400** | Default Response |  -  |
+| **403** | Default Response |  -  |
+| **404** | Default Response |  -  |
+| **409** | Default Response |  -  |
+| **422** | Default Response |  -  |
+| **503** | Default Response |  -  |
 
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 

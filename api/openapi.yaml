@@ -2712,6 +2712,8 @@ paths:
           result = Zippendo::CarriersApi.new.list_carriers("...")
     post:
       description: Connects a new carrier to the organization with its configuration.
+        Carriers that support it check the credentials with the carrier first and
+        refuse them with CARRIER_AUTH_FAILED or CARRIER_CONFIG_INVALID.
       operationId: connectCarrier
       parameters:
       - description: Organization ID
@@ -2749,6 +2751,12 @@ paths:
                 $ref: "#/components/schemas/listApiTokens_401_response"
           description: Default Response
         "404":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/listApiTokens_401_response"
+          description: Default Response
+        "422":
           content:
             application/json:
               schema:
@@ -2961,7 +2969,8 @@ paths:
           Zippendo.configure { |c| c.access_token = ENV["ZIPPENDO_API_TOKEN"] }
           result = Zippendo::CarriersApi.new.get_carrier("...", "...")
     put:
-      description: Updates a connected carrier's configuration or name.
+      description: "Updates a connected carrier's configuration or name. A new configuration\
+        \ is checked with the carrier first where the carrier supports it, as on connect."
       operationId: updateCarrier
       parameters:
       - description: Organization ID
@@ -3008,6 +3017,12 @@ paths:
                 $ref: "#/components/schemas/listApiTokens_401_response"
           description: Default Response
         "404":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/listApiTokens_401_response"
+          description: Default Response
+        "422":
           content:
             application/json:
               schema:
@@ -4629,6 +4644,119 @@ paths:
 
           Zippendo.configure { |c| c.access_token = ENV["ZIPPENDO_API_TOKEN"] }
           result = Zippendo::ShipmentsApi.new.fetch_shipment_label("...", "...")
+  /orgs/{orgId}/shipments/{shipmentId}/cancel:
+    post:
+      description: "Cancel a sent shipment with its carrier. The shipment becomes\
+        \ `cancelled` when the carrier confirms at once; a carrier that confirms later\
+        \ leaves it `dispatched` with the request in its activity, and its tracking\
+        \ shows the outcome; a carrier that withdrew only some parcels leaves it `dispatched`\
+        \ with each parcel's outcome in its activity. Only carriers whose `cancelsShipments`\
+        \ is true accept it, except products listed in `uncancellableProductIds`;\
+        \ others answer SHIPMENT_CANCEL_NOT_SUPPORTED, and a carrier that refuses\
+        \ (for example because the parcel was collected) answers CARRIER_CANCEL_REFUSED."
+      operationId: cancelShipment
+      parameters:
+      - description: Organization identifier.
+        explode: false
+        in: path
+        name: orgId
+        required: true
+        schema:
+          example: org_1a2b3c4d
+          type: string
+        style: simple
+      - description: Shipment identifier.
+        explode: false
+        in: path
+        name: shipmentId
+        required: true
+        schema:
+          example: shp_4d9e7a2f
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/createShipment_201_response"
+          description: Default Response
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/listApiTokens_401_response"
+          description: Default Response
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/listApiTokens_401_response"
+          description: Default Response
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/listApiTokens_401_response"
+          description: Default Response
+        "409":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/listApiTokens_401_response"
+          description: Default Response
+        "422":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/listApiTokens_401_response"
+          description: Default Response
+        "503":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/listApiTokens_401_response"
+          description: Default Response
+      summary: Cancel sent shipment
+      tags:
+      - Shipments
+      x-codeSamples:
+      - lang: typescript
+        label: TypeScript
+        source: |-
+          import { Configuration, ShipmentsApi } from "@zippendo/sdk"
+
+          const api = new ShipmentsApi(new Configuration({ accessToken: process.env.ZIPPENDO_API_TOKEN }))
+          const result = await api.cancelShipment({ orgId: "...", shipmentId: "..." })
+      - lang: python
+        label: Python
+        source: |-
+          import os
+          import zippendo
+
+          config = zippendo.Configuration(access_token=os.environ["ZIPPENDO_API_TOKEN"])
+          with zippendo.ApiClient(config) as client:
+              result = zippendo.ShipmentsApi(client).cancel_shipment("...", "...")
+      - lang: php
+        label: PHP
+        source: |-
+          <?php
+          $config = Zippendo\Sdk\Configuration::getDefaultConfiguration()->setAccessToken(getenv("ZIPPENDO_API_TOKEN"));
+          $api = new Zippendo\Sdk\Api\ShipmentsApi(new GuzzleHttp\Client(), $config);
+          $result = $api->cancelShipment("...", "...");
+      - lang: go
+        label: Go
+        source: |-
+          client := zippendo.NewAPIClient(zippendo.NewConfiguration())
+          ctx := context.WithValue(context.Background(), zippendo.ContextAccessToken, os.Getenv("ZIPPENDO_API_TOKEN"))
+          result, _, err := client.ShipmentsAPI.CancelShipment(ctx, "...", "...").Execute()
+      - lang: ruby
+        label: Ruby
+        source: |-
+          require "zippendo"
+
+          Zippendo.configure { |c| c.access_token = ENV["ZIPPENDO_API_TOKEN"] }
+          result = Zippendo::ShipmentsApi.new.cancel_shipment("...", "...")
   /orgs/{orgId}/shipments/batch-send:
     post:
       description: Send multiple shipments in `pending` or `error` status to their
@@ -7625,6 +7753,7 @@ components:
           - SHIPMENT_ALREADY_SENT
           - SHIPMENT_INVALID_STATE
           - SHIPMENT_LABEL_NOT_AVAILABLE
+          - SHIPMENT_CANCEL_NOT_SUPPORTED
           - SHIPMENT_NOT_READY_TO_SHIP
           - SCAN_PRINTER_NOT_SET
           - SHIPMENT_SERVICE_POINT_REQUIRED
@@ -7675,6 +7804,8 @@ components:
           - CARRIER_DSV_XPRESS_BOOKING_FAILED
           - CARRIER_DSV_ROAD_BOOKING_FAILED
           - CARRIER_DSV_SCHENKER_BOOKING_FAILED
+          - CARRIER_CANCEL_REFUSED
+          - CARRIER_WEBRINQ_BOOKING_FAILED
           - CARRIER_TRACKING_WEBHOOK_REGISTRATION_FAILED
           - CARRIER_CUSTOMS_UNSUPPORTED_PRODUCT
           - CARRIER_CUSTOMS_INCOMPLETE
@@ -9264,6 +9395,10 @@ components:
         beta: true
         generatesCustomsDocuments: true
         generatesCommercialInvoice: true
+        cancelsShipments: true
+        uncancellableProductIds:
+        - LOCKER_EXPRESS
+        verifiesCredentials: true
       properties:
         id:
           description: Unique carrier identifier
@@ -9334,6 +9469,24 @@ components:
             \ and returns it with the label, e.g. via electronic trade documents."
           example: true
           type: boolean
+        cancelsShipments:
+          description: Whether a sent shipment of this carrier can be cancelled from
+            Zippendo.
+          example: true
+          type: boolean
+        uncancellableProductIds:
+          description: "Products whose shipments this carrier cannot cancel, although\
+            \ it cancels its other products (for example locker deliveries)."
+          example:
+          - LOCKER_EXPRESS
+          items:
+            type: string
+          type: array
+        verifiesCredentials:
+          description: Whether Zippendo checks the credentials with the carrier when
+            the carrier is connected or updated.
+          example: true
+          type: boolean
       required:
       - brandId
       - carrierSlug
@@ -9365,6 +9518,10 @@ components:
           beta: true
           generatesCustomsDocuments: true
           generatesCommercialInvoice: true
+          cancelsShipments: true
+          uncancellableProductIds:
+          - LOCKER_EXPRESS
+          verifiesCredentials: true
         - id: carr_01HZX9K2QF
           name: PostNord
           carrierSlug: postnord
@@ -9382,6 +9539,10 @@ components:
           beta: true
           generatesCustomsDocuments: true
           generatesCommercialInvoice: true
+          cancelsShipments: true
+          uncancellableProductIds:
+          - LOCKER_EXPRESS
+          verifiesCredentials: true
         total: 137
         page: 1
         limit: 20
@@ -13186,6 +13347,8 @@ components:
         url: https://tracking.postnord.com/00370724710000012345
         number: "00370724710000012345"
         labelFreeCode: AB12CD34
+        expectedPickupDate: 2026-11-04
+        cancellationRequestedAt: 2026-11-03T10:15:00.000Z
         qrCodeLink: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg=="
         qrCodeDataUri: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg=="
         qrCodeUrl: https://qr.bring.com/label-free/AB12CD34.png
@@ -13204,6 +13367,18 @@ components:
         labelFreeCode:
           description: Label-free drop-off code.
           example: AB12CD34
+          nullable: true
+          type: string
+        expectedPickupDate:
+          description: "The day the carrier plans to collect the parcel, for carriers\
+            \ that choose the pickup day at booking (WebrinQ return pickups)."
+          example: 2026-11-04
+          nullable: true
+          type: string
+        cancellationRequestedAt:
+          description: When a cancellation was sent to a carrier that confirms it
+            later. The shipment stays dispatched until the carrier reports it cancelled.
+          example: 2026-11-03T10:15:00.000Z
           nullable: true
           type: string
         qrCodeLink:
@@ -13572,6 +13747,8 @@ components:
           url: https://tracking.postnord.com/00370724710000012345
           number: "00370724710000012345"
           labelFreeCode: AB12CD34
+          expectedPickupDate: 2026-11-04
+          cancellationRequestedAt: 2026-11-03T10:15:00.000Z
           qrCodeLink: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg=="
           qrCodeDataUri: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg=="
           qrCodeUrl: https://qr.bring.com/label-free/AB12CD34.png
@@ -14013,6 +14190,7 @@ components:
           - SHIPMENT_ALREADY_SENT
           - SHIPMENT_INVALID_STATE
           - SHIPMENT_LABEL_NOT_AVAILABLE
+          - SHIPMENT_CANCEL_NOT_SUPPORTED
           - SHIPMENT_NOT_READY_TO_SHIP
           - SCAN_PRINTER_NOT_SET
           - SHIPMENT_SERVICE_POINT_REQUIRED
@@ -14063,6 +14241,8 @@ components:
           - CARRIER_DSV_XPRESS_BOOKING_FAILED
           - CARRIER_DSV_ROAD_BOOKING_FAILED
           - CARRIER_DSV_SCHENKER_BOOKING_FAILED
+          - CARRIER_CANCEL_REFUSED
+          - CARRIER_WEBRINQ_BOOKING_FAILED
           - CARRIER_TRACKING_WEBHOOK_REGISTRATION_FAILED
           - CARRIER_CUSTOMS_UNSUPPORTED_PRODUCT
           - CARRIER_CUSTOMS_INCOMPLETE
@@ -14277,6 +14457,7 @@ components:
           - SHIPMENT_ALREADY_SENT
           - SHIPMENT_INVALID_STATE
           - SHIPMENT_LABEL_NOT_AVAILABLE
+          - SHIPMENT_CANCEL_NOT_SUPPORTED
           - SHIPMENT_NOT_READY_TO_SHIP
           - SCAN_PRINTER_NOT_SET
           - SHIPMENT_SERVICE_POINT_REQUIRED
@@ -14327,6 +14508,8 @@ components:
           - CARRIER_DSV_XPRESS_BOOKING_FAILED
           - CARRIER_DSV_ROAD_BOOKING_FAILED
           - CARRIER_DSV_SCHENKER_BOOKING_FAILED
+          - CARRIER_CANCEL_REFUSED
+          - CARRIER_WEBRINQ_BOOKING_FAILED
           - CARRIER_TRACKING_WEBHOOK_REGISTRATION_FAILED
           - CARRIER_CUSTOMS_UNSUPPORTED_PRODUCT
           - CARRIER_CUSTOMS_INCOMPLETE
@@ -14702,6 +14885,8 @@ components:
             url: https://tracking.postnord.com/00370724710000012345
             number: "00370724710000012345"
             labelFreeCode: AB12CD34
+            expectedPickupDate: 2026-11-04
+            cancellationRequestedAt: 2026-11-03T10:15:00.000Z
             qrCodeLink: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg=="
             qrCodeDataUri: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg=="
             qrCodeUrl: https://qr.bring.com/label-free/AB12CD34.png
@@ -14914,6 +15099,8 @@ components:
             url: https://tracking.postnord.com/00370724710000012345
             number: "00370724710000012345"
             labelFreeCode: AB12CD34
+            expectedPickupDate: 2026-11-04
+            cancellationRequestedAt: 2026-11-03T10:15:00.000Z
             qrCodeLink: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg=="
             qrCodeDataUri: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg=="
             qrCodeUrl: https://qr.bring.com/label-free/AB12CD34.png
@@ -15213,6 +15400,8 @@ components:
             url: https://tracking.postnord.com/00370724710000012345
             number: "00370724710000012345"
             labelFreeCode: AB12CD34
+            expectedPickupDate: 2026-11-04
+            cancellationRequestedAt: 2026-11-03T10:15:00.000Z
             qrCodeLink: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg=="
             qrCodeDataUri: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg=="
             qrCodeUrl: https://qr.bring.com/label-free/AB12CD34.png
@@ -15425,6 +15614,8 @@ components:
             url: https://tracking.postnord.com/00370724710000012345
             number: "00370724710000012345"
             labelFreeCode: AB12CD34
+            expectedPickupDate: 2026-11-04
+            cancellationRequestedAt: 2026-11-03T10:15:00.000Z
             qrCodeLink: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg=="
             qrCodeDataUri: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg=="
             qrCodeUrl: https://qr.bring.com/label-free/AB12CD34.png
@@ -15636,6 +15827,8 @@ components:
             url: https://tracking.postnord.com/00370724710000012345
             number: "00370724710000012345"
             labelFreeCode: AB12CD34
+            expectedPickupDate: 2026-11-04
+            cancellationRequestedAt: 2026-11-03T10:15:00.000Z
             qrCodeLink: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg=="
             qrCodeDataUri: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg=="
             qrCodeUrl: https://qr.bring.com/label-free/AB12CD34.png
@@ -15889,6 +16082,8 @@ components:
             url: https://tracking.postnord.com/00370724710000012345
             number: "00370724710000012345"
             labelFreeCode: AB12CD34
+            expectedPickupDate: 2026-11-04
+            cancellationRequestedAt: 2026-11-03T10:15:00.000Z
             qrCodeLink: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg=="
             qrCodeDataUri: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg=="
             qrCodeUrl: https://qr.bring.com/label-free/AB12CD34.png
@@ -17269,6 +17464,8 @@ components:
           url: https://tracking.postnord.com/00370724710000012345
           number: "00370724710000012345"
           labelFreeCode: AB12CD34
+          expectedPickupDate: 2026-11-04
+          cancellationRequestedAt: 2026-11-03T10:15:00.000Z
           qrCodeLink: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg=="
           qrCodeDataUri: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg=="
           qrCodeUrl: https://qr.bring.com/label-free/AB12CD34.png
@@ -17510,6 +17707,8 @@ components:
             url: https://tracking.postnord.com/00370724710000012345
             number: "00370724710000012345"
             labelFreeCode: AB12CD34
+            expectedPickupDate: 2026-11-04
+            cancellationRequestedAt: 2026-11-03T10:15:00.000Z
             qrCodeLink: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg=="
             qrCodeDataUri: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg=="
             qrCodeUrl: https://qr.bring.com/label-free/AB12CD34.png
@@ -17582,6 +17781,8 @@ components:
             url: https://tracking.postnord.com/00370724710000012345
             number: "00370724710000012345"
             labelFreeCode: AB12CD34
+            expectedPickupDate: 2026-11-04
+            cancellationRequestedAt: 2026-11-03T10:15:00.000Z
             qrCodeLink: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg=="
             qrCodeDataUri: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg=="
             qrCodeUrl: https://qr.bring.com/label-free/AB12CD34.png
@@ -18785,6 +18986,10 @@ components:
         beta: true
         generatesCustomsDocuments: true
         generatesCommercialInvoice: true
+        cancelsShipments: true
+        uncancellableProductIds:
+        - LOCKER_EXPRESS
+        verifiesCredentials: true
       properties:
         name:
           description: Display name of the carrier
@@ -18848,6 +19053,24 @@ components:
         generatesCommercialInvoice:
           description: "Whether the carrier produces the commercial invoice itself\
             \ and returns it with the label, e.g. via electronic trade documents."
+          example: true
+          type: boolean
+        cancelsShipments:
+          description: Whether a sent shipment of this carrier can be cancelled from
+            Zippendo.
+          example: true
+          type: boolean
+        uncancellableProductIds:
+          description: "Products whose shipments this carrier cannot cancel, although\
+            \ it cancels its other products (for example locker deliveries)."
+          example:
+          - LOCKER_EXPRESS
+          items:
+            type: string
+          type: array
+        verifiesCredentials:
+          description: Whether Zippendo checks the credentials with the carrier when
+            the carrier is connected or updated.
           example: true
           type: boolean
       required:

@@ -36,15 +36,19 @@ namespace Zippendo.Model
         /// <param name="url">Public carrier tracking URL.</param>
         /// <param name="number">Carrier tracking number.</param>
         /// <param name="labelFreeCode">Label-free drop-off code.</param>
+        /// <param name="expectedPickupDate">The day the carrier plans to collect the parcel, for carriers that choose the pickup day at booking (WebrinQ return pickups).</param>
+        /// <param name="cancellationRequestedAt">When a cancellation was sent to a carrier that confirms it later. The shipment stays dispatched until the carrier reports it cancelled.</param>
         /// <param name="qrCodeLink">DEPRECATED — use &#x60;qrCodeDataUri&#x60; (embeddable data URI) or &#x60;qrCodeUrl&#x60; (hosted link). Catch-all that carries whichever applies, kept populated for backwards compatibility during the migration and until it is disabled.</param>
         /// <param name="qrCodeDataUri">Embeddable &#x60;data:&#x60; URI of the QR code image for label-free drop-off — base64 image bytes you can drop straight into an &lt;img&gt;/email. Populated whenever the image bytes are available, including for carriers that host the image (it is fetched and inlined); null if the carrier published no QR code or its image could not be retrieved.</param>
         /// <param name="qrCodeUrl">Carrier-hosted URL of the QR code image for label-free drop-off, returned by carriers (e.g. Bring) that link to the image rather than embedding it. Independent of &#x60;qrCodeDataUri&#x60; — both are set when the hosted image was inlined successfully; null for carriers that only return embedded bytes.</param>
         [JsonConstructor]
-        public CreateShipment201ResponseTracking(Option<string?> url = default, Option<string?> number = default, Option<string?> labelFreeCode = default, Option<string?> qrCodeLink = default, Option<string?> qrCodeDataUri = default, Option<string?> qrCodeUrl = default)
+        public CreateShipment201ResponseTracking(Option<string?> url = default, Option<string?> number = default, Option<string?> labelFreeCode = default, Option<string?> expectedPickupDate = default, Option<string?> cancellationRequestedAt = default, Option<string?> qrCodeLink = default, Option<string?> qrCodeDataUri = default, Option<string?> qrCodeUrl = default)
         {
             UrlOption = url;
             NumberOption = number;
             LabelFreeCodeOption = labelFreeCode;
+            ExpectedPickupDateOption = expectedPickupDate;
+            CancellationRequestedAtOption = cancellationRequestedAt;
             QrCodeLinkOption = qrCodeLink;
             QrCodeDataUriOption = qrCodeDataUri;
             QrCodeUrlOption = qrCodeUrl;
@@ -97,6 +101,36 @@ namespace Zippendo.Model
         /* <example>AB12CD34</example> */
         [JsonPropertyName("labelFreeCode")]
         public string? LabelFreeCode { get { return this.LabelFreeCodeOption.Value; } set { this.LabelFreeCodeOption = new Option<string?>(value); } }
+
+        /// <summary>
+        /// Used to track the state of ExpectedPickupDate
+        /// </summary>
+        [JsonIgnore]
+        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public Option<string?> ExpectedPickupDateOption { get; private set; }
+
+        /// <summary>
+        /// The day the carrier plans to collect the parcel, for carriers that choose the pickup day at booking (WebrinQ return pickups).
+        /// </summary>
+        /// <value>The day the carrier plans to collect the parcel, for carriers that choose the pickup day at booking (WebrinQ return pickups).</value>
+        /* <example>2026-11-04</example> */
+        [JsonPropertyName("expectedPickupDate")]
+        public string? ExpectedPickupDate { get { return this.ExpectedPickupDateOption.Value; } set { this.ExpectedPickupDateOption = new Option<string?>(value); } }
+
+        /// <summary>
+        /// Used to track the state of CancellationRequestedAt
+        /// </summary>
+        [JsonIgnore]
+        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public Option<string?> CancellationRequestedAtOption { get; private set; }
+
+        /// <summary>
+        /// When a cancellation was sent to a carrier that confirms it later. The shipment stays dispatched until the carrier reports it cancelled.
+        /// </summary>
+        /// <value>When a cancellation was sent to a carrier that confirms it later. The shipment stays dispatched until the carrier reports it cancelled.</value>
+        /* <example>2026-11-03T10:15:00.000Z</example> */
+        [JsonPropertyName("cancellationRequestedAt")]
+        public string? CancellationRequestedAt { get { return this.CancellationRequestedAtOption.Value; } set { this.CancellationRequestedAtOption = new Option<string?>(value); } }
 
         /// <summary>
         /// Used to track the state of QrCodeLink
@@ -154,6 +188,8 @@ namespace Zippendo.Model
             sb.Append("  Url: ").Append(Url).Append("\n");
             sb.Append("  Number: ").Append(Number).Append("\n");
             sb.Append("  LabelFreeCode: ").Append(LabelFreeCode).Append("\n");
+            sb.Append("  ExpectedPickupDate: ").Append(ExpectedPickupDate).Append("\n");
+            sb.Append("  CancellationRequestedAt: ").Append(CancellationRequestedAt).Append("\n");
             sb.Append("  QrCodeLink: ").Append(QrCodeLink).Append("\n");
             sb.Append("  QrCodeDataUri: ").Append(QrCodeDataUri).Append("\n");
             sb.Append("  QrCodeUrl: ").Append(QrCodeUrl).Append("\n");
@@ -197,6 +233,8 @@ namespace Zippendo.Model
             Option<string?> url = default;
             Option<string?> number = default;
             Option<string?> labelFreeCode = default;
+            Option<string?> expectedPickupDate = default;
+            Option<string?> cancellationRequestedAt = default;
             Option<string?> qrCodeLink = default;
             Option<string?> qrCodeDataUri = default;
             Option<string?> qrCodeUrl = default;
@@ -225,6 +263,12 @@ namespace Zippendo.Model
                         case "labelFreeCode":
                             labelFreeCode = new Option<string?>(utf8JsonReader.GetString());
                             break;
+                        case "expectedPickupDate":
+                            expectedPickupDate = new Option<string?>(utf8JsonReader.GetString());
+                            break;
+                        case "cancellationRequestedAt":
+                            cancellationRequestedAt = new Option<string?>(utf8JsonReader.GetString());
+                            break;
                         case "qrCodeLink":
                             qrCodeLink = new Option<string?>(utf8JsonReader.GetString());
                             break;
@@ -240,7 +284,7 @@ namespace Zippendo.Model
                 }
             }
 
-            return new CreateShipment201ResponseTracking(url, number, labelFreeCode, qrCodeLink, qrCodeDataUri, qrCodeUrl);
+            return new CreateShipment201ResponseTracking(url, number, labelFreeCode, expectedPickupDate, cancellationRequestedAt, qrCodeLink, qrCodeDataUri, qrCodeUrl);
         }
 
         /// <summary>
@@ -284,6 +328,18 @@ namespace Zippendo.Model
                     writer.WriteString("labelFreeCode", createShipment201ResponseTracking.LabelFreeCode);
                 else
                     writer.WriteNull("labelFreeCode");
+
+            if (createShipment201ResponseTracking.ExpectedPickupDateOption.IsSet)
+                if (createShipment201ResponseTracking.ExpectedPickupDateOption.Value != null)
+                    writer.WriteString("expectedPickupDate", createShipment201ResponseTracking.ExpectedPickupDate);
+                else
+                    writer.WriteNull("expectedPickupDate");
+
+            if (createShipment201ResponseTracking.CancellationRequestedAtOption.IsSet)
+                if (createShipment201ResponseTracking.CancellationRequestedAtOption.Value != null)
+                    writer.WriteString("cancellationRequestedAt", createShipment201ResponseTracking.CancellationRequestedAt);
+                else
+                    writer.WriteNull("cancellationRequestedAt");
 
             if (createShipment201ResponseTracking.QrCodeLinkOption.IsSet)
                 if (createShipment201ResponseTracking.QrCodeLinkOption.Value != null)

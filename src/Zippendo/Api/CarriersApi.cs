@@ -42,7 +42,7 @@ namespace Zippendo.Api
         /// Connect carrier
         /// </summary>
         /// <remarks>
-        /// Connects a new carrier to the organization with its configuration.
+        /// Connects a new carrier to the organization with its configuration. Carriers that support it check the credentials with the carrier first and refuse them with CARRIER_AUTH_FAILED or CARRIER_CONFIG_INVALID.
         /// </remarks>
         /// <exception cref="ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId">Organization ID</param>
@@ -55,7 +55,7 @@ namespace Zippendo.Api
         /// Connect carrier
         /// </summary>
         /// <remarks>
-        /// Connects a new carrier to the organization with its configuration.
+        /// Connects a new carrier to the organization with its configuration. Carriers that support it check the credentials with the carrier first and refuse them with CARRIER_AUTH_FAILED or CARRIER_CONFIG_INVALID.
         /// </remarks>
         /// <param name="orgId">Organization ID</param>
         /// <param name="connectCarrierRequest"></param>
@@ -206,7 +206,7 @@ namespace Zippendo.Api
         /// Update carrier
         /// </summary>
         /// <remarks>
-        /// Updates a connected carrier&#39;s configuration or name.
+        /// Updates a connected carrier&#39;s configuration or name. A new configuration is checked with the carrier first where the carrier supports it, as on connect.
         /// </remarks>
         /// <exception cref="ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId">Organization ID</param>
@@ -220,7 +220,7 @@ namespace Zippendo.Api
         /// Update carrier
         /// </summary>
         /// <remarks>
-        /// Updates a connected carrier&#39;s configuration or name.
+        /// Updates a connected carrier&#39;s configuration or name. A new configuration is checked with the carrier first where the carrier supports it, as on connect.
         /// </remarks>
         /// <param name="orgId">Organization ID</param>
         /// <param name="carrierId">Carrier ID</param>
@@ -233,7 +233,7 @@ namespace Zippendo.Api
     /// <summary>
     /// The <see cref="IConnectCarrierApiResponse"/>
     /// </summary>
-    public interface IConnectCarrierApiResponse : Zippendo.Client.IApiResponse, ICreated<Zippendo.Model.ListCarriers200ResponseDataInner?>, IBadRequest<Zippendo.Model.ListApiTokens401Response?>, IForbidden<Zippendo.Model.ListApiTokens401Response?>, INotFound<Zippendo.Model.ListApiTokens401Response?>
+    public interface IConnectCarrierApiResponse : Zippendo.Client.IApiResponse, ICreated<Zippendo.Model.ListCarriers200ResponseDataInner?>, IBadRequest<Zippendo.Model.ListApiTokens401Response?>, IForbidden<Zippendo.Model.ListApiTokens401Response?>, INotFound<Zippendo.Model.ListApiTokens401Response?>, IUnprocessableContent<Zippendo.Model.ListApiTokens401Response?>
     {
         /// <summary>
         /// Returns true if the response is 201 Created
@@ -258,6 +258,12 @@ namespace Zippendo.Api
         /// </summary>
         /// <returns></returns>
         bool IsNotFound { get; }
+
+        /// <summary>
+        /// Returns true if the response is 422 UnprocessableContent
+        /// </summary>
+        /// <returns></returns>
+        bool IsUnprocessableContent { get; }
     }
 
     /// <summary>
@@ -377,7 +383,7 @@ namespace Zippendo.Api
     /// <summary>
     /// The <see cref="IUpdateCarrierApiResponse"/>
     /// </summary>
-    public interface IUpdateCarrierApiResponse : Zippendo.Client.IApiResponse, IOk<Zippendo.Model.ListCarriers200ResponseDataInner?>, IBadRequest<Zippendo.Model.ListApiTokens401Response?>, IForbidden<Zippendo.Model.ListApiTokens401Response?>, INotFound<Zippendo.Model.ListApiTokens401Response?>
+    public interface IUpdateCarrierApiResponse : Zippendo.Client.IApiResponse, IOk<Zippendo.Model.ListCarriers200ResponseDataInner?>, IBadRequest<Zippendo.Model.ListApiTokens401Response?>, IForbidden<Zippendo.Model.ListApiTokens401Response?>, INotFound<Zippendo.Model.ListApiTokens401Response?>, IUnprocessableContent<Zippendo.Model.ListApiTokens401Response?>
     {
         /// <summary>
         /// Returns true if the response is 200 Ok
@@ -402,6 +408,12 @@ namespace Zippendo.Api
         /// </summary>
         /// <returns></returns>
         bool IsNotFound { get; }
+
+        /// <summary>
+        /// Returns true if the response is 422 UnprocessableContent
+        /// </summary>
+        /// <returns></returns>
+        bool IsUnprocessableContent { get; }
     }
 
     /// <summary>
@@ -659,7 +671,7 @@ namespace Zippendo.Api
         partial void OnErrorConnectCarrier(ref bool suppressDefaultLogLocalVar, Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, string orgId, ConnectCarrierRequest connectCarrierRequest);
 
         /// <summary>
-        /// Connect carrier Connects a new carrier to the organization with its configuration.
+        /// Connect carrier Connects a new carrier to the organization with its configuration. Carriers that support it check the credentials with the carrier first and refuse them with CARRIER_AUTH_FAILED or CARRIER_CONFIG_INVALID.
         /// </summary>
         /// <param name="orgId">Organization ID</param>
         /// <param name="connectCarrierRequest"></param>
@@ -678,7 +690,7 @@ namespace Zippendo.Api
         }
 
         /// <summary>
-        /// Connect carrier Connects a new carrier to the organization with its configuration.
+        /// Connect carrier Connects a new carrier to the organization with its configuration. Carriers that support it check the credentials with the carrier first and refuse them with CARRIER_AUTH_FAILED or CARRIER_CONFIG_INVALID.
         /// </summary>
         /// <exception cref="ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId">Organization ID</param>
@@ -963,6 +975,44 @@ namespace Zippendo.Api
                 } catch (Exception e)
                 {
                     OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)404);
+                }
+
+                return result != null;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 422 UnprocessableContent
+            /// </summary>
+            /// <returns></returns>
+            public bool IsUnprocessableContent => 422 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 422 UnprocessableContent
+            /// </summary>
+            /// <returns></returns>
+            public Zippendo.Model.ListApiTokens401Response? UnprocessableContent()
+            {
+                // This logic may be modified with the AsModel.mustache template
+                return IsUnprocessableContent
+                    ? System.Text.Json.JsonSerializer.Deserialize<Zippendo.Model.ListApiTokens401Response>(RawContent, _jsonSerializerOptions)
+                    : default;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 422 UnprocessableContent and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryUnprocessableContent(out Zippendo.Model.ListApiTokens401Response? result)
+            {
+                result = null;
+
+                try
+                {
+                    result = UnprocessableContent();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)422);
                 }
 
                 return result != null;
@@ -2804,7 +2854,7 @@ namespace Zippendo.Api
         partial void OnErrorUpdateCarrier(ref bool suppressDefaultLogLocalVar, Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, string orgId, string carrierId, UpdateCarrierRequest updateCarrierRequest);
 
         /// <summary>
-        /// Update carrier Updates a connected carrier&#39;s configuration or name.
+        /// Update carrier Updates a connected carrier&#39;s configuration or name. A new configuration is checked with the carrier first where the carrier supports it, as on connect.
         /// </summary>
         /// <param name="orgId">Organization ID</param>
         /// <param name="carrierId">Carrier ID</param>
@@ -2824,7 +2874,7 @@ namespace Zippendo.Api
         }
 
         /// <summary>
-        /// Update carrier Updates a connected carrier&#39;s configuration or name.
+        /// Update carrier Updates a connected carrier&#39;s configuration or name. A new configuration is checked with the carrier first where the carrier supports it, as on connect.
         /// </summary>
         /// <exception cref="ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId">Organization ID</param>
@@ -3111,6 +3161,44 @@ namespace Zippendo.Api
                 } catch (Exception e)
                 {
                     OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)404);
+                }
+
+                return result != null;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 422 UnprocessableContent
+            /// </summary>
+            /// <returns></returns>
+            public bool IsUnprocessableContent => 422 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 422 UnprocessableContent
+            /// </summary>
+            /// <returns></returns>
+            public Zippendo.Model.ListApiTokens401Response? UnprocessableContent()
+            {
+                // This logic may be modified with the AsModel.mustache template
+                return IsUnprocessableContent
+                    ? System.Text.Json.JsonSerializer.Deserialize<Zippendo.Model.ListApiTokens401Response>(RawContent, _jsonSerializerOptions)
+                    : default;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 422 UnprocessableContent and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryUnprocessableContent(out Zippendo.Model.ListApiTokens401Response? result)
+            {
+                result = null;
+
+                try
+                {
+                    result = UnprocessableContent();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)422);
                 }
 
                 return result != null;

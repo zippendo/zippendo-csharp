@@ -91,6 +91,31 @@ namespace Zippendo.Api
         Task<IBatchSplitShipmentApiResponse?> BatchSplitShipmentOrDefaultAsync(string orgId, string shipmentId, BatchSplitShipmentRequest batchSplitShipmentRequest, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
+        /// Cancel sent shipment
+        /// </summary>
+        /// <remarks>
+        /// Cancel a sent shipment with its carrier. The shipment becomes &#x60;cancelled&#x60; when the carrier confirms at once; a carrier that confirms later leaves it &#x60;dispatched&#x60; with the request in its activity, and its tracking shows the outcome; a carrier that withdrew only some parcels leaves it &#x60;dispatched&#x60; with each parcel&#39;s outcome in its activity. Only carriers whose &#x60;cancelsShipments&#x60; is true accept it, except products listed in &#x60;uncancellableProductIds&#x60;; others answer SHIPMENT_CANCEL_NOT_SUPPORTED, and a carrier that refuses (for example because the parcel was collected) answers CARRIER_CANCEL_REFUSED.
+        /// </remarks>
+        /// <exception cref="ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orgId">Organization identifier.</param>
+        /// <param name="shipmentId">Shipment identifier.</param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns><see cref="Task"/>&lt;<see cref="ICancelShipmentApiResponse"/>&gt;</returns>
+        Task<ICancelShipmentApiResponse> CancelShipmentAsync(string orgId, string shipmentId, System.Threading.CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Cancel sent shipment
+        /// </summary>
+        /// <remarks>
+        /// Cancel a sent shipment with its carrier. The shipment becomes &#x60;cancelled&#x60; when the carrier confirms at once; a carrier that confirms later leaves it &#x60;dispatched&#x60; with the request in its activity, and its tracking shows the outcome; a carrier that withdrew only some parcels leaves it &#x60;dispatched&#x60; with each parcel&#39;s outcome in its activity. Only carriers whose &#x60;cancelsShipments&#x60; is true accept it, except products listed in &#x60;uncancellableProductIds&#x60;; others answer SHIPMENT_CANCEL_NOT_SUPPORTED, and a carrier that refuses (for example because the parcel was collected) answers CARRIER_CANCEL_REFUSED.
+        /// </remarks>
+        /// <param name="orgId">Organization identifier.</param>
+        /// <param name="shipmentId">Shipment identifier.</param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns><see cref="Task"/>&lt;<see cref="ICancelShipmentApiResponse"/>?&gt;</returns>
+        Task<ICancelShipmentApiResponse?> CancelShipmentOrDefaultAsync(string orgId, string shipmentId, System.Threading.CancellationToken cancellationToken = default);
+
+        /// <summary>
         /// Create return shipment
         /// </summary>
         /// <remarks>
@@ -469,6 +494,54 @@ namespace Zippendo.Api
         /// </summary>
         /// <returns></returns>
         bool IsNotFound { get; }
+    }
+
+    /// <summary>
+    /// The <see cref="ICancelShipmentApiResponse"/>
+    /// </summary>
+    public interface ICancelShipmentApiResponse : Zippendo.Client.IApiResponse, IOk<Zippendo.Model.CreateShipment201Response?>, IBadRequest<Zippendo.Model.ListApiTokens401Response?>, IForbidden<Zippendo.Model.ListApiTokens401Response?>, INotFound<Zippendo.Model.ListApiTokens401Response?>, IConflict<Zippendo.Model.ListApiTokens401Response?>, IUnprocessableContent<Zippendo.Model.ListApiTokens401Response?>, IServiceUnavailable<Zippendo.Model.ListApiTokens401Response?>
+    {
+        /// <summary>
+        /// Returns true if the response is 200 Ok
+        /// </summary>
+        /// <returns></returns>
+        bool IsOk { get; }
+
+        /// <summary>
+        /// Returns true if the response is 400 BadRequest
+        /// </summary>
+        /// <returns></returns>
+        bool IsBadRequest { get; }
+
+        /// <summary>
+        /// Returns true if the response is 403 Forbidden
+        /// </summary>
+        /// <returns></returns>
+        bool IsForbidden { get; }
+
+        /// <summary>
+        /// Returns true if the response is 404 NotFound
+        /// </summary>
+        /// <returns></returns>
+        bool IsNotFound { get; }
+
+        /// <summary>
+        /// Returns true if the response is 409 Conflict
+        /// </summary>
+        /// <returns></returns>
+        bool IsConflict { get; }
+
+        /// <summary>
+        /// Returns true if the response is 422 UnprocessableContent
+        /// </summary>
+        /// <returns></returns>
+        bool IsUnprocessableContent { get; }
+
+        /// <summary>
+        /// Returns true if the response is 503 ServiceUnavailable
+        /// </summary>
+        /// <returns></returns>
+        bool IsServiceUnavailable { get; }
     }
 
     /// <summary>
@@ -856,6 +929,26 @@ namespace Zippendo.Api
         internal void ExecuteOnErrorBatchSplitShipment(Exception exception)
         {
             OnErrorBatchSplitShipment?.Invoke(this, new ExceptionEventArgs(exception));
+        }
+
+        /// <summary>
+        /// The event raised after the server response
+        /// </summary>
+        public event EventHandler<ApiResponseEventArgs>? OnCancelShipment;
+
+        /// <summary>
+        /// The event raised after an error querying the server
+        /// </summary>
+        public event EventHandler<ExceptionEventArgs>? OnErrorCancelShipment;
+
+        internal void ExecuteOnCancelShipment(ShipmentsApi.CancelShipmentApiResponse apiResponse)
+        {
+            OnCancelShipment?.Invoke(this, new ApiResponseEventArgs(apiResponse));
+        }
+
+        internal void ExecuteOnErrorCancelShipment(Exception exception)
+        {
+            OnErrorCancelShipment?.Invoke(this, new ExceptionEventArgs(exception));
         }
 
         /// <summary>
@@ -1873,6 +1966,496 @@ namespace Zippendo.Api
                 } catch (Exception e)
                 {
                     OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)404);
+                }
+
+                return result != null;
+            }
+
+            private void OnDeserializationErrorDefaultImplementation(Exception exception, HttpStatusCode httpStatusCode)
+            {
+                bool suppressDefaultLog = false;
+                OnDeserializationError(ref suppressDefaultLog, exception, httpStatusCode);
+                if (!suppressDefaultLog)
+                    Logger.LogError(RestLogEvents.ApiDeserializationFailed, exception, "An error occurred while deserializing the {code} response.", httpStatusCode);
+            }
+
+            partial void OnDeserializationError(ref bool suppressDefaultLog, Exception exception, HttpStatusCode httpStatusCode);
+        }
+
+        partial void FormatCancelShipment(ref string orgId, ref string shipmentId);
+
+        /// <summary>
+        /// Validates the request parameters
+        /// </summary>
+        /// <param name="orgId"></param>
+        /// <param name="shipmentId"></param>
+        /// <returns></returns>
+        private void ValidateCancelShipment(string orgId, string shipmentId)
+        {
+            if (orgId == null)
+                throw new ArgumentNullException(nameof(orgId));
+
+            if (shipmentId == null)
+                throw new ArgumentNullException(nameof(shipmentId));
+        }
+
+        /// <summary>
+        /// Processes the server response
+        /// </summary>
+        /// <param name="apiResponseLocalVar"></param>
+        /// <param name="orgId"></param>
+        /// <param name="shipmentId"></param>
+        private void AfterCancelShipmentDefaultImplementation(ICancelShipmentApiResponse apiResponseLocalVar, string orgId, string shipmentId)
+        {
+            bool suppressDefaultLog = false;
+            AfterCancelShipment(ref suppressDefaultLog, apiResponseLocalVar, orgId, shipmentId);
+            if (!suppressDefaultLog)
+                Logger.LogInformation(RestLogEvents.ApiRequestCompleted, "{0,-9} | {1} | {2}", (apiResponseLocalVar.DownloadedAt - apiResponseLocalVar.RequestedAt).TotalSeconds, apiResponseLocalVar.StatusCode, apiResponseLocalVar.Path);
+        }
+
+        /// <summary>
+        /// Processes the server response
+        /// </summary>
+        /// <param name="suppressDefaultLog"></param>
+        /// <param name="apiResponseLocalVar"></param>
+        /// <param name="orgId"></param>
+        /// <param name="shipmentId"></param>
+        partial void AfterCancelShipment(ref bool suppressDefaultLog, ICancelShipmentApiResponse apiResponseLocalVar, string orgId, string shipmentId);
+
+        /// <summary>
+        /// Logs exceptions that occur while retrieving the server response
+        /// </summary>
+        /// <param name="exceptionLocalVar"></param>
+        /// <param name="pathFormatLocalVar"></param>
+        /// <param name="pathLocalVar"></param>
+        /// <param name="orgId"></param>
+        /// <param name="shipmentId"></param>
+        private void OnErrorCancelShipmentDefaultImplementation(Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, string orgId, string shipmentId)
+        {
+            bool suppressDefaultLogLocalVar = false;
+            OnErrorCancelShipment(ref suppressDefaultLogLocalVar, exceptionLocalVar, pathFormatLocalVar, pathLocalVar, orgId, shipmentId);
+            if (!suppressDefaultLogLocalVar)
+                Logger.LogError(RestLogEvents.ApiRequestFailed, exceptionLocalVar, "An error occurred while sending the request to the server.");
+        }
+
+        /// <summary>
+        /// A partial method that gives developers a way to provide customized exception handling
+        /// </summary>
+        /// <param name="suppressDefaultLogLocalVar"></param>
+        /// <param name="exceptionLocalVar"></param>
+        /// <param name="pathFormatLocalVar"></param>
+        /// <param name="pathLocalVar"></param>
+        /// <param name="orgId"></param>
+        /// <param name="shipmentId"></param>
+        partial void OnErrorCancelShipment(ref bool suppressDefaultLogLocalVar, Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, string orgId, string shipmentId);
+
+        /// <summary>
+        /// Cancel sent shipment Cancel a sent shipment with its carrier. The shipment becomes &#x60;cancelled&#x60; when the carrier confirms at once; a carrier that confirms later leaves it &#x60;dispatched&#x60; with the request in its activity, and its tracking shows the outcome; a carrier that withdrew only some parcels leaves it &#x60;dispatched&#x60; with each parcel&#39;s outcome in its activity. Only carriers whose &#x60;cancelsShipments&#x60; is true accept it, except products listed in &#x60;uncancellableProductIds&#x60;; others answer SHIPMENT_CANCEL_NOT_SUPPORTED, and a carrier that refuses (for example because the parcel was collected) answers CARRIER_CANCEL_REFUSED.
+        /// </summary>
+        /// <param name="orgId">Organization identifier.</param>
+        /// <param name="shipmentId">Shipment identifier.</param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns><see cref="Task"/>&lt;<see cref="ICancelShipmentApiResponse"/>&gt;</returns>
+        public async Task<ICancelShipmentApiResponse?> CancelShipmentOrDefaultAsync(string orgId, string shipmentId, System.Threading.CancellationToken cancellationToken = default)
+        {
+            try
+            {
+                return await CancelShipmentAsync(orgId, shipmentId, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// Cancel sent shipment Cancel a sent shipment with its carrier. The shipment becomes &#x60;cancelled&#x60; when the carrier confirms at once; a carrier that confirms later leaves it &#x60;dispatched&#x60; with the request in its activity, and its tracking shows the outcome; a carrier that withdrew only some parcels leaves it &#x60;dispatched&#x60; with each parcel&#39;s outcome in its activity. Only carriers whose &#x60;cancelsShipments&#x60; is true accept it, except products listed in &#x60;uncancellableProductIds&#x60;; others answer SHIPMENT_CANCEL_NOT_SUPPORTED, and a carrier that refuses (for example because the parcel was collected) answers CARRIER_CANCEL_REFUSED.
+        /// </summary>
+        /// <exception cref="ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orgId">Organization identifier.</param>
+        /// <param name="shipmentId">Shipment identifier.</param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns><see cref="Task"/>&lt;<see cref="ICancelShipmentApiResponse"/>&gt;</returns>
+        public async Task<ICancelShipmentApiResponse> CancelShipmentAsync(string orgId, string shipmentId, System.Threading.CancellationToken cancellationToken = default)
+        {
+            UriBuilder uriBuilderLocalVar = new UriBuilder();
+
+            try
+            {
+                ValidateCancelShipment(orgId, shipmentId);
+
+                FormatCancelShipment(ref orgId, ref shipmentId);
+
+                using (HttpRequestMessage httpRequestMessageLocalVar = new HttpRequestMessage())
+                {
+                    uriBuilderLocalVar.Host = HttpClient.BaseAddress!.Host;
+                    uriBuilderLocalVar.Port = HttpClient.BaseAddress.Port;
+                    uriBuilderLocalVar.Scheme = HttpClient.BaseAddress.Scheme;
+                    uriBuilderLocalVar.Path = HttpClient.BaseAddress.AbsolutePath == "/"
+                        ? "/orgs/{orgId}/shipments/{shipmentId}/cancel"
+                        : string.Concat(HttpClient.BaseAddress.AbsolutePath.TrimEnd('/'), "/orgs/{orgId}/shipments/{shipmentId}/cancel");
+                    uriBuilderLocalVar.Path = uriBuilderLocalVar.Path.Replace("%7BorgId%7D", Uri.EscapeDataString(orgId.ToString()));
+                    uriBuilderLocalVar.Path = uriBuilderLocalVar.Path.Replace("%7BshipmentId%7D", Uri.EscapeDataString(shipmentId.ToString()));
+
+                    List<TokenBase> tokenBaseLocalVars = new List<TokenBase>();
+                    httpRequestMessageLocalVar.RequestUri = uriBuilderLocalVar.Uri;
+
+                    BearerToken bearerTokenLocalVar1 = (BearerToken) await BearerTokenProvider.GetAsync(cancellation: cancellationToken).ConfigureAwait(false);
+
+                    tokenBaseLocalVars.Add(bearerTokenLocalVar1);
+
+                    bearerTokenLocalVar1.UseInHeader(httpRequestMessageLocalVar, "");
+
+                    string[] acceptLocalVars = new string[] {
+                        "application/json"
+                    };
+
+                    IEnumerable<MediaTypeWithQualityHeaderValue> acceptHeaderValuesLocalVar = ClientUtils.SelectHeaderAcceptArray(acceptLocalVars);
+
+                    foreach (var acceptLocalVar in acceptHeaderValuesLocalVar)
+                        httpRequestMessageLocalVar.Headers.Accept.Add(acceptLocalVar);
+                    httpRequestMessageLocalVar.Method = new HttpMethod("POST");
+
+                    DateTime requestedAtLocalVar = DateTime.UtcNow;
+
+                    using (HttpResponseMessage httpResponseMessageLocalVar = await HttpClient.SendAsync(httpRequestMessageLocalVar, cancellationToken).ConfigureAwait(false))
+                    {
+                        CancelShipmentApiResponse apiResponseLocalVar;
+
+                        switch ((int)httpResponseMessageLocalVar.StatusCode) {
+                            default: {
+                                string responseContentLocalVar = await httpResponseMessageLocalVar.Content.ReadAsStringAsync().ConfigureAwait(false);
+                                apiResponseLocalVar = new CancelShipmentApiResponse(Logger, httpRequestMessageLocalVar, httpResponseMessageLocalVar, responseContentLocalVar, "/orgs/{orgId}/shipments/{shipmentId}/cancel", requestedAtLocalVar, _jsonSerializerOptions);
+
+                                break;
+                            }
+                        }
+
+                        AfterCancelShipmentDefaultImplementation(apiResponseLocalVar, orgId, shipmentId);
+
+                        Events.ExecuteOnCancelShipment(apiResponseLocalVar);
+
+                        if (apiResponseLocalVar.StatusCode == (HttpStatusCode) 429)
+                            foreach(TokenBase tokenBaseLocalVar in tokenBaseLocalVars)
+                                tokenBaseLocalVar.BeginRateLimit();
+
+                        return apiResponseLocalVar;
+                    }
+                }
+            }
+            catch(Exception e)
+            {
+                OnErrorCancelShipmentDefaultImplementation(e, "/orgs/{orgId}/shipments/{shipmentId}/cancel", uriBuilderLocalVar.Path, orgId, shipmentId);
+                Events.ExecuteOnErrorCancelShipment(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// The <see cref="CancelShipmentApiResponse"/>
+        /// </summary>
+        public partial class CancelShipmentApiResponse : Zippendo.Client.ApiResponse, ICancelShipmentApiResponse
+        {
+            /// <summary>
+            /// The logger
+            /// </summary>
+            public ILogger<ShipmentsApi> Logger { get; }
+
+            /// <summary>
+            /// The <see cref="CancelShipmentApiResponse"/>
+            /// </summary>
+            /// <param name="logger"></param>
+            /// <param name="httpRequestMessage"></param>
+            /// <param name="httpResponseMessage"></param>
+            /// <param name="rawContent"></param>
+            /// <param name="path"></param>
+            /// <param name="requestedAt"></param>
+            /// <param name="jsonSerializerOptions"></param>
+            public CancelShipmentApiResponse(ILogger<ShipmentsApi> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, string rawContent, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, rawContent, path, requestedAt, jsonSerializerOptions)
+            {
+                Logger = logger;
+                OnCreated(httpRequestMessage, httpResponseMessage);
+            }
+
+            /// <summary>
+            /// The <see cref="CancelShipmentApiResponse"/>
+            /// </summary>
+            /// <param name="logger"></param>
+            /// <param name="httpRequestMessage"></param>
+            /// <param name="httpResponseMessage"></param>
+            /// <param name="contentStream"></param>
+            /// <param name="path"></param>
+            /// <param name="requestedAt"></param>
+            /// <param name="jsonSerializerOptions"></param>
+            public CancelShipmentApiResponse(ILogger<ShipmentsApi> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, System.IO.Stream contentStream, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, contentStream, path, requestedAt, jsonSerializerOptions)
+            {
+                Logger = logger;
+                OnCreated(httpRequestMessage, httpResponseMessage);
+            }
+
+            partial void OnCreated(global::System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage);
+
+            /// <summary>
+            /// Returns true if the response is 200 Ok
+            /// </summary>
+            /// <returns></returns>
+            public bool IsOk => 200 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 200 Ok
+            /// </summary>
+            /// <returns></returns>
+            public Zippendo.Model.CreateShipment201Response? Ok()
+            {
+                // This logic may be modified with the AsModel.mustache template
+                return IsOk
+                    ? System.Text.Json.JsonSerializer.Deserialize<Zippendo.Model.CreateShipment201Response>(RawContent, _jsonSerializerOptions)
+                    : default;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 200 Ok and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryOk(out Zippendo.Model.CreateShipment201Response? result)
+            {
+                result = null;
+
+                try
+                {
+                    result = Ok();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)200);
+                }
+
+                return result != null;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 400 BadRequest
+            /// </summary>
+            /// <returns></returns>
+            public bool IsBadRequest => 400 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 400 BadRequest
+            /// </summary>
+            /// <returns></returns>
+            public Zippendo.Model.ListApiTokens401Response? BadRequest()
+            {
+                // This logic may be modified with the AsModel.mustache template
+                return IsBadRequest
+                    ? System.Text.Json.JsonSerializer.Deserialize<Zippendo.Model.ListApiTokens401Response>(RawContent, _jsonSerializerOptions)
+                    : default;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 400 BadRequest and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryBadRequest(out Zippendo.Model.ListApiTokens401Response? result)
+            {
+                result = null;
+
+                try
+                {
+                    result = BadRequest();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)400);
+                }
+
+                return result != null;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 403 Forbidden
+            /// </summary>
+            /// <returns></returns>
+            public bool IsForbidden => 403 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 403 Forbidden
+            /// </summary>
+            /// <returns></returns>
+            public Zippendo.Model.ListApiTokens401Response? Forbidden()
+            {
+                // This logic may be modified with the AsModel.mustache template
+                return IsForbidden
+                    ? System.Text.Json.JsonSerializer.Deserialize<Zippendo.Model.ListApiTokens401Response>(RawContent, _jsonSerializerOptions)
+                    : default;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 403 Forbidden and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryForbidden(out Zippendo.Model.ListApiTokens401Response? result)
+            {
+                result = null;
+
+                try
+                {
+                    result = Forbidden();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)403);
+                }
+
+                return result != null;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 404 NotFound
+            /// </summary>
+            /// <returns></returns>
+            public bool IsNotFound => 404 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 404 NotFound
+            /// </summary>
+            /// <returns></returns>
+            public Zippendo.Model.ListApiTokens401Response? NotFound()
+            {
+                // This logic may be modified with the AsModel.mustache template
+                return IsNotFound
+                    ? System.Text.Json.JsonSerializer.Deserialize<Zippendo.Model.ListApiTokens401Response>(RawContent, _jsonSerializerOptions)
+                    : default;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 404 NotFound and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryNotFound(out Zippendo.Model.ListApiTokens401Response? result)
+            {
+                result = null;
+
+                try
+                {
+                    result = NotFound();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)404);
+                }
+
+                return result != null;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 409 Conflict
+            /// </summary>
+            /// <returns></returns>
+            public bool IsConflict => 409 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 409 Conflict
+            /// </summary>
+            /// <returns></returns>
+            public Zippendo.Model.ListApiTokens401Response? Conflict()
+            {
+                // This logic may be modified with the AsModel.mustache template
+                return IsConflict
+                    ? System.Text.Json.JsonSerializer.Deserialize<Zippendo.Model.ListApiTokens401Response>(RawContent, _jsonSerializerOptions)
+                    : default;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 409 Conflict and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryConflict(out Zippendo.Model.ListApiTokens401Response? result)
+            {
+                result = null;
+
+                try
+                {
+                    result = Conflict();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)409);
+                }
+
+                return result != null;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 422 UnprocessableContent
+            /// </summary>
+            /// <returns></returns>
+            public bool IsUnprocessableContent => 422 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 422 UnprocessableContent
+            /// </summary>
+            /// <returns></returns>
+            public Zippendo.Model.ListApiTokens401Response? UnprocessableContent()
+            {
+                // This logic may be modified with the AsModel.mustache template
+                return IsUnprocessableContent
+                    ? System.Text.Json.JsonSerializer.Deserialize<Zippendo.Model.ListApiTokens401Response>(RawContent, _jsonSerializerOptions)
+                    : default;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 422 UnprocessableContent and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryUnprocessableContent(out Zippendo.Model.ListApiTokens401Response? result)
+            {
+                result = null;
+
+                try
+                {
+                    result = UnprocessableContent();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)422);
+                }
+
+                return result != null;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 503 ServiceUnavailable
+            /// </summary>
+            /// <returns></returns>
+            public bool IsServiceUnavailable => 503 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 503 ServiceUnavailable
+            /// </summary>
+            /// <returns></returns>
+            public Zippendo.Model.ListApiTokens401Response? ServiceUnavailable()
+            {
+                // This logic may be modified with the AsModel.mustache template
+                return IsServiceUnavailable
+                    ? System.Text.Json.JsonSerializer.Deserialize<Zippendo.Model.ListApiTokens401Response>(RawContent, _jsonSerializerOptions)
+                    : default;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 503 ServiceUnavailable and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryServiceUnavailable(out Zippendo.Model.ListApiTokens401Response? result)
+            {
+                result = null;
+
+                try
+                {
+                    result = ServiceUnavailable();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)503);
                 }
 
                 return result != null;
