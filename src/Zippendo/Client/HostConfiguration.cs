@@ -143,6 +143,8 @@ namespace Zippendo.Client
             _jsonOptions.Converters.Add(new ListCarrierProducts200ResponseInnerJsonConverter());
             _jsonOptions.Converters.Add(new ListCarrierProducts200ResponseInnerAdditionalParametersInnerJsonConverter());
             _jsonOptions.Converters.Add(new ListCarrierProducts200ResponseInnerAdditionalParametersInnerOptionsInnerJsonConverter());
+            _jsonOptions.Converters.Add(new ListCarrierProducts200ResponseInnerDangerousGoodsInnerJsonConverter());
+            _jsonOptions.Converters.Add(new ListCarrierProducts200ResponseInnerDangerousGoodsInnerParametersJsonConverter());
             _jsonOptions.Converters.Add(new ListCarrierProducts200ResponseInnerServicesInnerJsonConverter());
             _jsonOptions.Converters.Add(new ListCarrierProducts200ResponseInnerWeightLimitsJsonConverter());
             _jsonOptions.Converters.Add(new ListCarriers200ResponseJsonConverter());

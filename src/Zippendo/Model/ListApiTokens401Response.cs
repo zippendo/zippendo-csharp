@@ -1014,34 +1014,44 @@ namespace Zippendo.Model
             WMSLABELALREADYBOOKED = 192,
 
             /// <summary>
+            /// Enum WMSPROVIDERCREDENTIALSINVALID for value: WMS_PROVIDER_CREDENTIALS_INVALID
+            /// </summary>
+            WMSPROVIDERCREDENTIALSINVALID = 193,
+
+            /// <summary>
+            /// Enum WMSPROVIDERREQUESTFAILED for value: WMS_PROVIDER_REQUEST_FAILED
+            /// </summary>
+            WMSPROVIDERREQUESTFAILED = 194,
+
+            /// <summary>
             /// Enum WMSLABELCOUNTMISMATCH for value: WMS_LABEL_COUNT_MISMATCH
             /// </summary>
-            WMSLABELCOUNTMISMATCH = 193,
+            WMSLABELCOUNTMISMATCH = 195,
 
             /// <summary>
             /// Enum DATAEXPORTNOTFOUND for value: DATA_EXPORT_NOT_FOUND
             /// </summary>
-            DATAEXPORTNOTFOUND = 194,
+            DATAEXPORTNOTFOUND = 196,
 
             /// <summary>
             /// Enum DATAEXPORTINPROGRESS for value: DATA_EXPORT_IN_PROGRESS
             /// </summary>
-            DATAEXPORTINPROGRESS = 195,
+            DATAEXPORTINPROGRESS = 197,
 
             /// <summary>
             /// Enum DATAEXPORTNOTREADY for value: DATA_EXPORT_NOT_READY
             /// </summary>
-            DATAEXPORTNOTREADY = 196,
+            DATAEXPORTNOTREADY = 198,
 
             /// <summary>
             /// Enum DATAEXPORTEXPIRED for value: DATA_EXPORT_EXPIRED
             /// </summary>
-            DATAEXPORTEXPIRED = 197,
+            DATAEXPORTEXPIRED = 199,
 
             /// <summary>
             /// Enum DATAEXPORTFAILED for value: DATA_EXPORT_FAILED
             /// </summary>
-            DATAEXPORTFAILED = 198
+            DATAEXPORTFAILED = 200
         }
 
         /// <summary>
@@ -1627,6 +1637,12 @@ namespace Zippendo.Model
 
             if (value.Equals("WMS_LABEL_ALREADY_BOOKED"))
                 return CodeEnum.WMSLABELALREADYBOOKED;
+
+            if (value.Equals("WMS_PROVIDER_CREDENTIALS_INVALID"))
+                return CodeEnum.WMSPROVIDERCREDENTIALSINVALID;
+
+            if (value.Equals("WMS_PROVIDER_REQUEST_FAILED"))
+                return CodeEnum.WMSPROVIDERREQUESTFAILED;
 
             if (value.Equals("WMS_LABEL_COUNT_MISMATCH"))
                 return CodeEnum.WMSLABELCOUNTMISMATCH;
@@ -2232,6 +2248,12 @@ namespace Zippendo.Model
             if (value.Equals("WMS_LABEL_ALREADY_BOOKED"))
                 return CodeEnum.WMSLABELALREADYBOOKED;
 
+            if (value.Equals("WMS_PROVIDER_CREDENTIALS_INVALID"))
+                return CodeEnum.WMSPROVIDERCREDENTIALSINVALID;
+
+            if (value.Equals("WMS_PROVIDER_REQUEST_FAILED"))
+                return CodeEnum.WMSPROVIDERREQUESTFAILED;
+
             if (value.Equals("WMS_LABEL_COUNT_MISMATCH"))
                 return CodeEnum.WMSLABELCOUNTMISMATCH;
 
@@ -2836,6 +2858,12 @@ namespace Zippendo.Model
 
             if (value == CodeEnum.WMSLABELALREADYBOOKED)
                 return "WMS_LABEL_ALREADY_BOOKED";
+
+            if (value == CodeEnum.WMSPROVIDERCREDENTIALSINVALID)
+                return "WMS_PROVIDER_CREDENTIALS_INVALID";
+
+            if (value == CodeEnum.WMSPROVIDERREQUESTFAILED)
+                return "WMS_PROVIDER_REQUEST_FAILED";
 
             if (value == CodeEnum.WMSLABELCOUNTMISMATCH)
                 return "WMS_LABEL_COUNT_MISMATCH";

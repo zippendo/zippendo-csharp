@@ -14,6 +14,7 @@ Name | Type | Description | Notes
 **IsPickupAvailable** | **bool** | Whether carrier pickup is available for this product | [default to false]
 **Services** | [**List&lt;ListCarrierProducts200ResponseInnerServicesInner&gt;**](ListCarrierProducts200ResponseInnerServicesInner.md) | Additional services available for this product | [optional] 
 **AdditionalParameters** | [**List&lt;ListCarrierProducts200ResponseInnerAdditionalParametersInner&gt;**](ListCarrierProducts200ResponseInnerAdditionalParametersInner.md) | Extra parameters that can or must be supplied for this product | [optional] 
+**DangerousGoods** | [**List&lt;ListCarrierProducts200ResponseInnerDangerousGoodsInner&gt;**](ListCarrierProducts200ResponseInnerDangerousGoodsInner.md) | How this product declares dangerous goods: the service to request and the parameters that carry the details. Absent when the product cannot carry them. | [optional] 
 **WeightLimits** | [**ListCarrierProducts200ResponseInnerWeightLimits**](ListCarrierProducts200ResponseInnerWeightLimits.md) |  | [optional] 
 
 [[Back to Model list]](../../README.md#documentation-for-models) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to README]](../../README.md)

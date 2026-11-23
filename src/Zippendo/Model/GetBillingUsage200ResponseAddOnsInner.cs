@@ -33,7 +33,7 @@ namespace Zippendo.Model
         /// <summary>
         /// Initializes a new instance of the <see cref="GetBillingUsage200ResponseAddOnsInner" /> class.
         /// </summary>
-        /// <param name="type">Type of billing add-on</param>
+        /// <param name="type">Type of billing add-on. Only zippy can be purchased.</param>
         /// <param name="quantity">Number of add-on units purchased</param>
         /// <param name="unitPrice">Price per unit per month, in minor units of the billing currency</param>
         /// <param name="totalPrice">Total price per month, in minor units of the billing currency</param>
@@ -50,9 +50,9 @@ namespace Zippendo.Model
         partial void OnCreated();
 
         /// <summary>
-        /// Type of billing add-on
+        /// Type of billing add-on. Only zippy can be purchased.
         /// </summary>
-        /// <value>Type of billing add-on</value>
+        /// <value>Type of billing add-on. Only zippy can be purchased.</value>
         public enum TypeEnum
         {
             /// <summary>
@@ -131,10 +131,10 @@ namespace Zippendo.Model
         }
 
         /// <summary>
-        /// Type of billing add-on
+        /// Type of billing add-on. Only zippy can be purchased.
         /// </summary>
-        /// <value>Type of billing add-on</value>
-        /* <example>extra_carrier</example> */
+        /// <value>Type of billing add-on. Only zippy can be purchased.</value>
+        /* <example>zippy</example> */
         [JsonPropertyName("type")]
         public TypeEnum Type { get; set; }
 

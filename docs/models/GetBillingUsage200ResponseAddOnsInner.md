@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Type** | **string** | Type of billing add-on | 
+**Type** | **string** | Type of billing add-on. Only zippy can be purchased. | 
 **Quantity** | **decimal** | Number of add-on units purchased | 
 **UnitPrice** | **decimal** | Price per unit per month, in minor units of the billing currency | 
 **TotalPrice** | **decimal** | Total price per month, in minor units of the billing currency | 

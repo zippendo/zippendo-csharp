@@ -43,9 +43,10 @@ namespace Zippendo.Model
         /// <param name="isPickupAvailable">Whether carrier pickup is available for this product (default to false)</param>
         /// <param name="services">Additional services available for this product</param>
         /// <param name="additionalParameters">Extra parameters that can or must be supplied for this product</param>
+        /// <param name="dangerousGoods">How this product declares dangerous goods: the service to request and the parameters that carry the details. Absent when the product cannot carry them.</param>
         /// <param name="weightLimits">weightLimits</param>
         [JsonConstructor]
-        public ListCarrierProducts200ResponseInner(string name, string productId, TypeEnum type, List<string> availableCountries, List<string> availableSenderCountries, Option<string?> description = default, bool isServicePoint = false, bool isPickupAvailable = false, Option<List<ListCarrierProducts200ResponseInnerServicesInner>?> services = default, Option<List<ListCarrierProducts200ResponseInnerAdditionalParametersInner>?> additionalParameters = default, Option<ListCarrierProducts200ResponseInnerWeightLimits?> weightLimits = default)
+        public ListCarrierProducts200ResponseInner(string name, string productId, TypeEnum type, List<string> availableCountries, List<string> availableSenderCountries, Option<string?> description = default, bool isServicePoint = false, bool isPickupAvailable = false, Option<List<ListCarrierProducts200ResponseInnerServicesInner>?> services = default, Option<List<ListCarrierProducts200ResponseInnerAdditionalParametersInner>?> additionalParameters = default, Option<List<ListCarrierProducts200ResponseInnerDangerousGoodsInner>?> dangerousGoods = default, Option<ListCarrierProducts200ResponseInnerWeightLimits?> weightLimits = default)
         {
             Name = name;
             ProductId = productId;
@@ -57,6 +58,7 @@ namespace Zippendo.Model
             IsPickupAvailable = isPickupAvailable;
             ServicesOption = services;
             AdditionalParametersOption = additionalParameters;
+            DangerousGoodsOption = dangerousGoods;
             WeightLimitsOption = weightLimits;
             OnCreated();
         }
@@ -228,6 +230,20 @@ namespace Zippendo.Model
         public List<ListCarrierProducts200ResponseInnerAdditionalParametersInner>? AdditionalParameters { get { return this.AdditionalParametersOption.Value; } set { this.AdditionalParametersOption = new Option<List<ListCarrierProducts200ResponseInnerAdditionalParametersInner>?>(value); } }
 
         /// <summary>
+        /// Used to track the state of DangerousGoods
+        /// </summary>
+        [JsonIgnore]
+        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public Option<List<ListCarrierProducts200ResponseInnerDangerousGoodsInner>?> DangerousGoodsOption { get; private set; }
+
+        /// <summary>
+        /// How this product declares dangerous goods: the service to request and the parameters that carry the details. Absent when the product cannot carry them.
+        /// </summary>
+        /// <value>How this product declares dangerous goods: the service to request and the parameters that carry the details. Absent when the product cannot carry them.</value>
+        [JsonPropertyName("dangerousGoods")]
+        public List<ListCarrierProducts200ResponseInnerDangerousGoodsInner>? DangerousGoods { get { return this.DangerousGoodsOption.Value; } set { this.DangerousGoodsOption = new Option<List<ListCarrierProducts200ResponseInnerDangerousGoodsInner>?>(value); } }
+
+        /// <summary>
         /// Used to track the state of WeightLimits
         /// </summary>
         [JsonIgnore]
@@ -258,6 +274,7 @@ namespace Zippendo.Model
             sb.Append("  IsPickupAvailable: ").Append(IsPickupAvailable).Append("\n");
             sb.Append("  Services: ").Append(Services).Append("\n");
             sb.Append("  AdditionalParameters: ").Append(AdditionalParameters).Append("\n");
+            sb.Append("  DangerousGoods: ").Append(DangerousGoods).Append("\n");
             sb.Append("  WeightLimits: ").Append(WeightLimits).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
@@ -306,6 +323,7 @@ namespace Zippendo.Model
             Option<bool?> isPickupAvailable = default;
             Option<List<ListCarrierProducts200ResponseInnerServicesInner>?> services = default;
             Option<List<ListCarrierProducts200ResponseInnerAdditionalParametersInner>?> additionalParameters = default;
+            Option<List<ListCarrierProducts200ResponseInnerDangerousGoodsInner>?> dangerousGoods = default;
             Option<ListCarrierProducts200ResponseInnerWeightLimits?> weightLimits = default;
 
             while (utf8JsonReader.Read())
@@ -354,6 +372,9 @@ namespace Zippendo.Model
                             break;
                         case "additionalParameters":
                             additionalParameters = new Option<List<ListCarrierProducts200ResponseInnerAdditionalParametersInner>?>(JsonSerializer.Deserialize<List<ListCarrierProducts200ResponseInnerAdditionalParametersInner>>(ref utf8JsonReader, jsonSerializerOptions)!);
+                            break;
+                        case "dangerousGoods":
+                            dangerousGoods = new Option<List<ListCarrierProducts200ResponseInnerDangerousGoodsInner>?>(JsonSerializer.Deserialize<List<ListCarrierProducts200ResponseInnerDangerousGoodsInner>>(ref utf8JsonReader, jsonSerializerOptions)!);
                             break;
                         case "weightLimits":
                             weightLimits = new Option<ListCarrierProducts200ResponseInnerWeightLimits?>(JsonSerializer.Deserialize<ListCarrierProducts200ResponseInnerWeightLimits>(ref utf8JsonReader, jsonSerializerOptions)!);
@@ -415,10 +436,13 @@ namespace Zippendo.Model
             if (additionalParameters.IsSet && additionalParameters.Value == null)
                 throw new ArgumentNullException(nameof(additionalParameters), "Property is not nullable for class ListCarrierProducts200ResponseInner.");
 
+            if (dangerousGoods.IsSet && dangerousGoods.Value == null)
+                throw new ArgumentNullException(nameof(dangerousGoods), "Property is not nullable for class ListCarrierProducts200ResponseInner.");
+
             if (weightLimits.IsSet && weightLimits.Value == null)
                 throw new ArgumentNullException(nameof(weightLimits), "Property is not nullable for class ListCarrierProducts200ResponseInner.");
 
-            return new ListCarrierProducts200ResponseInner(name.Value!, productId.Value!, type.Value!.Value!, availableCountries.Value!, availableSenderCountries.Value!, description, isServicePoint.Value!.Value!, isPickupAvailable.Value!.Value!, services, additionalParameters, weightLimits);
+            return new ListCarrierProducts200ResponseInner(name.Value!, productId.Value!, type.Value!.Value!, availableCountries.Value!, availableSenderCountries.Value!, description, isServicePoint.Value!.Value!, isPickupAvailable.Value!.Value!, services, additionalParameters, dangerousGoods, weightLimits);
         }
 
         /// <summary>
@@ -466,6 +490,9 @@ namespace Zippendo.Model
             if (listCarrierProducts200ResponseInner.AdditionalParametersOption.IsSet && listCarrierProducts200ResponseInner.AdditionalParameters == null)
                 throw new ArgumentNullException(nameof(listCarrierProducts200ResponseInner.AdditionalParameters), "Property is required for class ListCarrierProducts200ResponseInner.");
 
+            if (listCarrierProducts200ResponseInner.DangerousGoodsOption.IsSet && listCarrierProducts200ResponseInner.DangerousGoods == null)
+                throw new ArgumentNullException(nameof(listCarrierProducts200ResponseInner.DangerousGoods), "Property is required for class ListCarrierProducts200ResponseInner.");
+
             if (listCarrierProducts200ResponseInner.WeightLimitsOption.IsSet && listCarrierProducts200ResponseInner.WeightLimits == null)
                 throw new ArgumentNullException(nameof(listCarrierProducts200ResponseInner.WeightLimits), "Property is required for class ListCarrierProducts200ResponseInner.");
 
@@ -495,6 +522,11 @@ namespace Zippendo.Model
             {
                 writer.WritePropertyName("additionalParameters");
                 JsonSerializer.Serialize(writer, listCarrierProducts200ResponseInner.AdditionalParameters, jsonSerializerOptions);
+            }
+            if (listCarrierProducts200ResponseInner.DangerousGoodsOption.IsSet)
+            {
+                writer.WritePropertyName("dangerousGoods");
+                JsonSerializer.Serialize(writer, listCarrierProducts200ResponseInner.DangerousGoods, jsonSerializerOptions);
             }
             if (listCarrierProducts200ResponseInner.WeightLimitsOption.IsSet)
             {

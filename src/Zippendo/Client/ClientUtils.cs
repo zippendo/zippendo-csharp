@@ -209,6 +209,8 @@ namespace Zippendo.Client
                 return ListCarrierProducts200ResponseInner.TypeEnumToJsonValue(listCarrierProducts200ResponseInnerTypeEnum);
             if (obj is ListCarrierProducts200ResponseInnerAdditionalParametersInner.TypeEnum listCarrierProducts200ResponseInnerAdditionalParametersInnerTypeEnum)
                 return ListCarrierProducts200ResponseInnerAdditionalParametersInner.TypeEnumToJsonValue(listCarrierProducts200ResponseInnerAdditionalParametersInnerTypeEnum);
+            if (obj is ListCarrierProducts200ResponseInnerDangerousGoodsInner.KindEnum listCarrierProducts200ResponseInnerDangerousGoodsInnerKindEnum)
+                return ListCarrierProducts200ResponseInnerDangerousGoodsInner.KindEnumToJsonValue(listCarrierProducts200ResponseInnerDangerousGoodsInnerKindEnum);
             if (obj is ListCarrierProducts200ResponseInnerWeightLimits.UnitEnum listCarrierProducts200ResponseInnerWeightLimitsUnitEnum)
                 return ListCarrierProducts200ResponseInnerWeightLimits.UnitEnumToJsonValue(listCarrierProducts200ResponseInnerWeightLimitsUnitEnum);
             if (obj is ListOrderChannels200ResponseDataInner.TypeEnum listOrderChannels200ResponseDataInnerTypeEnum)
