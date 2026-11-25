@@ -67,7 +67,7 @@ namespace Zippendo.Api
         /// Disconnect carrier
         /// </summary>
         /// <remarks>
-        /// Disconnects a carrier from the organization.
+        /// Disconnects a carrier from the organization. A carrier that has pickups cannot be disconnected.
         /// </remarks>
         /// <exception cref="ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId">Organization ID</param>
@@ -80,7 +80,7 @@ namespace Zippendo.Api
         /// Disconnect carrier
         /// </summary>
         /// <remarks>
-        /// Disconnects a carrier from the organization.
+        /// Disconnects a carrier from the organization. A carrier that has pickups cannot be disconnected.
         /// </remarks>
         /// <param name="orgId">Organization ID</param>
         /// <param name="carrierId">Carrier ID</param>
@@ -269,7 +269,7 @@ namespace Zippendo.Api
     /// <summary>
     /// The <see cref="IDisconnectCarrierApiResponse"/>
     /// </summary>
-    public interface IDisconnectCarrierApiResponse : Zippendo.Client.IApiResponse, INoContent<string?>, IForbidden<Zippendo.Model.ListApiTokens401Response?>, INotFound<Zippendo.Model.ListApiTokens401Response?>
+    public interface IDisconnectCarrierApiResponse : Zippendo.Client.IApiResponse, INoContent<string?>, IForbidden<Zippendo.Model.ListApiTokens401Response?>, INotFound<Zippendo.Model.ListApiTokens401Response?>, IConflict<Zippendo.Model.ListApiTokens401Response?>
     {
         /// <summary>
         /// Returns true if the response is 204 NoContent
@@ -288,6 +288,12 @@ namespace Zippendo.Api
         /// </summary>
         /// <returns></returns>
         bool IsNotFound { get; }
+
+        /// <summary>
+        /// Returns true if the response is 409 Conflict
+        /// </summary>
+        /// <returns></returns>
+        bool IsConflict { get; }
     }
 
     /// <summary>
@@ -1097,7 +1103,7 @@ namespace Zippendo.Api
         partial void OnErrorDisconnectCarrier(ref bool suppressDefaultLogLocalVar, Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, string orgId, string carrierId);
 
         /// <summary>
-        /// Disconnect carrier Disconnects a carrier from the organization.
+        /// Disconnect carrier Disconnects a carrier from the organization. A carrier that has pickups cannot be disconnected.
         /// </summary>
         /// <param name="orgId">Organization ID</param>
         /// <param name="carrierId">Carrier ID</param>
@@ -1116,7 +1122,7 @@ namespace Zippendo.Api
         }
 
         /// <summary>
-        /// Disconnect carrier Disconnects a carrier from the organization.
+        /// Disconnect carrier Disconnects a carrier from the organization. A carrier that has pickups cannot be disconnected.
         /// </summary>
         /// <exception cref="ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId">Organization ID</param>
@@ -1351,6 +1357,44 @@ namespace Zippendo.Api
                 } catch (Exception e)
                 {
                     OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)404);
+                }
+
+                return result != null;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 409 Conflict
+            /// </summary>
+            /// <returns></returns>
+            public bool IsConflict => 409 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 409 Conflict
+            /// </summary>
+            /// <returns></returns>
+            public Zippendo.Model.ListApiTokens401Response? Conflict()
+            {
+                // This logic may be modified with the AsModel.mustache template
+                return IsConflict
+                    ? System.Text.Json.JsonSerializer.Deserialize<Zippendo.Model.ListApiTokens401Response>(RawContent, _jsonSerializerOptions)
+                    : default;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 409 Conflict and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryConflict(out Zippendo.Model.ListApiTokens401Response? result)
+            {
+                result = null;
+
+                try
+                {
+                    result = Conflict();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)409);
                 }
 
                 return result != null;

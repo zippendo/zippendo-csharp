@@ -2804,7 +2804,8 @@ paths:
           result = Zippendo::CarriersApi.new.connect_carrier("...", Zippendo::ConnectCarrierRequest.new)
   /orgs/{orgId}/carriers/{carrierId}:
     delete:
-      description: Disconnects a carrier from the organization.
+      description: Disconnects a carrier from the organization. A carrier that has
+        pickups cannot be disconnected.
       operationId: disconnectCarrier
       parameters:
       - description: Organization ID
@@ -2842,6 +2843,12 @@ paths:
                 $ref: "#/components/schemas/listApiTokens_401_response"
           description: Default Response
         "404":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/listApiTokens_401_response"
+          description: Default Response
+        "409":
           content:
             application/json:
               schema:
@@ -7765,6 +7772,7 @@ components:
           - CARRIER_ERROR
           - CARRIER_AUTH_FAILED
           - CARRIER_NOT_FOUND
+          - CARRIER_HAS_PICKUPS
           - CARRIER_PRODUCT_NOT_FOUND
           - CARRIER_PRODUCT_ROUTE_UNSUPPORTED
           - CARRIER_CONFIG_INVALID
@@ -7779,6 +7787,7 @@ components:
           - CARRIER_QR_CODE_NOT_ISSUED
           - CARRIER_LABEL_NOT_ISSUED
           - CARRIER_CUSTOMS_DATA_NOT_ACCEPTED
+          - CARRIER_BOOKING_CHANGED
           - CARRIER_GLS_WRONG_ADDRESS
           - CARRIER_GLS_BOOKING_FAILED
           - CARRIER_DAO_INVALID_POSTAL_CODE
@@ -7787,6 +7796,8 @@ components:
           - CARRIER_DHL_EXPRESS_BOOKING_FAILED
           - CARRIER_DHL_PARCEL_NL_BOOKING_FAILED
           - CARRIER_DHL_ECOMMERCE_EU_BOOKING_FAILED
+          - CARRIER_DHL_PARCEL_DE_BOOKING_FAILED
+          - CARRIER_DHL_PARCEL_PL_BOOKING_FAILED
           - CARRIER_UPS_BOOKING_FAILED
           - CARRIER_MATKAHUOLTO_BOOKING_FAILED
           - CARRIER_DPD_PL_BOOKING_FAILED
@@ -7795,6 +7806,7 @@ components:
           - CARRIER_DPD_BE_BOOKING_FAILED
           - CARRIER_DPD_LV_BOOKING_FAILED
           - CARRIER_DPD_LT_BOOKING_FAILED
+          - CARRIER_DPD_DE_BOOKING_FAILED
           - CARRIER_POSTNL_BOOKING_FAILED
           - CARRIER_POSTI_BOOKING_FAILED
           - CARRIER_INPOST_BOOKING_FAILED
@@ -7806,6 +7818,9 @@ components:
           - CARRIER_DSV_SCHENKER_BOOKING_FAILED
           - CARRIER_CANCEL_REFUSED
           - CARRIER_WEBRINQ_BOOKING_FAILED
+          - CARRIER_ORLEN_PACZKA_BOOKING_FAILED
+          - CARRIER_HERMES_DE_BOOKING_FAILED
+          - CARRIER_POCZTA_POLSKA_BOOKING_FAILED
           - CARRIER_TRACKING_WEBHOOK_REGISTRATION_FAILED
           - CARRIER_CUSTOMS_UNSUPPORTED_PRODUCT
           - CARRIER_CUSTOMS_INCOMPLETE
@@ -14354,6 +14369,7 @@ components:
           - CARRIER_ERROR
           - CARRIER_AUTH_FAILED
           - CARRIER_NOT_FOUND
+          - CARRIER_HAS_PICKUPS
           - CARRIER_PRODUCT_NOT_FOUND
           - CARRIER_PRODUCT_ROUTE_UNSUPPORTED
           - CARRIER_CONFIG_INVALID
@@ -14368,6 +14384,7 @@ components:
           - CARRIER_QR_CODE_NOT_ISSUED
           - CARRIER_LABEL_NOT_ISSUED
           - CARRIER_CUSTOMS_DATA_NOT_ACCEPTED
+          - CARRIER_BOOKING_CHANGED
           - CARRIER_GLS_WRONG_ADDRESS
           - CARRIER_GLS_BOOKING_FAILED
           - CARRIER_DAO_INVALID_POSTAL_CODE
@@ -14376,6 +14393,8 @@ components:
           - CARRIER_DHL_EXPRESS_BOOKING_FAILED
           - CARRIER_DHL_PARCEL_NL_BOOKING_FAILED
           - CARRIER_DHL_ECOMMERCE_EU_BOOKING_FAILED
+          - CARRIER_DHL_PARCEL_DE_BOOKING_FAILED
+          - CARRIER_DHL_PARCEL_PL_BOOKING_FAILED
           - CARRIER_UPS_BOOKING_FAILED
           - CARRIER_MATKAHUOLTO_BOOKING_FAILED
           - CARRIER_DPD_PL_BOOKING_FAILED
@@ -14384,6 +14403,7 @@ components:
           - CARRIER_DPD_BE_BOOKING_FAILED
           - CARRIER_DPD_LV_BOOKING_FAILED
           - CARRIER_DPD_LT_BOOKING_FAILED
+          - CARRIER_DPD_DE_BOOKING_FAILED
           - CARRIER_POSTNL_BOOKING_FAILED
           - CARRIER_POSTI_BOOKING_FAILED
           - CARRIER_INPOST_BOOKING_FAILED
@@ -14395,6 +14415,9 @@ components:
           - CARRIER_DSV_SCHENKER_BOOKING_FAILED
           - CARRIER_CANCEL_REFUSED
           - CARRIER_WEBRINQ_BOOKING_FAILED
+          - CARRIER_ORLEN_PACZKA_BOOKING_FAILED
+          - CARRIER_HERMES_DE_BOOKING_FAILED
+          - CARRIER_POCZTA_POLSKA_BOOKING_FAILED
           - CARRIER_TRACKING_WEBHOOK_REGISTRATION_FAILED
           - CARRIER_CUSTOMS_UNSUPPORTED_PRODUCT
           - CARRIER_CUSTOMS_INCOMPLETE
@@ -14623,6 +14646,7 @@ components:
           - CARRIER_ERROR
           - CARRIER_AUTH_FAILED
           - CARRIER_NOT_FOUND
+          - CARRIER_HAS_PICKUPS
           - CARRIER_PRODUCT_NOT_FOUND
           - CARRIER_PRODUCT_ROUTE_UNSUPPORTED
           - CARRIER_CONFIG_INVALID
@@ -14637,6 +14661,7 @@ components:
           - CARRIER_QR_CODE_NOT_ISSUED
           - CARRIER_LABEL_NOT_ISSUED
           - CARRIER_CUSTOMS_DATA_NOT_ACCEPTED
+          - CARRIER_BOOKING_CHANGED
           - CARRIER_GLS_WRONG_ADDRESS
           - CARRIER_GLS_BOOKING_FAILED
           - CARRIER_DAO_INVALID_POSTAL_CODE
@@ -14645,6 +14670,8 @@ components:
           - CARRIER_DHL_EXPRESS_BOOKING_FAILED
           - CARRIER_DHL_PARCEL_NL_BOOKING_FAILED
           - CARRIER_DHL_ECOMMERCE_EU_BOOKING_FAILED
+          - CARRIER_DHL_PARCEL_DE_BOOKING_FAILED
+          - CARRIER_DHL_PARCEL_PL_BOOKING_FAILED
           - CARRIER_UPS_BOOKING_FAILED
           - CARRIER_MATKAHUOLTO_BOOKING_FAILED
           - CARRIER_DPD_PL_BOOKING_FAILED
@@ -14653,6 +14680,7 @@ components:
           - CARRIER_DPD_BE_BOOKING_FAILED
           - CARRIER_DPD_LV_BOOKING_FAILED
           - CARRIER_DPD_LT_BOOKING_FAILED
+          - CARRIER_DPD_DE_BOOKING_FAILED
           - CARRIER_POSTNL_BOOKING_FAILED
           - CARRIER_POSTI_BOOKING_FAILED
           - CARRIER_INPOST_BOOKING_FAILED
@@ -14664,6 +14692,9 @@ components:
           - CARRIER_DSV_SCHENKER_BOOKING_FAILED
           - CARRIER_CANCEL_REFUSED
           - CARRIER_WEBRINQ_BOOKING_FAILED
+          - CARRIER_ORLEN_PACZKA_BOOKING_FAILED
+          - CARRIER_HERMES_DE_BOOKING_FAILED
+          - CARRIER_POCZTA_POLSKA_BOOKING_FAILED
           - CARRIER_TRACKING_WEBHOOK_REGISTRATION_FAILED
           - CARRIER_CUSTOMS_UNSUPPORTED_PRODUCT
           - CARRIER_CUSTOMS_INCOMPLETE
